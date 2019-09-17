@@ -1,0 +1,87 @@
+{
+  "project_info": {
+    "project_number": "264313001758",
+    "firebase_url": "https://spooky-halloween-sounds.firebaseio.com",
+    "project_id": "spooky-halloween-sounds",
+    "storage_bucket": "spooky-halloween-sounds.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:264313001758:android:64f86806d6e71e08",
+        "android_client_info": {
+          "package_name": "design.bosson.spookyhalloweensounds"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "264313001758-8nnale08e1u2re4sh9d13dk9k3upoup7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "design.bosson.spookyhalloweensounds",
+            "certificate_hash": "f5bdd70a70cd94bca065781843343cd25d85119d"
+          }
+        },
+        {
+          "client_id": "264313001758-9gk5p3aon5s08a7qhetbvbpmr67j6nsh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "design.bosson.spookyhalloweensounds",
+            "certificate_hash": "5d055cd4ad1af5c0f572a4f7080e112fb0a44fb6"
+          }
+        },
+        {
+          "client_id": "264313001758-i04i7gm46mp7352k747sbff7bh0s83fk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "design.bosson.spookyhalloweensounds",
+            "certificate_hash": "ffd42cc8a2ae79e973d986d538877cd53fbd7be8"
+          }
+        },
+        {
+          "client_id": "264313001758-hq8iompvrbk4f1tevdsprlmfmjamdtr1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "design.bosson.spookyhalloweensounds",
+            "certificate_hash": "c929f5f3727aeb42beb4beea0184675b794881ef"
+          }
+        },
+        {
+          "client_id": "264313001758-4o3qbp55c1ocu3018k4e71jmklu1oclr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcVpHlLdL60H5R2a6GZJUrx_gLYPUlIBA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "264313001758-4o3qbp55c1ocu3018k4e71jmklu1oclr.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "264313001758-tcucbf9btu3a86avhid7pacvsp57pkmj.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.bossondesign.spookyhalloweensounds"
+              }
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      },
+      "admob_app_id": "ca-app-pub-4078141567020545~3770772916"
+    }
+  ],
+  "configuration_version": "1"
+}

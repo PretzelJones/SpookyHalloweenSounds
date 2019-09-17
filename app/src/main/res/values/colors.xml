@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#ff9100</color>
+    <color name="colorPrimaryDark">#F59548</color>
+    <color name="colorAccent">#000000</color>
+    <color name="colorTitle">#f4863b</color>
+    <color name="colorTimer">#ffffff</color>
+    <color name="colorBossonLogo">#784579</color>
+</resources>
