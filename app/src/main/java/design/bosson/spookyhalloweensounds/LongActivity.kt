@@ -1,5 +1,3 @@
-//activity for the long mix players
-
 package design.bosson.spookyhalloweensounds
 
 import android.content.Intent
