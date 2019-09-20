@@ -51,11 +51,11 @@
         tools:ignore="MissingPrefix" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/imageMoon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/buttonLongMix"
-        app:srcCompat="@drawable/pumpkin" />
+        app:srcCompat="@drawable/moon" />
 
 
 </RelativeLayout>
