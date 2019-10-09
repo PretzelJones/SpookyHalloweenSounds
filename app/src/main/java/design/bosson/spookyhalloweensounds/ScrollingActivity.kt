@@ -77,6 +77,7 @@ class ScrollingActivity : AppCompatActivity() {
         val bHauntedSwamp = this.buttonHauntedSwamp
         val bTorturedSouls = this.buttonTorturedSouls
         val bChillingHorn = this.buttonChillingHorn
+        val bMovieThemes = this.buttonMovieThemes
 
         //sets font for buttons on API 16
         val mTypeFace = Typeface.createFromAsset(assets, "Creepster.ttf")
@@ -120,10 +121,16 @@ class ScrollingActivity : AppCompatActivity() {
         bHauntedSwamp.typeface = mTypeFace
         bTorturedSouls.typeface = mTypeFace
         bChillingHorn.typeface = mTypeFace
+        bMovieThemes.typeface = mTypeFace
 
         //media player sounds
         buttonLoopingMix.setOnClickListener {
             val intent = Intent(this, LongActivity::class.java)
+            this.startActivity(intent)
+        }
+
+        buttonMovieThemes.setOnClickListener {
+            val intent = Intent(this, MovieActivity::class.java)
             this.startActivity(intent)
         }
 

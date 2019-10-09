@@ -22,4 +22,8 @@
     <string name="secret_description">Congratulations, you’ve found the hidden sounds. We’ve saved the best for here. The sounds below are audio recordings found deep in the web. These are genuine recordings of mysterious origin and meaning. They are not for the faint of heart and may leave you feeling uneasy, frightened, and paranoid. You have been warned. </string>
     <string name="title_activity_long">Looping Mixes</string>
     <string name="looping_mix_title">Looping Mixes</string>
+    <string name="horror_movie_themes">Horror Movie Themes</string>
+    <string name="witch_cackle">Witch Cackle</string>
+    <string name="black_cat">Black Cat</string>
+    <string name="title_activity_movie">MovieActivity</string>
 </resources>

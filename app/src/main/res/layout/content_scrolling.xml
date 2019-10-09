@@ -26,53 +26,28 @@
             app:backgroundTint="@color/colorTitle"
             tools:ignore="MissingPrefix" />
 
-        <!--<Button
-            android:id="@+id/buttonTerrorMix"
+        <Button
+            android:id="@+id/buttonMovieThemes"
             android:layout_width="match_parent"
             android:layout_height="70dp"
-            android:drawableTop="@drawable/loop"
+            android:layout_below="@+id/buttonLoopingMix"
+            android:drawableTop="@drawable/film_reel"
             android:elevation="0dp"
             android:fontFamily="@font/creepster"
             android:keepScreenOn="true"
-            android:text="Ultra Terror Loop"
+            android:text="@string/horror_movie_themes"
             app:backgroundTint="@color/colorTitle"
             tools:ignore="MissingPrefix" />
-
-        <Button
-            android:id="@+id/buttonHauntedMix"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:layout_below="@+id/buttonTerrorMix"
-            android:drawableTop="@drawable/loop"
-            android:elevation="0dp"
-            android:fontFamily="@font/creepster"
-            android:keepScreenOn="true"
-            android:text="Haunted House Loop"
-            app:backgroundTint="@color/colorTitle"
-            tools:ignore="MissingPrefix" />
-
-        <Button
-            android:id="@+id/buttonLongMix"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:layout_below="@+id/buttonHauntedMix"
-            android:drawableTop="@drawable/loop"
-            android:elevation="0dp"
-            android:fontFamily="@font/creepster"
-            android:keepScreenOn="true"
-            android:text="Spooky Sounds Loop"
-            app:backgroundTint="@color/colorTitle"
-            tools:ignore="MissingPrefix" />-->
 
         <Button
             android:id="@+id/buttonWitch"
             android:layout_width="match_parent"
             android:layout_height="70dp"
-            android:layout_below="@+id/buttonLoopingMix"
+            android:layout_below="@+id/buttonMovieThemes"
             android:drawableTop="@drawable/witch_hat"
             android:elevation="0dp"
             android:fontFamily="@font/creepster"
-            android:text="Witch Cackle"
+            android:text="@string/witch_cackle"
             app:backgroundTint="@color/colorTitle"
             tools:ignore="MissingPrefix" />
 
@@ -84,7 +59,7 @@
             android:drawableTop="@drawable/black_cat"
             android:elevation="0dp"
             android:fontFamily="@font/creepster"
-            android:text="Black Cat"
+            android:text="@string/black_cat"
             app:backgroundTint="@color/colorTitle"
             tools:ignore="MissingPrefix" />
 
@@ -507,6 +482,7 @@
             android:text="Chilling Horn"
             app:backgroundTint="@color/colorTitle"
             tools:ignore="MissingPrefix" />
+
 
     </RelativeLayout>
 

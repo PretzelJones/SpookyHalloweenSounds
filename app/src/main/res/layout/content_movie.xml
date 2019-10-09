@@ -7,60 +7,58 @@
     android:layout_height="match_parent"
     android:background="@color/colorAccent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="design.bosson.spookyhalloweensounds.LongActivity"
-    tools:showIn="@layout/activity_long">
-
-
+    tools:context="design.bosson.spookyhalloweensounds.MovieActivity"
+    tools:showIn="@layout/activity_movie">
 
     <Button
-        android:id="@+id/buttonTerrorMix"
+        android:id="@+id/buttonHalloween"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:drawableTop="@drawable/loop"
+        android:drawableTop="@drawable/halloween"
         android:elevation="0dp"
         android:fontFamily="@font/creepster"
         android:keepScreenOn="true"
-        android:text="Ultra Terror"
+        android:text="Halloween"
         app:backgroundTint="@color/colorTitle"
         tools:ignore="MissingPrefix" />
 
     <Button
-        android:id="@+id/buttonHauntedMix"
+        android:id="@+id/buttonExorcist"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:layout_below="@+id/buttonTerrorMix"
-        android:drawableTop="@drawable/loop"
+        android:layout_below="@+id/buttonHalloween"
+        android:drawableTop="@drawable/cross"
         android:elevation="0dp"
         android:fontFamily="@font/creepster"
         android:keepScreenOn="true"
-        android:text="Haunted House"
+        android:text="The Exorcist"
         app:backgroundTint="@color/colorTitle"
         tools:ignore="MissingPrefix" />
 
     <Button
-        android:id="@+id/buttonLongMix"
+        android:id="@+id/buttonShining"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:layout_below="@+id/buttonHauntedMix"
+        android:layout_below="@+id/buttonExorcist"
         android:layout_marginTop="3dp"
-        android:drawableTop="@drawable/loop"
+        android:drawableTop="@drawable/axe"
         android:elevation="0dp"
         android:fontFamily="@font/creepster"
         android:keepScreenOn="true"
-        android:text="Spooky Sounds"
+        android:text="The Shining"
         app:backgroundTint="@color/colorTitle"
         tools:ignore="MissingPrefix" />
 
     <Button
-        android:id="@+id/buttonSpaceTerror"
+        android:id="@+id/buttonElmStreet"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:layout_below="@+id/buttonLongMix"
-        android:drawableTop="@drawable/loop"
+        android:layout_below="@+id/buttonShining"
+        android:drawableTop="@drawable/freddy"
         android:elevation="0dp"
         android:fontFamily="@font/creepster"
         android:keepScreenOn="true"
-        android:text="Space Terror"
+        android:text="Nightmare on Elm Street"
         app:backgroundTint="@color/colorTitle"
         tools:ignore="MissingPrefix" />
 
@@ -68,8 +66,8 @@
         android:id="@+id/imageMoon"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/buttonLongMix"
-        android:layout_marginTop="76dp"
+        android:layout_below="@+id/buttonElmStreet"
+        android:layout_marginTop="0dp"
         app:srcCompat="@drawable/moon" />
 
 

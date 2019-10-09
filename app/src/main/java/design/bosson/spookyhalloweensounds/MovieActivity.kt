@@ -13,60 +13,63 @@ import android.widget.Toast
 
 import kotlinx.android.synthetic.main.activity_long.*
 import kotlinx.android.synthetic.main.content_long.*
+import kotlinx.android.synthetic.main.content_movie.*
 import kotlinx.android.synthetic.main.content_scrolling.*
 import kotlinx.android.synthetic.main.content_secret.*
 
-class LongActivity : AppCompatActivity() {
+class MovieActivity : AppCompatActivity() {
 
     private var mp: MediaPlayer? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_long)
+        setContentView(R.layout.activity_movie)
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayShowTitleEnabled(false) //prevent title display
 
         //initialize buttons
-        val bTerrorMix = this.buttonTerrorMix
-        val bHauntedMix = this.buttonHauntedMix
-        val bLongMix = this.buttonLongMix
-        val bSpaceTerror = this.buttonSpaceTerror
+        val bHalloween = this.buttonHalloween
+        val bExorcist = this.buttonExorcist
+        val bShining = this.buttonShining
+        val bElmStreet = this.buttonElmStreet
 
         //sets font for buttons on API 16
         val mTypeFace = Typeface.createFromAsset(assets, "Creepster.ttf")
 
-        bTerrorMix.typeface = mTypeFace
-        bHauntedMix.typeface = mTypeFace
-        bLongMix.typeface = mTypeFace
-        bSpaceTerror.typeface = mTypeFace
+        bHalloween.typeface = mTypeFace
+        bExorcist.typeface = mTypeFace
+        bShining.typeface = mTypeFace
+        bElmStreet.typeface = mTypeFace
 
         //sound managers
-        bTerrorMix.setOnClickListener {
+        bHalloween.setOnClickListener {
+
             onPause()
-            mp = MediaPlayer.create(this@LongActivity, R.raw.ultra_terror)
+            mp = MediaPlayer.create(this@MovieActivity, R.raw.halloween)
             mp!!.start()
             mp!!.isLooping()
         }
 
-        bHauntedMix.setOnClickListener {
+        bExorcist.setOnClickListener {
 
             onPause()
-            mp = MediaPlayer.create(this@LongActivity, R.raw.haunted_house)
+            mp = MediaPlayer.create(this@MovieActivity, R.raw.exorcist)
             mp!!.start()
             mp!!.isLooping = true
         }
 
-        bLongMix.setOnClickListener {
+        bShining.setOnClickListener {
 
             onPause()
-            mp = MediaPlayer.create(this@LongActivity, R.raw.long_mix)
+            mp = MediaPlayer.create(this@MovieActivity, R.raw.shining)
             mp!!.start()
             mp!!.isLooping = true
         }
 
-        bSpaceTerror.setOnClickListener {
+        bElmStreet.setOnClickListener {
 
-            mp = MediaPlayer.create(this@LongActivity, R.raw.space_terror)
+            onPause()
+            mp = MediaPlayer.create(this@MovieActivity, R.raw.elm_street)
             mp!!.start()
             mp!!.isLooping = true
         }
