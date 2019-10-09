@@ -66,6 +66,7 @@ class LongActivity : AppCompatActivity() {
 
         bSpaceTerror.setOnClickListener {
 
+            onPause()
             mp = MediaPlayer.create(this@LongActivity, R.raw.space_terror)
             mp!!.start()
             mp!!.isLooping = true
