@@ -78,7 +78,7 @@
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="276dp"
+        android:layout_height="match_parent"
         android:layout_below="@+id/buttonDontLetIn"
         android:layout_marginTop="2dp"
         app:srcCompat="@drawable/orange_skull" />
