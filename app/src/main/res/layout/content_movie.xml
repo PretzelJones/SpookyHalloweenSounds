@@ -68,7 +68,7 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/buttonElmStreet"
         android:layout_marginTop="0dp"
-        app:srcCompat="@drawable/moon" />
+        app:srcCompat="@drawable/orange_skull" />
 
 
 </RelativeLayout>

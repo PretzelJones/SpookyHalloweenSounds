@@ -1,10 +1,12 @@
 package design.bosson.spookyhalloweensounds
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.graphics.Typeface
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
+import android.provider.MediaStore
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
@@ -31,6 +33,7 @@ class LongActivity : AppCompatActivity() {
         val bHauntedMix = this.buttonHauntedMix
         val bLongMix = this.buttonLongMix
         val bSpaceTerror = this.buttonSpaceTerror
+        val bDontLetIn = this.buttonDontLetIn
 
         //sets font for buttons on API 16
         val mTypeFace = Typeface.createFromAsset(assets, "Creepster.ttf")
@@ -39,6 +42,7 @@ class LongActivity : AppCompatActivity() {
         bHauntedMix.typeface = mTypeFace
         bLongMix.typeface = mTypeFace
         bSpaceTerror.typeface = mTypeFace
+        bDontLetIn.typeface = mTypeFace
 
         //sound managers
         bTerrorMix.setOnClickListener {
@@ -72,6 +76,14 @@ class LongActivity : AppCompatActivity() {
             mp!!.isLooping = true
         }
 
+        bDontLetIn.setOnClickListener {
+
+            onPause()
+            mp = MediaPlayer.create(this@LongActivity, R.raw.dont_let_in)
+            mp!!.start()
+            mp!!.isLooping = true
+        }
+
     }
 
     public override fun onPause() {
@@ -93,6 +105,13 @@ class LongActivity : AppCompatActivity() {
 
         val id = item.itemId
 
+        /*
+        if (id == R.id.payment){
+            val intent = Intent(this, PaymentActivity::class.java)
+            this.startActivity(intent)
+
+        } else if
+                */
         if (id == R.id.action_settings) {
             val intent = Intent(this, DeveloperActivity::class.java)
             this.startActivity(intent)
@@ -100,8 +119,7 @@ class LongActivity : AppCompatActivity() {
         } else if (id == R.id.share) {
             val sharingIntent = Intent(Intent.ACTION_SEND)
             sharingIntent.type = "text/plain"
-            sharingIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.google_play_store
-            ))
+            sharingIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.google_play_store))
             startActivity(Intent.createChooser(sharingIntent, "Share via"))
 
         } else if (id == R.id.secret) {

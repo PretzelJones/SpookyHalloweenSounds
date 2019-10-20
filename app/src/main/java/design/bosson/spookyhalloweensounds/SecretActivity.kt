@@ -91,6 +91,13 @@ class SecretActivity : AppCompatActivity() {
 
         val id = item.itemId
 
+        /*
+        if (id == R.id.payment){
+            val intent = Intent(this, PaymentActivity::class.java)
+            this.startActivity(intent)
+
+        } else if
+                */
         if (id == R.id.action_settings) {
             val intent = Intent(this, DeveloperActivity::class.java)
             this.startActivity(intent)
@@ -98,8 +105,7 @@ class SecretActivity : AppCompatActivity() {
         } else if (id == R.id.share) {
             val sharingIntent = Intent(Intent.ACTION_SEND)
             sharingIntent.type = "text/plain"
-            sharingIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.google_play_store
-            ))
+            sharingIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.google_play_store))
             startActivity(Intent.createChooser(sharingIntent, "Share via"))
 
         } else if (id == R.id.secret) {
