@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/SpookyHalloweenSounds.iml" filepath="$PROJECT_DIR$/SpookyHalloweenSounds.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SpookyHalloweenSounds.iml" filepath="$PROJECT_DIR$/SpookyHalloweenSounds.iml" group="SpookyHalloweenSounds" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="SpookyHalloweenSounds/app" />
     </modules>
   </component>
 </project>
