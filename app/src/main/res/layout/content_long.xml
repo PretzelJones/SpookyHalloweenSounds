@@ -40,7 +40,6 @@
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_below="@+id/buttonHauntedMix"
-        android:layout_marginTop="3dp"
         android:drawableTop="@drawable/loop"
         android:elevation="0dp"
         android:fontFamily="@font/creepster"
@@ -75,12 +74,23 @@
         app:backgroundTint="@color/colorTitle"
         tools:ignore="MissingPrefix" />
 
-    <ImageView
-        android:id="@+id/imageView"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/buttonDontLetIn"
-        android:layout_marginTop="2dp"
-        app:srcCompat="@drawable/orange_skull" />
+        android:layout_margin="4dp"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="0dp"
+        android:paddingTop="15dp"
+        android:backgroundTint="@color/colorAccent"
+        android:layout_below="@+id/buttonDontLetIn">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/graveyard"
+            android:scaleType="fitStart"/>
+
+    </androidx.cardview.widget.CardView>
 
 </RelativeLayout>
