@@ -18,7 +18,7 @@
         android:id="@+id/share"
         android:orderInCategory="102"
         android:title="@string/share"
-        app:actionProviderClass="android.support.v7.widget.ShareActionProvider"
+        app:actionProviderClass="androidx.appcompat.widget.ShareActionProvider"
         app:showAsAction="never" />
     <item
         android:id="@+id/secret"

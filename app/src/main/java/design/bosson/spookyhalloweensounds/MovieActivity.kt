@@ -4,18 +4,12 @@ import android.content.Intent
 import android.graphics.Typeface
 import android.media.MediaPlayer
 import android.os.Bundle
-import android.os.Handler
-import android.support.design.widget.Snackbar
-import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
-
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import kotlinx.android.synthetic.main.activity_long.*
-import kotlinx.android.synthetic.main.content_long.*
 import kotlinx.android.synthetic.main.content_movie.*
-import kotlinx.android.synthetic.main.content_scrolling.*
-import kotlinx.android.synthetic.main.content_secret.*
 
 class MovieActivity : AppCompatActivity() {
 
@@ -24,7 +18,7 @@ class MovieActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie)
-        setSupportActionBar(toolbar)
+        setSupportActionBar(toolbar as Toolbar?)
         supportActionBar!!.setDisplayShowTitleEnabled(false) //prevent title display
 
         //initialize buttons
@@ -32,6 +26,7 @@ class MovieActivity : AppCompatActivity() {
         val bExorcist = this.buttonExorcist
         val bShining = this.buttonShining
         val bElmStreet = this.buttonElmStreet
+        val bFriday = this.buttonFriday
 
         //sets font for buttons on API 16
         val mTypeFace = Typeface.createFromAsset(assets, "Creepster.ttf")
@@ -40,47 +35,58 @@ class MovieActivity : AppCompatActivity() {
         bExorcist.typeface = mTypeFace
         bShining.typeface = mTypeFace
         bElmStreet.typeface = mTypeFace
+        bFriday.typeface = mTypeFace
 
         //sound managers
         bHalloween.setOnClickListener {
 
             onPause()
             mp = MediaPlayer.create(this@MovieActivity, R.raw.halloween)
-            mp!!.start()
-            mp!!.isLooping()
+            mediaPlay()
         }
 
         bExorcist.setOnClickListener {
 
             onPause()
             mp = MediaPlayer.create(this@MovieActivity, R.raw.exorcist)
-            mp!!.start()
-            mp!!.isLooping = true
+            mediaPlay()
         }
 
         bShining.setOnClickListener {
 
             onPause()
             mp = MediaPlayer.create(this@MovieActivity, R.raw.shining)
-            mp!!.start()
-            mp!!.isLooping = true
+            mediaPlay()
         }
 
         bElmStreet.setOnClickListener {
 
             onPause()
             mp = MediaPlayer.create(this@MovieActivity, R.raw.elm_street)
-            mp!!.start()
-            mp!!.isLooping = true
+            mediaPlay()
         }
 
+        bFriday.setOnClickListener {
+
+            onPause()
+            mp = MediaPlayer.create(this@MovieActivity, R.raw.vorhees)
+            mediaPlay()
+        }
+    }
+
+    private fun mediaPlay() {
+        if (mp!!.isPlaying) {
+            mp!!.pause()
+        } else {
+            mp!!.start()
+        }
+        mp!!.isLooping = true
     }
 
     public override fun onPause() {
         if (mp != null) {
             mp!!.release()
         }
-
         super.onPause()
     }
 
@@ -121,4 +127,3 @@ class MovieActivity : AppCompatActivity() {
 
     }
 }
-

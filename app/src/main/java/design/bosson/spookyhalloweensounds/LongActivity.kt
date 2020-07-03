@@ -1,22 +1,15 @@
 package design.bosson.spookyhalloweensounds
 
 import android.content.Intent
-import android.content.res.Configuration
 import android.graphics.Typeface
 import android.media.MediaPlayer
 import android.os.Bundle
-import android.os.Handler
-import android.provider.MediaStore
-import android.support.design.widget.Snackbar
-import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
-
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import kotlinx.android.synthetic.main.activity_long.*
 import kotlinx.android.synthetic.main.content_long.*
-import kotlinx.android.synthetic.main.content_scrolling.*
-import kotlinx.android.synthetic.main.content_secret.*
 
 class LongActivity : AppCompatActivity() {
 
@@ -25,7 +18,7 @@ class LongActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_long)
-        setSupportActionBar(toolbar)
+        setSupportActionBar(toolbar as Toolbar?)
         supportActionBar!!.setDisplayShowTitleEnabled(false) //prevent title display
 
         //initialize buttons
@@ -48,49 +41,53 @@ class LongActivity : AppCompatActivity() {
         bTerrorMix.setOnClickListener {
             onPause()
             mp = MediaPlayer.create(this@LongActivity, R.raw.ultra_terror)
-            mp!!.start()
-            mp!!.isLooping()
+            if (mp!!.isPlaying) {
+                mp!!.pause()
+            } else {
+                mp!!.start()
+            }
+            mp!!.isLooping = true
         }
 
         bHauntedMix.setOnClickListener {
-
             onPause()
             mp = MediaPlayer.create(this@LongActivity, R.raw.haunted_house)
-            mp!!.start()
-            mp!!.isLooping = true
+            mediaPlay()
         }
 
         bLongMix.setOnClickListener {
-
             onPause()
             mp = MediaPlayer.create(this@LongActivity, R.raw.long_mix)
-            mp!!.start()
-            mp!!.isLooping = true
+            mediaPlay()
         }
 
         bSpaceTerror.setOnClickListener {
-
             onPause()
             mp = MediaPlayer.create(this@LongActivity, R.raw.space_terror)
-            mp!!.start()
-            mp!!.isLooping = true
+            mediaPlay()
         }
 
         bDontLetIn.setOnClickListener {
-
             onPause()
             mp = MediaPlayer.create(this@LongActivity, R.raw.dont_let_in)
-            mp!!.start()
-            mp!!.isLooping = true
+            mediaPlay()
         }
 
+    }
+
+    private fun mediaPlay() {
+        if (mp!!.isPlaying) {
+            mp!!.pause()
+        } else {
+            mp!!.start()
+        }
+        mp!!.isLooping = true
     }
 
     public override fun onPause() {
         if (mp != null) {
             mp!!.release()
         }
-
         super.onPause()
     }
 
@@ -131,4 +128,3 @@ class LongActivity : AppCompatActivity() {
 
     }
 }
-

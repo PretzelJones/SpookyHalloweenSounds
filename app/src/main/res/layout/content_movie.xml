@@ -61,6 +61,19 @@
         app:backgroundTint="@color/colorTitle"
         tools:ignore="MissingPrefix" />
 
+    <Button
+        android:id="@+id/buttonFriday"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_below="@+id/buttonElmStreet"
+        android:drawableTop="@drawable/vorhees"
+        android:elevation="0dp"
+        android:fontFamily="@font/creepster"
+        android:keepScreenOn="true"
+        android:text="@string/friday_the_13th"
+        app:backgroundTint="@color/colorTitle"
+        tools:ignore="MissingPrefix" />
+
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -69,7 +82,7 @@
         app:cardElevation="0dp"
         android:paddingTop="15dp"
         android:backgroundTint="@color/colorAccent"
-        android:layout_below="@+id/buttonElmStreet">
+        android:layout_below="@+id/buttonFriday">
 
         <ImageView
             android:id="@+id/imageView"
