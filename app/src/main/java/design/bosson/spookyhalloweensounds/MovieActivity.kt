@@ -28,6 +28,12 @@ class MovieActivity : AppCompatActivity() {
         val bElmStreet = this.buttonElmStreet
         val bFriday = this.buttonFriday
 
+        val halloweenPlayer = MediaPlayer.create(this@MovieActivity, R.raw.halloween)
+        val exorcistPlayer = MediaPlayer.create(this@MovieActivity, R.raw.exorcist)
+        val shiningPlayer = MediaPlayer.create(this@MovieActivity, R.raw.shining)
+        val elmPlayer = MediaPlayer.create(this@MovieActivity, R.raw.elm_street)
+        val fridayPlayer = MediaPlayer.create(this@MovieActivity, R.raw.vorhees)
+
         //sets font for buttons on API 16
         val mTypeFace = Typeface.createFromAsset(assets, "Creepster.ttf")
 
@@ -40,55 +46,95 @@ class MovieActivity : AppCompatActivity() {
         //sound managers
         bHalloween.setOnClickListener {
 
-            onPause()
-            mp = MediaPlayer.create(this@MovieActivity, R.raw.halloween)
-            mediaPlay()
+//            onPause()
+//            mp = MediaPlayer.create(this@MovieActivity, R.raw.halloween)
+//            mediaPlay()
+
+            if(halloweenPlayer!!.isPlaying){
+                halloweenPlayer.pause();
+            } else {
+                halloweenPlayer.start();
+                halloweenPlayer.isLooping = true
+                halloweenPlayer.setScreenOnWhilePlaying(true)
+            }
         }
 
         bExorcist.setOnClickListener {
 
-            onPause()
-            mp = MediaPlayer.create(this@MovieActivity, R.raw.exorcist)
-            mediaPlay()
+//            onPause()
+//            mp = MediaPlayer.create(this@MovieActivity, R.raw.exorcist)
+//            mediaPlay()
+
+            if(exorcistPlayer!!.isPlaying){
+                exorcistPlayer.pause();
+            } else {
+                exorcistPlayer.start();
+                exorcistPlayer.isLooping = true
+                exorcistPlayer.setScreenOnWhilePlaying(true)
+            }
         }
 
         bShining.setOnClickListener {
 
-            onPause()
-            mp = MediaPlayer.create(this@MovieActivity, R.raw.shining)
-            mediaPlay()
+//            onPause()
+//            mp = MediaPlayer.create(this@MovieActivity, R.raw.shining)
+//            mediaPlay()
+
+            if(shiningPlayer!!.isPlaying){
+                shiningPlayer.pause();
+            } else {
+                shiningPlayer.start();
+                shiningPlayer.isLooping = true
+                shiningPlayer.setScreenOnWhilePlaying(true)
+            }
         }
 
         bElmStreet.setOnClickListener {
 
-            onPause()
-            mp = MediaPlayer.create(this@MovieActivity, R.raw.elm_street)
-            mediaPlay()
+//            onPause()
+//            mp = MediaPlayer.create(this@MovieActivity, R.raw.elm_street)
+//            mediaPlay()
+
+            if(elmPlayer!!.isPlaying){
+                elmPlayer.pause();
+            } else {
+                elmPlayer.start();
+                elmPlayer.isLooping = true
+                elmPlayer.setScreenOnWhilePlaying(true)
+            }
         }
 
         bFriday.setOnClickListener {
 
-            onPause()
-            mp = MediaPlayer.create(this@MovieActivity, R.raw.vorhees)
-            mediaPlay()
+//            onPause()
+//            mp = MediaPlayer.create(this@MovieActivity, R.raw.vorhees)
+//            mediaPlay()
+
+            if(fridayPlayer!!.isPlaying){
+                fridayPlayer.pause();
+            } else {
+                fridayPlayer.start();
+                fridayPlayer.isLooping = true
+                fridayPlayer.setScreenOnWhilePlaying(true)
+            }
         }
     }
 
-    private fun mediaPlay() {
-        if (mp!!.isPlaying) {
-            mp!!.pause()
-        } else {
-            mp!!.start()
-        }
-        mp!!.isLooping = true
-    }
-
-    public override fun onPause() {
-        if (mp != null) {
-            mp!!.release()
-        }
-        super.onPause()
-    }
+//    private fun mediaPlay() {
+//        if (mp!!.isPlaying) {
+//            mp!!.pause()
+//        } else {
+//            mp!!.start()
+//        }
+//        mp!!.isLooping = true
+//    }
+//
+//    public override fun onPause() {
+//        if (mp != null) {
+//            mp!!.release()
+//        }
+//        super.onPause()
+//    }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
 

@@ -27,6 +27,11 @@ class SecretActivity : AppCompatActivity() {
         val bChillingCries = this.buttonChillingCries
         val bCriesFromHell = this.buttonCriesFromHell
 
+        val oldPlayer = MediaPlayer.create(this@SecretActivity, R.raw.the_old_tape)
+        val ghostPlayer = MediaPlayer.create(this@SecretActivity, R.raw.the_ghost_song)
+        val chillingPlayer = MediaPlayer.create(this@SecretActivity, R.raw.chilling_cries)
+        val criesPlayer = MediaPlayer.create(this@SecretActivity, R.raw.cries_from_hell)
+
         //sets font for buttons
         val mTypeFace = Typeface.createFromAsset(assets, "Creepster.ttf")
 
@@ -40,45 +45,77 @@ class SecretActivity : AppCompatActivity() {
         //media player methods
         bTheOldTape.setOnClickListener {
             onPause()
-            mp = MediaPlayer.create(this@SecretActivity, R.raw.the_old_tape)
-            mp!!.start()
-            mp!!.isLooping = true
-            mp!!.setScreenOnWhilePlaying(true)
+//            mp = MediaPlayer.create(this@SecretActivity, R.raw.the_old_tape)
+//            mp!!.start()
+//            mp!!.isLooping = true
+//            mp!!.setScreenOnWhilePlaying(true)
+
+            if(oldPlayer!!.isPlaying){
+                oldPlayer.pause();
+            } else {
+                oldPlayer.start();
+                oldPlayer.isLooping = true
+                oldPlayer.setScreenOnWhilePlaying(true)
+            }
         }
 
         bTheGhostSong.setOnClickListener {
-            onPause()
-            mp = MediaPlayer.create(this@SecretActivity, R.raw.the_ghost_song)
-            mp!!.start()
-            mp!!.isLooping = true
-            mp!!.setScreenOnWhilePlaying(true)
+//            onPause()
+//            mp = MediaPlayer.create(this@SecretActivity, R.raw.the_ghost_song)
+//            mp!!.start()
+//            mp!!.isLooping = true
+//            mp!!.setScreenOnWhilePlaying(true)
+
+            if(ghostPlayer!!.isPlaying){
+                ghostPlayer.pause();
+            } else {
+                ghostPlayer.start();
+                ghostPlayer.isLooping = true
+                ghostPlayer.setScreenOnWhilePlaying(true)
+            }
         }
 
         bChillingCries.setOnClickListener {
-            onPause()
-            mp = MediaPlayer.create(this@SecretActivity, R.raw.chilling_cries)
-            mp!!.start()
-            mp!!.isLooping = true
-            mp!!.setScreenOnWhilePlaying(true)
+//            onPause()
+//            mp = MediaPlayer.create(this@SecretActivity, R.raw.chilling_cries)
+//            mp!!.start()
+//            mp!!.isLooping = true
+//            mp!!.setScreenOnWhilePlaying(true)
+
+            if(chillingPlayer!!.isPlaying){
+                chillingPlayer.pause();
+            } else {
+                chillingPlayer.start();
+                chillingPlayer.isLooping = true
+                chillingPlayer.setScreenOnWhilePlaying(true)
+            }
         }
 
         bCriesFromHell.setOnClickListener {
-            onPause()
-            mp = MediaPlayer.create(this@SecretActivity, R.raw.cries_from_hell)
-            mp!!.start()
-            mp!!.isLooping = true
-            mp!!.setScreenOnWhilePlaying(true)
+//            onPause()
+//            mp = MediaPlayer.create(this@SecretActivity, R.raw.cries_from_hell)
+//            mp!!.start()
+//            mp!!.isLooping = true
+//            mp!!.setScreenOnWhilePlaying(true)
+
+            if(criesPlayer!!.isPlaying){
+                criesPlayer.pause();
+            } else {
+                criesPlayer.start();
+                criesPlayer.isLooping = true
+                criesPlayer.setScreenOnWhilePlaying(true)
+            }
         }
 
     }
 
-    public override fun onPause() {
-        if (mp != null) {
-            mp!!.release()
-        }
-
-        super.onPause()
-    }
+//    public override fun onPause() {
+//        if (mp != null) {
+//            mp!!.release()
+//        }
+//
+//        super.onPause()
+//    }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
 
