@@ -28,11 +28,11 @@ class MovieActivity : AppCompatActivity() {
         val bElmStreet = this.buttonElmStreet
         val bFriday = this.buttonFriday
 
-        val halloweenPlayer = MediaPlayer.create(this@MovieActivity, R.raw.halloween)
-        val exorcistPlayer = MediaPlayer.create(this@MovieActivity, R.raw.exorcist)
-        val shiningPlayer = MediaPlayer.create(this@MovieActivity, R.raw.shining)
-        val elmPlayer = MediaPlayer.create(this@MovieActivity, R.raw.elm_street)
-        val fridayPlayer = MediaPlayer.create(this@MovieActivity, R.raw.vorhees)
+//        val halloweenPlayer = MediaPlayer.create(this@MovieActivity, R.raw.halloween)
+//        val exorcistPlayer = MediaPlayer.create(this@MovieActivity, R.raw.exorcist)
+//        val shiningPlayer = MediaPlayer.create(this@MovieActivity, R.raw.shining)
+//        val elmPlayer = MediaPlayer.create(this@MovieActivity, R.raw.elm_street)
+//        val fridayPlayer = MediaPlayer.create(this@MovieActivity, R.raw.vorhees)
 
         //sets font for buttons on API 16
         val mTypeFace = Typeface.createFromAsset(assets, "Creepster.ttf")
@@ -43,98 +43,96 @@ class MovieActivity : AppCompatActivity() {
         bElmStreet.typeface = mTypeFace
         bFriday.typeface = mTypeFace
 
+
         //sound managers
         bHalloween.setOnClickListener {
+            onPause()
+            mp = MediaPlayer.create(this@MovieActivity, R.raw.halloween)
+            mp!!.start()
+            mp!!.isLooping = true
 
-//            onPause()
-//            mp = MediaPlayer.create(this@MovieActivity, R.raw.halloween)
-//            mediaPlay()
-
-            if(halloweenPlayer!!.isPlaying){
-                halloweenPlayer.pause();
-            } else {
-                halloweenPlayer.start();
-                halloweenPlayer.isLooping = true
-                halloweenPlayer.setScreenOnWhilePlaying(true)
-            }
+//             fun onBackPressed() {
+////                 halloweenPlayer!!.reset();
+//                 halloweenPlayer.release();
+//                super.onBackPressed();
+//            }
+//            if (mp!!.isPlaying) {
+//                mp!!.pause();
+//            } else {
+//                mp!!.start();
+//                mp!!.isLooping = true
+//                mp!!.setScreenOnWhilePlaying(true)
+//            }
         }
 
         bExorcist.setOnClickListener {
+            onPause()
+            mp = MediaPlayer.create(this@MovieActivity, R.raw.exorcist)
+            mp!!.start()
+            mp!!.isLooping = true
 
-//            onPause()
-//            mp = MediaPlayer.create(this@MovieActivity, R.raw.exorcist)
-//            mediaPlay()
-
-            if(exorcistPlayer!!.isPlaying){
-                exorcistPlayer.pause();
-            } else {
-                exorcistPlayer.start();
-                exorcistPlayer.isLooping = true
-                exorcistPlayer.setScreenOnWhilePlaying(true)
-            }
+//            if(exorcistPlayer!!.isPlaying){
+//                exorcistPlayer.pause();
+//            } else {
+//                exorcistPlayer.start();
+//                exorcistPlayer.isLooping = true
+//                exorcistPlayer.setScreenOnWhilePlaying(true)
+//            }
         }
 
         bShining.setOnClickListener {
+            onPause()
+            mp = MediaPlayer.create(this@MovieActivity, R.raw.shining)
+            mp!!.start()
+            mp!!.isLooping = true
 
-//            onPause()
-//            mp = MediaPlayer.create(this@MovieActivity, R.raw.shining)
-//            mediaPlay()
-
-            if(shiningPlayer!!.isPlaying){
-                shiningPlayer.pause();
-            } else {
-                shiningPlayer.start();
-                shiningPlayer.isLooping = true
-                shiningPlayer.setScreenOnWhilePlaying(true)
-            }
+//            if(shiningPlayer!!.isPlaying){
+//                shiningPlayer.pause();
+//            } else {
+//                shiningPlayer.start();
+//                shiningPlayer.isLooping = true
+//                shiningPlayer.setScreenOnWhilePlaying(true)
+//            }
         }
 
         bElmStreet.setOnClickListener {
+            onPause()
+            mp = MediaPlayer.create(this@MovieActivity, R.raw.elm_street)
+            mp!!.start()
+            mp!!.isLooping = true
 
-//            onPause()
-//            mp = MediaPlayer.create(this@MovieActivity, R.raw.elm_street)
-//            mediaPlay()
-
-            if(elmPlayer!!.isPlaying){
-                elmPlayer.pause();
-            } else {
-                elmPlayer.start();
-                elmPlayer.isLooping = true
-                elmPlayer.setScreenOnWhilePlaying(true)
-            }
+//            if(elmPlayer!!.isPlaying){
+//                elmPlayer.pause();
+//            } else {
+//                elmPlayer.start();
+//                elmPlayer.isLooping = true
+//                elmPlayer.setScreenOnWhilePlaying(true)
+//            }
         }
 
         bFriday.setOnClickListener {
+            onPause()
+            mp = MediaPlayer.create(this@MovieActivity, R.raw.vorhees)
+            mp!!.start()
+            mp!!.isLooping = true
 
-//            onPause()
-//            mp = MediaPlayer.create(this@MovieActivity, R.raw.vorhees)
-//            mediaPlay()
-
-            if(fridayPlayer!!.isPlaying){
-                fridayPlayer.pause();
-            } else {
-                fridayPlayer.start();
-                fridayPlayer.isLooping = true
-                fridayPlayer.setScreenOnWhilePlaying(true)
-            }
+//            if(fridayPlayer!!.isPlaying){
+//                fridayPlayer.pause();
+//            } else {
+//                fridayPlayer.start();
+//                fridayPlayer.isLooping = true
+//                fridayPlayer.setScreenOnWhilePlaying(true)
+//            }
         }
     }
 
-//    private fun mediaPlay() {
-//        if (mp!!.isPlaying) {
-//            mp!!.pause()
-//        } else {
-//            mp!!.start()
-//        }
-//        mp!!.isLooping = true
-//    }
-//
-//    public override fun onPause() {
-//        if (mp != null) {
-//            mp!!.release()
-//        }
-//        super.onPause()
-//    }
+    public override fun onPause() {
+        if (mp != null) {
+            mp!!.release()
+        }
+
+        super.onPause()
+    }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
 
@@ -148,12 +146,12 @@ class MovieActivity : AppCompatActivity() {
         val id = item.itemId
 
         /*
-        if (id == R.id.payment){
-            val intent = Intent(this, PaymentActivity::class.java)
-            this.startActivity(intent)
+    if (id == R.id.payment){
+        val intent = Intent(this, PaymentActivity::class.java)
+        this.startActivity(intent)
 
-        } else if
-                */
+    } else if
+            */
         if (id == R.id.action_settings) {
             val intent = Intent(this, DeveloperActivity::class.java)
             this.startActivity(intent)

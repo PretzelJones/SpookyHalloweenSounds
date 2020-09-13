@@ -28,11 +28,11 @@ class LongActivity : AppCompatActivity() {
         val bSpaceTerror = this.buttonSpaceTerror
         val bDontLetIn = this.buttonDontLetIn
 
-        val terrorPlayer = MediaPlayer.create(this@LongActivity, R.raw.ultra_terror)
-        val hauntedPlayer = MediaPlayer.create(this@LongActivity, R.raw.haunted_house)
-        val longPlayer = MediaPlayer.create(this@LongActivity, R.raw.long_mix)
-        val spacePlayer = MediaPlayer.create(this@LongActivity, R.raw.space_terror)
-        val dontPlayer = MediaPlayer.create(this@LongActivity, R.raw.dont_let_in)
+//        val terrorPlayer = MediaPlayer.create(this@LongActivity, R.raw.ultra_terror)
+//        val hauntedPlayer = MediaPlayer.create(this@LongActivity, R.raw.haunted_house)
+//        val longPlayer = MediaPlayer.create(this@LongActivity, R.raw.long_mix)
+//        val spacePlayer = MediaPlayer.create(this@LongActivity, R.raw.space_terror)
+//        val dontPlayer = MediaPlayer.create(this@LongActivity, R.raw.dont_let_in)
 
         //sets font for buttons on API 16
         val mTypeFace = Typeface.createFromAsset(assets, "Creepster.ttf")
@@ -45,97 +45,94 @@ class LongActivity : AppCompatActivity() {
 
         //sound managers
         bTerrorMix.setOnClickListener {
-//            onPause()
-//            mp = MediaPlayer.create(this@LongActivity, R.raw.ultra_terror)
-//            if (mp!!.isPlaying) {
-//                mp!!.pause()
-//            } else {
-//                mp!!.start()
-//            }
-//            mp!!.isLooping = true
+            onPause()
+            mp = MediaPlayer.create(this@LongActivity, R.raw.ultra_terror)
+            mp!!.start()
+            mp!!.isLooping = true
+            mp!!.setScreenOnWhilePlaying(true)
 
-            if(terrorPlayer!!.isPlaying){
-                terrorPlayer.pause();
-            } else {
-                terrorPlayer.start();
-                terrorPlayer.isLooping = true
-                terrorPlayer.setScreenOnWhilePlaying(true)
-            }
+//            if(terrorPlayer!!.isPlaying){
+//                terrorPlayer.pause();
+//            } else {
+//                terrorPlayer.start();
+//                terrorPlayer.isLooping = true
+//                terrorPlayer.setScreenOnWhilePlaying(true)
+//            }
         }
 
         bHauntedMix.setOnClickListener {
-//            onPause()
-//            mp = MediaPlayer.create(this@LongActivity, R.raw.haunted_house)
-//            mediaPlay()
+            onPause()
+            mp = MediaPlayer.create(this@LongActivity, R.raw.haunted_house)
+            mp!!.start()
+            mp!!.isLooping = true
+            mp!!.setScreenOnWhilePlaying(true)
 
-            if(hauntedPlayer!!.isPlaying){
-                hauntedPlayer.pause();
-            } else {
-                hauntedPlayer.start();
-                hauntedPlayer.isLooping = true
-                hauntedPlayer.setScreenOnWhilePlaying(true)
-            }
+//            if(hauntedPlayer!!.isPlaying){
+//                hauntedPlayer.pause();
+//            } else {
+//                hauntedPlayer.start();
+//                hauntedPlayer.isLooping = true
+//                hauntedPlayer.setScreenOnWhilePlaying(true)
+//            }
         }
 
         bLongMix.setOnClickListener {
-//            onPause()
-//            mp = MediaPlayer.create(this@LongActivity, R.raw.long_mix)
-//            mediaPlay()
+            onPause()
+            mp = MediaPlayer.create(this@LongActivity, R.raw.long_mix)
+            mp!!.start()
+            mp!!.isLooping = true
+            mp!!.setScreenOnWhilePlaying(true)
 
-            if(longPlayer!!.isPlaying){
-                longPlayer.pause();
-            } else {
-                longPlayer.start();
-                longPlayer.isLooping = true
-                longPlayer.setScreenOnWhilePlaying(true)
-            }
+//            if(longPlayer!!.isPlaying){
+//                longPlayer.pause();
+//            } else {
+//                longPlayer.start();
+//                longPlayer.isLooping = true
+//                longPlayer.setScreenOnWhilePlaying(true)
+//            }
         }
 
         bSpaceTerror.setOnClickListener {
-//            onPause()
-//            mp = MediaPlayer.create(this@LongActivity, R.raw.space_terror)
-//            mediaPlay()
+            onPause()
+            mp = MediaPlayer.create(this@LongActivity, R.raw.space_terror)
+            mp!!.start()
+            mp!!.isLooping = true
+            mp!!.setScreenOnWhilePlaying(true)
 
-            if(spacePlayer!!.isPlaying){
-                spacePlayer.pause();
-            } else {
-                spacePlayer.start();
-                spacePlayer.isLooping = true
-                spacePlayer.setScreenOnWhilePlaying(true)
-            }
+//            if(spacePlayer!!.isPlaying){
+//                spacePlayer.pause();
+//            } else {
+//                spacePlayer.start();
+//                spacePlayer.isLooping = true
+//                spacePlayer.setScreenOnWhilePlaying(true)
+//            }
         }
 
         bDontLetIn.setOnClickListener {
-//            onPause()
-//            mp = MediaPlayer.create(this@LongActivity, R.raw.dont_let_in)
-//            mediaPlay()
+            onPause()
+            mp = MediaPlayer.create(this@LongActivity, R.raw.dont_let_in)
+            mp!!.start()
+            mp!!.isLooping = true
+            mp!!.setScreenOnWhilePlaying(true)
 
-            if(dontPlayer!!.isPlaying){
-                dontPlayer.pause();
-            } else {
-                dontPlayer.start();
-                dontPlayer.isLooping = true
-                dontPlayer.setScreenOnWhilePlaying(true)
-            }
+//            if(dontPlayer!!.isPlaying){
+//                dontPlayer.pause();
+//            } else {
+//                dontPlayer.start();
+//                dontPlayer.isLooping = true
+//                dontPlayer.setScreenOnWhilePlaying(true)
+//            }
+//        }
         }
-
     }
 
-//    private fun mediaPlay() {
-//        if (mp!!.isPlaying) {
-//            mp!!.pause()
-//        } else {
-//            mp!!.start()
-//        }
-//        mp!!.isLooping = true
-//    }
-//
-//    public override fun onPause() {
-//        if (mp != null) {
-//            mp!!.release()
-//        }
-//        super.onPause()
-//    }
+    override fun onPause() {
+        if (mp != null) {
+            mp!!.release()
+        }
+
+        super.onPause()
+    }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
 
@@ -149,12 +146,12 @@ class LongActivity : AppCompatActivity() {
         val id = item.itemId
 
         /*
-        if (id == R.id.payment){
-            val intent = Intent(this, PaymentActivity::class.java)
-            this.startActivity(intent)
+    if (id == R.id.payment){
+        val intent = Intent(this, PaymentActivity::class.java)
+        this.startActivity(intent)
 
-        } else if
-                */
+    } else if
+            */
         if (id == R.id.action_settings) {
             val intent = Intent(this, DeveloperActivity::class.java)
             this.startActivity(intent)

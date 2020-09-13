@@ -8,6 +8,7 @@ import android.os.Handler
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -16,9 +17,15 @@ import com.google.android.play.core.review.ReviewManagerFactory
 import com.google.android.play.core.tasks.Task
 import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.content_scrolling.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class ScrollingActivity : AppCompatActivity() {
+
+    public lateinit var textCountdown: TextView
+    public val tvEvent: TextView? = null
+    public var handler: Handler? = null
 
     private var mp: MediaPlayer? = null
     private lateinit var mFirebaseAnalytics: FirebaseAnalytics
@@ -31,6 +38,8 @@ class ScrollingActivity : AppCompatActivity() {
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
+        textCountdown = findViewById(R.id.textCountdown)
+        countDownStart()
 
 
         val manager = ReviewManagerFactory.create(this)
@@ -46,6 +55,12 @@ class ScrollingActivity : AppCompatActivity() {
                 // There was some problem, continue regardless of the result.
             }
         }
+
+
+
+//        fun textViewGone() {
+//            findViewById(R.id.textView1).setVisibility(View.GONE)
+//        }
 
         mp = MediaPlayer() //added to resolve NullPointerException 10/27/17
 
@@ -405,6 +420,45 @@ class ScrollingActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.menu_scrolling, menu)
 
         return true
+    }
+
+    fun countDownStart() {
+        handler = Handler()
+        //                    Calendar.getInstance().get(Calendar.YEAR);
+        //set event date//YYYY-MM-DD
+        val runnable: Runnable = object : Runnable {
+            override fun run() {
+                handler!!.postDelayed(this, 1000)
+                try {
+//                    Calendar.getInstance().get(Calendar.YEAR);
+                    val dateFormat = SimpleDateFormat(
+                            "yyyy-MM-dd")
+                    //set event date//YYYY-MM-DD
+                    val futureDate = dateFormat.parse(getString(R.string.date))
+                    val currentDate = Date()
+                    if (!currentDate.after(futureDate)) {
+                        assert(futureDate != null)
+                        var diff = (futureDate!!.time
+                                - currentDate.time)
+                        val days = diff / (24 * 60 * 60 * 1000)
+                        diff -= days * (24 * 60 * 60 * 1000)
+                        val hours = diff / (60 * 60 * 1000)
+                        diff -= hours * (60 * 60 * 1000)
+                        val minutes = diff / (60 * 1000)
+                        diff -= minutes * (60 * 1000)
+                        val seconds = diff / 1000
+                        textCountdown.setText("" + String.format("%02d", days) + " days till Halloween")
+                    } else {
+//                            tvEvent!!.visibility = View.VISIBLE
+//                            tvEvent.text = "The event started!"
+//                            textViewGone()
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+        }
+        handler!!.postDelayed(runnable, 1000)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
