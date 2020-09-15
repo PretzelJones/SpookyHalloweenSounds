@@ -10,17 +10,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0ab9337d-686f-443d-85b5-d4995dd55070" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/assetWizardSettings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/mac.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules/SpookyHalloweenSounds.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/release/halloweensounds.aab" beforeDir="false" afterPath="$PROJECT_DIR$/app/release/halloweensounds.aab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/AppRater.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/AppRater.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/MovieActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/MovieActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/ScrollingActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/ScrollingActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -226,7 +217,14 @@
       <option name="project" value="LOCAL" />
       <updated>1600039462583</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="commented out google review api code. Set app rater to 0 days and 5 app starts. optimized imports.">
+      <created>1600211493905</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1600211493905</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -252,7 +250,8 @@
     <MESSAGE value="Converted to androidX and API 28" />
     <MESSAGE value="Release version 1.9.31 Build 42" />
     <MESSAGE value="Corrected player code back to old way. Added countdown. Updated version" />
-    <option name="LAST_COMMIT_MESSAGE" value="Corrected player code back to old way. Added countdown. Updated version" />
+    <MESSAGE value="commented out google review api code. Set app rater to 0 days and 5 app starts. optimized imports." />
+    <option name="LAST_COMMIT_MESSAGE" value="commented out google review api code. Set app rater to 0 days and 5 app starts. optimized imports." />
   </component>
   <component name="WindowStateProjectService">
     <state x="457" y="223" key="#com.intellij.codeInsight.editorActions.RestoreReferencesDialog" timestamp="1593818830745">
@@ -267,10 +266,10 @@
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="575" y="405" key="AndroidCreateXmlResourceDialog/0.23.1440.877@0.23.1440.877" timestamp="1600008072514" />
-    <state x="112" y="41" key="CommitChangelistDialog2" timestamp="1600039462173">
+    <state x="112" y="41" key="CommitChangelistDialog2" timestamp="1600211771293">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
-    <state x="112" y="41" key="CommitChangelistDialog2/0.23.1440.877@0.23.1440.877" timestamp="1600039462173" />
+    <state x="112" y="41" key="CommitChangelistDialog2/0.23.1440.877@0.23.1440.877" timestamp="1600211771293" />
     <state width="1398" height="229" key="GridCell.Tab.0.bottom" timestamp="1600127077968">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
