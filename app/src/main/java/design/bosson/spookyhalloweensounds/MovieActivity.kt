@@ -52,7 +52,7 @@ class MovieActivity : AppCompatActivity() {
             mp!!.isLooping = true
 
 //             fun onBackPressed() {
-////                 halloweenPlayer!!.reset();
+//                 halloweenPlayer!!.reset();
 //                 halloweenPlayer.release();
 //                super.onBackPressed();
 //            }
@@ -78,7 +78,9 @@ class MovieActivity : AppCompatActivity() {
 //                exorcistPlayer.isLooping = true
 //                exorcistPlayer.setScreenOnWhilePlaying(true)
 //            }
+
         }
+
 
         bShining.setOnClickListener {
             onPause()

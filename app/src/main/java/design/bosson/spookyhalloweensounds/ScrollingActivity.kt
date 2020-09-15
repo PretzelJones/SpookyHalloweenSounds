@@ -12,9 +12,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import com.google.android.play.core.review.ReviewInfo
-import com.google.android.play.core.review.ReviewManagerFactory
-import com.google.android.play.core.tasks.Task
 import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.content_scrolling.*
 import java.text.SimpleDateFormat
@@ -23,9 +20,9 @@ import java.util.*
 
 class ScrollingActivity : AppCompatActivity() {
 
-    public lateinit var textCountdown: TextView
-    public val tvEvent: TextView? = null
-    public var handler: Handler? = null
+    lateinit var textCountdown: TextView
+    val tvEvent: TextView? = null
+    var handler: Handler? = null
 
     private var mp: MediaPlayer? = null
     private lateinit var mFirebaseAnalytics: FirebaseAnalytics
@@ -40,23 +37,6 @@ class ScrollingActivity : AppCompatActivity() {
         supportActionBar!!.setDisplayShowTitleEnabled(false)
         textCountdown = findViewById(R.id.textCountdown)
         countDownStart()
-
-
-        val manager = ReviewManagerFactory.create(this)
-
-        val request = manager.requestReviewFlow()
-        request.addOnCompleteListener { task: Task<ReviewInfo?> ->
-            if (task.isSuccessful) {
-                // We can get the ReviewInfo object
-                val reviewInfo = task.result
-                val flow = manager.launchReviewFlow(this, reviewInfo)
-                flow.addOnCompleteListener { task: Task<Void?>? -> }
-            } else {
-                // There was some problem, continue regardless of the result.
-            }
-        }
-
-
 
 //        fun textViewGone() {
 //            findViewById(R.id.textView1).setVisibility(View.GONE)

@@ -38,7 +38,7 @@ public class AppRater {
     private static final String DEFAULT_TEXT_NOW = "Rate now";
     private static final String DEFAULT_TEXT_LATER = "Maybe Later";
     private static final String DEFAULT_TEXT_NEVER = "Leave me alone!";
-    private static final int DEFAULT_DAYS_BEFORE_PROMPT = 2;
+    private static final int DEFAULT_DAYS_BEFORE_PROMPT = 0;
     private static final int DEFAULT_LAUNCHES_BEFORE_PROMPT = 5;
     private Context mContext;
     private String mPackageName;
