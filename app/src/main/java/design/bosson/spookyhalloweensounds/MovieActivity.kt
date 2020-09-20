@@ -11,7 +11,7 @@ import androidx.appcompat.widget.Toolbar
 import kotlinx.android.synthetic.main.activity_long.*
 import kotlinx.android.synthetic.main.content_movie.*
 
-class MovieActivity : AppCompatActivity() {
+open class MovieActivity : AppCompatActivity() {
 
     private var mp: MediaPlayer? = null
 
@@ -46,95 +46,64 @@ class MovieActivity : AppCompatActivity() {
 
         //sound managers
         bHalloween.setOnClickListener {
-            onPause()
+            stopPlaying()
             mp = MediaPlayer.create(this@MovieActivity, R.raw.halloween)
-            mp!!.start()
-            mp!!.isLooping = true
-
-//             fun onBackPressed() {
-//                 halloweenPlayer!!.reset();
-//                 halloweenPlayer.release();
-//                super.onBackPressed();
-//            }
-//            if (mp!!.isPlaying) {
-//                mp!!.pause();
-//            } else {
-//                mp!!.start();
-//                mp!!.isLooping = true
-//                mp!!.setScreenOnWhilePlaying(true)
-//            }
+            mPlay()
         }
 
         bExorcist.setOnClickListener {
-            onPause()
+            stopPlaying()
             mp = MediaPlayer.create(this@MovieActivity, R.raw.exorcist)
-            mp!!.start()
-            mp!!.isLooping = true
-
-//            if(exorcistPlayer!!.isPlaying){
-//                exorcistPlayer.pause();
-//            } else {
-//                exorcistPlayer.start();
-//                exorcistPlayer.isLooping = true
-//                exorcistPlayer.setScreenOnWhilePlaying(true)
-//            }
-
+            mPlay()
         }
 
-
         bShining.setOnClickListener {
-            onPause()
+            stopPlaying()
             mp = MediaPlayer.create(this@MovieActivity, R.raw.shining)
-            mp!!.start()
-            mp!!.isLooping = true
-
-//            if(shiningPlayer!!.isPlaying){
-//                shiningPlayer.pause();
-//            } else {
-//                shiningPlayer.start();
-//                shiningPlayer.isLooping = true
-//                shiningPlayer.setScreenOnWhilePlaying(true)
-//            }
+            mPlay()
         }
 
         bElmStreet.setOnClickListener {
-            onPause()
+            stopPlaying()
             mp = MediaPlayer.create(this@MovieActivity, R.raw.elm_street)
-            mp!!.start()
-            mp!!.isLooping = true
-
-//            if(elmPlayer!!.isPlaying){
-//                elmPlayer.pause();
-//            } else {
-//                elmPlayer.start();
-//                elmPlayer.isLooping = true
-//                elmPlayer.setScreenOnWhilePlaying(true)
-//            }
+            mPlay()
         }
 
         bFriday.setOnClickListener {
-            onPause()
+            stopPlaying()
             mp = MediaPlayer.create(this@MovieActivity, R.raw.vorhees)
-            mp!!.start()
-            mp!!.isLooping = true
-
-//            if(fridayPlayer!!.isPlaying){
-//                fridayPlayer.pause();
-//            } else {
-//                fridayPlayer.start();
-//                fridayPlayer.isLooping = true
-//                fridayPlayer.setScreenOnWhilePlaying(true)
-//            }
+            mPlay()
         }
     }
 
-    public override fun onPause() {
+    private fun mPlay () {
+        mp!!.start()
+        mp!!.isLooping = true
+        mp!!.setScreenOnWhilePlaying(true)
+    }
+
+    private fun stopPlaying() {
+        // If media player is not null then try to stop it
         if (mp != null) {
+            mp!!.stop()
             mp!!.release()
+            mp = null
         }
-
-        super.onPause()
     }
+
+    override fun onStop() {
+        super.onStop()
+        mp?.release()
+        mp = null
+    }
+
+//    override fun onPause() {
+//        if (mp != null) {
+//            mp!!.release()
+//        }
+//
+//        super.onPause()
+//    }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
 
@@ -173,3 +142,4 @@ class MovieActivity : AppCompatActivity() {
 
     }
 }
+

@@ -45,94 +45,64 @@ class LongActivity : AppCompatActivity() {
 
         //sound managers
         bTerrorMix.setOnClickListener {
-            onPause()
+            stopPlaying()
             mp = MediaPlayer.create(this@LongActivity, R.raw.ultra_terror)
-            mp!!.start()
-            mp!!.isLooping = true
-            mp!!.setScreenOnWhilePlaying(true)
-
-//            if(terrorPlayer!!.isPlaying){
-//                terrorPlayer.pause();
-//            } else {
-//                terrorPlayer.start();
-//                terrorPlayer.isLooping = true
-//                terrorPlayer.setScreenOnWhilePlaying(true)
-//            }
+            mPlay()
         }
 
         bHauntedMix.setOnClickListener {
-            onPause()
+            stopPlaying()
             mp = MediaPlayer.create(this@LongActivity, R.raw.haunted_house)
-            mp!!.start()
-            mp!!.isLooping = true
-            mp!!.setScreenOnWhilePlaying(true)
-
-//            if(hauntedPlayer!!.isPlaying){
-//                hauntedPlayer.pause();
-//            } else {
-//                hauntedPlayer.start();
-//                hauntedPlayer.isLooping = true
-//                hauntedPlayer.setScreenOnWhilePlaying(true)
-//            }
+            mPlay()
         }
 
         bLongMix.setOnClickListener {
-            onPause()
+            stopPlaying()
             mp = MediaPlayer.create(this@LongActivity, R.raw.long_mix)
-            mp!!.start()
-            mp!!.isLooping = true
-            mp!!.setScreenOnWhilePlaying(true)
-
-//            if(longPlayer!!.isPlaying){
-//                longPlayer.pause();
-//            } else {
-//                longPlayer.start();
-//                longPlayer.isLooping = true
-//                longPlayer.setScreenOnWhilePlaying(true)
-//            }
+            mPlay()
         }
 
         bSpaceTerror.setOnClickListener {
-            onPause()
+            stopPlaying()
             mp = MediaPlayer.create(this@LongActivity, R.raw.space_terror)
-            mp!!.start()
-            mp!!.isLooping = true
-            mp!!.setScreenOnWhilePlaying(true)
-
-//            if(spacePlayer!!.isPlaying){
-//                spacePlayer.pause();
-//            } else {
-//                spacePlayer.start();
-//                spacePlayer.isLooping = true
-//                spacePlayer.setScreenOnWhilePlaying(true)
-//            }
+            mPlay()
         }
 
         bDontLetIn.setOnClickListener {
-            onPause()
+            stopPlaying()
             mp = MediaPlayer.create(this@LongActivity, R.raw.dont_let_in)
-            mp!!.start()
-            mp!!.isLooping = true
-            mp!!.setScreenOnWhilePlaying(true)
+            mPlay()
 
-//            if(dontPlayer!!.isPlaying){
-//                dontPlayer.pause();
-//            } else {
-//                dontPlayer.start();
-//                dontPlayer.isLooping = true
-//                dontPlayer.setScreenOnWhilePlaying(true)
-//            }
-//        }
         }
     }
 
-    override fun onPause() {
+    private fun mPlay () {
+        mp!!.start()
+        mp!!.isLooping = true
+        mp!!.setScreenOnWhilePlaying(true)
+    }
+
+    private fun stopPlaying() {
         if (mp != null) {
+            mp!!.stop()
             mp!!.release()
+            mp = null
         }
-
-        super.onPause()
     }
+
+    override fun onStop() {
+        super.onStop()
+        mp?.release()
+        mp = null
+    }
+
+//    override fun onPause() {
+//        if (mp != null) {
+//            mp!!.release()
+//        }
+//
+//        super.onPause()
+//    }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
 

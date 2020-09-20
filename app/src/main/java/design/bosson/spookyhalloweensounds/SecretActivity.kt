@@ -44,78 +44,59 @@ class SecretActivity : AppCompatActivity() {
 
         //media player methods
         bTheOldTape.setOnClickListener {
-            onPause()
+            stopPlaying()
             mp = MediaPlayer.create(this@SecretActivity, R.raw.the_old_tape)
-            mp!!.start()
-            mp!!.isLooping = true
-            mp!!.setScreenOnWhilePlaying(true)
-
-//            if(oldPlayer!!.isPlaying){
-//                oldPlayer.pause();
-//            } else {
-//                oldPlayer.start();
-//                oldPlayer.isLooping = true
-//                oldPlayer.setScreenOnWhilePlaying(true)
-//            }
+            mPlay()
         }
 
         bTheGhostSong.setOnClickListener {
-            onPause()
+            stopPlaying()
             mp = MediaPlayer.create(this@SecretActivity, R.raw.the_ghost_song)
-            mp!!.start()
-            mp!!.isLooping = true
-            mp!!.setScreenOnWhilePlaying(true)
-
-//            if(ghostPlayer!!.isPlaying){
-//                ghostPlayer.pause();
-//            } else {
-//                ghostPlayer.start();
-//                ghostPlayer.isLooping = true
-//                ghostPlayer.setScreenOnWhilePlaying(true)
-//            }
+            mPlay()
         }
 
         bChillingCries.setOnClickListener {
-            onPause()
+            stopPlaying()
             mp = MediaPlayer.create(this@SecretActivity, R.raw.chilling_cries)
-            mp!!.start()
-            mp!!.isLooping = true
-            mp!!.setScreenOnWhilePlaying(true)
-
-//            if(chillingPlayer!!.isPlaying){
-//                chillingPlayer.pause();
-//            } else {
-//                chillingPlayer.start();
-//                chillingPlayer.isLooping = true
-//                chillingPlayer.setScreenOnWhilePlaying(true)
-//            }
+            mPlay()
         }
 
         bCriesFromHell.setOnClickListener {
-            onPause()
+            stopPlaying()
             mp = MediaPlayer.create(this@SecretActivity, R.raw.cries_from_hell)
-            mp!!.start()
-            mp!!.isLooping = true
-            mp!!.setScreenOnWhilePlaying(true)
-
-//            if(criesPlayer!!.isPlaying){
-//                criesPlayer.pause();
-//            } else {
-//                criesPlayer.start();
-//                criesPlayer.isLooping = true
-//                criesPlayer.setScreenOnWhilePlaying(true)
-//            }
+            mPlay()
         }
 
     }
 
-    public override fun onPause() {
+    private fun mPlay () {
+        mp!!.start()
+        mp!!.isLooping = true
+        mp!!.setScreenOnWhilePlaying(true)
+    }
+
+    private fun stopPlaying() {
+        // If media player is not null then try to stop it
         if (mp != null) {
+            mp!!.stop()
             mp!!.release()
+            mp = null
         }
-
-        super.onPause()
     }
+
+    override fun onStop() {
+        super.onStop()
+        mp?.release()
+        mp = null
+    }
+
+//    public override fun onPause() {
+//        if (mp != null) {
+//            mp!!.release()
+//        }
+//
+//        super.onPause()
+//    }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
 

@@ -149,223 +149,224 @@ class ScrollingActivity : AppCompatActivity() {
         bWitchLaugh.setOnClickListener {
 
             mp = MediaPlayer.create(this@ScrollingActivity, R.raw.witch_laugh)
-            mp!!.start()
-        }
-
-        bEvilMan.setOnClickListener {
-
-            mp = MediaPlayer.create(this@ScrollingActivity, R.raw.evil_man)
-            mp!!.start()
-        }
-
-        bCreakyDoor.setOnClickListener {
-
-            mp = MediaPlayer.create(this@ScrollingActivity, R.raw.creaky_door)
-            mp!!.start()
+            mPlay()
         }
 
         bBlackCat.setOnClickListener {
 
             mp = MediaPlayer.create(this@ScrollingActivity, R.raw.black_cat)
-            mp!!.start()
+            mPlay()
+        }
+
+        bEvilMan.setOnClickListener {
+
+            mp = MediaPlayer.create(this@ScrollingActivity, R.raw.evil_man)
+//            mp!!.start()
+            mPlay()
+        }
+
+        bCreakyDoor.setOnClickListener {
+
+            mp = MediaPlayer.create(this@ScrollingActivity, R.raw.creaky_door)
+            mPlay()
         }
 
         bHorrorAmbience.setOnClickListener {
 
             mp = MediaPlayer.create(this@ScrollingActivity, R.raw.horror_ambience)
-            mp!!.start()
+            mPlay()
         }
 
         bMonsterGrowl.setOnClickListener {
 
             mp = MediaPlayer.create(this@ScrollingActivity, R.raw.monster_growl)
-            mp!!.start()
+            mPlay()
         }
 
         bMonsterWalking.setOnClickListener {
 
             mp = MediaPlayer.create(this@ScrollingActivity, R.raw.monster_walking)
-            mp!!.start()
+            mPlay()
         }
 
         bScaryScream.setOnClickListener {
 
             mp = MediaPlayer.create(this@ScrollingActivity, R.raw.scary_scream)
-            mp!!.start()
+            mPlay()
         }
 
         bSpookyChains.setOnClickListener {
 
             mp = MediaPlayer.create(this@ScrollingActivity, R.raw.spooky_chains)
-            mp!!.start()
+            mPlay()
         }
 
         bThunder.setOnClickListener {
 
             mp = MediaPlayer.create(this@ScrollingActivity, R.raw.thunder)
-            mp!!.start()
+            mPlay()
         }
 
         bVampireBat.setOnClickListener {
 
             mp = MediaPlayer.create(this@ScrollingActivity, R.raw.vampire_bat)
-            mp!!.start()
+            mPlay()
         }
 
         bZombie.setOnClickListener {
 
             mp = MediaPlayer.create(this@ScrollingActivity, R.raw.zombie)
-            mp!!.start()
+            mPlay()
         }
 
         bGhostBoo.setOnClickListener {
 
             mp = MediaPlayer.create(this@ScrollingActivity, R.raw.ghost_boo)
-            mp!!.start()
+            mPlay()
         }
 
         bWerewolfHowl.setOnClickListener {
 
             mp = MediaPlayer.create(this@ScrollingActivity, R.raw.werewolf_howl)
-            mp!!.start()
+            mPlay()
         }
 
         bPoltergeistVoice.setOnClickListener {
 
             mp = MediaPlayer.create(this@ScrollingActivity, R.raw.poltergeist_voice)
-            mp!!.start()
+            mPlay()
         }
 
         bZombieCome.setOnClickListener {
 
             mp = MediaPlayer.create(this@ScrollingActivity, R.raw.zombie_come)
-            mp!!.start()
+            mPlay()
         }
 
         bCatScream.setOnClickListener {
 
             mp = MediaPlayer.create(this@ScrollingActivity, R.raw.cat_scream)
-            mp!!.start()
+            mPlay()
         }
 
         bWraithWail.setOnClickListener {
 
             mp = MediaPlayer.create(this@ScrollingActivity, R.raw.wraith_wail)
-            mp!!.start()
+            mPlay()
         }
 
         bSpookyOwl.setOnClickListener {
 
             mp = MediaPlayer.create(this@ScrollingActivity, R.raw.spooky_owl)
-            mp!!.start()
+            mPlay()
         }
 
         bChainedGhoul.setOnClickListener {
 
             mp = MediaPlayer.create(this@ScrollingActivity, R.raw.chained_ghoul)
-            mp!!.start()
+            mPlay()
         }
 
         bTerrifiedScream.setOnClickListener {
 
             mp = MediaPlayer.create(this@ScrollingActivity, R.raw.terrified_scream)
-            mp!!.start()
+            mPlay()
         }
 
         bHauntedOrgan.setOnClickListener {
 
             mp = MediaPlayer.create(this@ScrollingActivity, R.raw.haunted_organ)
-            mp!!.start()
+            mPlay()
         }
 
         bScareCrow.setOnClickListener {
 
             mp = MediaPlayer.create(this@ScrollingActivity, R.raw.scarecrow)
-            mp!!.start()
+            mPlay()
         }
 
         bBlowingWind.setOnClickListener {
 
             mp = MediaPlayer.create(this@ScrollingActivity, R.raw.blowing_wind)
-            mp!!.start()
+            mPlay()
         }
 
         bGhostlyWhisper.setOnClickListener {
 
             mp = MediaPlayer.create(this@ScrollingActivity, R.raw.ghostly_whisper)
-            mp!!.start()
+            mPlay()
         }
 
         bDraculaLaugh.setOnClickListener {
 
             mp = MediaPlayer.create(this@ScrollingActivity, R.raw.dracula_laugh)
-            mp!!.start()
+            mPlay()
         }
 
         bWolfCry.setOnClickListener {
 
             mp = MediaPlayer.create(this@ScrollingActivity, R.raw.wolf_cry)
-            mp!!.start()
+            mPlay()
         }
 
         bKnockKnock.setOnClickListener {
 
             mp = MediaPlayer.create(this@ScrollingActivity, R.raw.knock_knock)
-            mp!!.start()
+            mPlay()
         }
 
         bIgorGrumble.setOnClickListener {
 
             mp = MediaPlayer.create(this@ScrollingActivity, R.raw.igor_grumble)
-            mp!!.start()
+            mPlay()
         }
 
         bHorrorMovie.setOnClickListener {
 
             mp = MediaPlayer.create(this@ScrollingActivity, R.raw.horror_film)
-            mp!!.start()
+            mPlay()
         }
 
         bTwoBells.setOnClickListener {
 
             mp = MediaPlayer.create(this@ScrollingActivity, R.raw.warning_bells)
-            mp!!.start()
+            mPlay()
         }
 
         bPainfulMoan.setOnClickListener {
 
             mp = MediaPlayer.create(this@ScrollingActivity, R.raw.painful_moan)
-            mp!!.start()
+            mPlay()
         }
 
         bWitchesCauldron.setOnClickListener {
 
             mp = MediaPlayer.create(this@ScrollingActivity, R.raw.bubbles)
-            mp!!.start()
+            mPlay()
         }
 
         bGhostlyChildren.setOnClickListener {
 
             mp = MediaPlayer.create(this@ScrollingActivity, R.raw.scary_nursery)
-            mp!!.start()
+            mPlay()
         }
 
         bHauntedSwamp.setOnClickListener {
 
             mp = MediaPlayer.create(this@ScrollingActivity, R.raw.haunted_swamp)
-            mp!!.start()
+            mPlay()
         }
 
         bTorturedSouls.setOnClickListener {
 
             mp = MediaPlayer.create(this@ScrollingActivity, R.raw.tortured_souls)
-            mp!!.start()
+            mPlay()
         }
 
         bChillingHorn.setOnClickListener {
 
             mp = MediaPlayer.create(this@ScrollingActivity, R.raw.chilling_horn)
-            mp!!.start()
+            mPlay()
         }
 
     }
@@ -387,13 +388,23 @@ class ScrollingActivity : AppCompatActivity() {
         }
     }
 
-    override fun onPause() {
-        super.onPause()
-        if (mp != null) {
-            mp!!.release()
-            mp = null
-        }
+    private fun mPlay () {
+        mp!!.start()
     }
+
+    override fun onStop() {
+        super.onStop()
+        mp?.release()
+        mp = null
+    }
+
+//    override fun onPause() {
+//        super.onPause()
+//        if (mp != null) {
+//            mp!!.release()
+//            mp = null
+//        }
+//    }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
 
@@ -402,7 +413,7 @@ class ScrollingActivity : AppCompatActivity() {
         return true
     }
 
-    fun countDownStart() {
+    private fun countDownStart() {
         handler = Handler()
         //                    Calendar.getInstance().get(Calendar.YEAR);
         //set event date//YYYY-MM-DD
