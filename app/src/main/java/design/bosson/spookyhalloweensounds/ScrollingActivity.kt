@@ -21,13 +21,12 @@ import java.util.*
 class ScrollingActivity : AppCompatActivity() {
 
     lateinit var textCountdown: TextView
-    val tvEvent: TextView? = null
+//    val tvEvent: TextView? = null
     var handler: Handler? = null
 
     private var mp: MediaPlayer? = null
     private lateinit var mFirebaseAnalytics: FirebaseAnalytics
     private var doubleBackToExitPressedOnce = false
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,10 +36,6 @@ class ScrollingActivity : AppCompatActivity() {
         supportActionBar!!.setDisplayShowTitleEnabled(false)
         textCountdown = findViewById(R.id.textCountdown)
         countDownStart()
-
-//        fun textViewGone() {
-//            findViewById(R.id.textView1).setVisibility(View.GONE)
-//        }
 
         mp = MediaPlayer() //added to resolve NullPointerException 10/27/17
 

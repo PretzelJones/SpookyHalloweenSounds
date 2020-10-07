@@ -27,6 +27,7 @@ open class MovieActivity : AppCompatActivity() {
         val bShining = this.buttonShining
         val bElmStreet = this.buttonElmStreet
         val bFriday = this.buttonFriday
+        val bAmityville = this.buttonAmityville
 
 //        val halloweenPlayer = MediaPlayer.create(this@MovieActivity, R.raw.halloween)
 //        val exorcistPlayer = MediaPlayer.create(this@MovieActivity, R.raw.exorcist)
@@ -42,7 +43,7 @@ open class MovieActivity : AppCompatActivity() {
         bShining.typeface = mTypeFace
         bElmStreet.typeface = mTypeFace
         bFriday.typeface = mTypeFace
-
+        bAmityville.typeface = mTypeFace
 
         //sound managers
         bHalloween.setOnClickListener {
@@ -72,6 +73,12 @@ open class MovieActivity : AppCompatActivity() {
         bFriday.setOnClickListener {
             stopPlaying()
             mp = MediaPlayer.create(this@MovieActivity, R.raw.vorhees)
+            mPlay()
+        }
+
+        bAmityville.setOnClickListener {
+            stopPlaying()
+            mp = MediaPlayer.create(this@MovieActivity, R.raw.amityville)
             mPlay()
         }
     }
