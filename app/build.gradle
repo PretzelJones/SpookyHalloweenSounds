@@ -1,7 +1,8 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-//apply plugin: 'io.fabric' //commented due to duplicate resource error
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.crashlytics'
 
 android {
     compileSdkVersion 30
@@ -10,8 +11,8 @@ android {
         applicationId "design.bosson.spookyhalloweensounds"
         minSdkVersion 16
         targetSdkVersion 30
-        versionCode 47
-        versionName "1.9.36"
+        versionCode 48
+        versionName "1.9.37"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         lintOptions {
 
@@ -33,20 +34,20 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.4.0"
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.4.10"
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.3'
     implementation 'androidx.legacy:legacy-support-core-utils:1.0.0'
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.2.1'
-    implementation 'com.google.firebase:firebase-core:17.5.0'
-    implementation 'com.google.firebase:firebase-messaging:20.2.4'
+    implementation 'com.google.firebase:firebase-core:18.0.0'
+    implementation 'com.google.firebase:firebase-messaging:21.0.0'
     implementation 'com.google.firebase:firebase-crash:16.2.1'
     implementation 'com.google.android.gms:play-services-auth:18.1.0'
     implementation 'androidx.cardview:cardview:1.0.0'
-    androidTestImplementation 'junit:junit:4.13'
+    implementation 'com.google.firebase:firebase-crashlytics:17.2.2'
+    implementation 'com.google.firebase:firebase-analytics:18.0.0'
+    androidTestImplementation 'junit:junit:4.13.1'
     androidTestImplementation('androidx.test.espresso:espresso-core:3.1.0', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 }
-
-apply plugin: 'com.google.gms.google-services'
