@@ -21,7 +21,8 @@ import java.util.*
 class ScrollingActivity : AppCompatActivity() {
 
     lateinit var textCountdown: TextView
-//    val tvEvent: TextView? = null
+
+    //    val tvEvent: TextView? = null
     var handler: Handler? = null
 
     private var mp: MediaPlayer? = null
@@ -383,7 +384,7 @@ class ScrollingActivity : AppCompatActivity() {
         }
     }
 
-    private fun mPlay () {
+    private fun mPlay() {
         mp!!.start()
     }
 
@@ -455,7 +456,6 @@ class ScrollingActivity : AppCompatActivity() {
         if (id == R.id.payment){
             val intent = Intent(this, PaymentActivity::class.java)
             this.startActivity(intent)
-
         } else if
                 */
         if (id == R.id.action_settings) {
