@@ -12,9 +12,10 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0ab9337d-686f-443d-85b5-d4995dd55070" name="Default Changelist" comment="">
+    <list default="true" id="0ab9337d-686f-443d-85b5-d4995dd55070" name="Default Changelist" comment="Set new date for 2021. Ready for production">
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/ScrollingActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/ScrollingActivity.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -277,7 +278,14 @@
       <option name="project" value="LOCAL" />
       <updated>1605453331964</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Commented out minutes and seconds out of the countdown timer code.">
+      <created>1605454041727</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1605454041727</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -308,7 +316,8 @@
     <MESSAGE value="Added Amityville sound and version code - updated to version 1.9.36 version 47 ready for release" />
     <MESSAGE value="Added firebase crashylitics" />
     <MESSAGE value="Updated Halloween date" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated Halloween date" />
+    <MESSAGE value="Commented out minutes and seconds out of the countdown timer code." />
+    <option name="LAST_COMMIT_MESSAGE" value="Commented out minutes and seconds out of the countdown timer code." />
   </component>
   <component name="WindowStateProjectService">
     <state x="408" y="206" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1605451261754">
@@ -324,10 +333,10 @@
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="463" y="359" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.23.1440.877@0.23.1440.877" timestamp="1603997321818" />
-    <state x="100" y="125" width="1240" height="675" key="AVDManager" timestamp="1605452126907">
+    <state x="100" y="125" width="1240" height="675" key="AVDManager" timestamp="1605562172765">
       <screen x="0" y="25" width="1440" height="875" />
     </state>
-    <state x="100" y="125" width="1240" height="675" key="AVDManager/0.25.1440.875@0.25.1440.875" timestamp="1605452126907" />
+    <state x="100" y="125" width="1240" height="675" key="AVDManager/0.25.1440.875@0.25.1440.875" timestamp="1605562172765" />
     <state x="308" y="223" key="AndroidCreateResourceFileDialog" timestamp="1600604970425">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
@@ -337,44 +346,48 @@
     </state>
     <state x="575" y="392" key="AndroidCreateXmlResourceDialog/0.0.1440.900@0.0.1440.900" timestamp="1602113115687" />
     <state x="575" y="405" key="AndroidCreateXmlResourceDialog/0.23.1440.877@0.23.1440.877" timestamp="1600008072514" />
-    <state x="0" y="44" key="CommitChangelistDialog2" timestamp="1605453330035">
+    <state x="0" y="44" key="CommitChangelistDialog2" timestamp="1605562144913">
       <screen x="0" y="25" width="1440" height="875" />
     </state>
     <state x="107" y="43" key="CommitChangelistDialog2/0.0.1440.900@0.0.1440.900" timestamp="1602113956447" />
     <state x="0" y="51" key="CommitChangelistDialog2/0.23.1440.877@0.23.1440.877" timestamp="1603998217760" />
-    <state x="0" y="44" key="CommitChangelistDialog2/0.25.1440.875@0.25.1440.875" timestamp="1605453330035" />
-    <state width="1398" height="234" key="GridCell.Tab.0.bottom" timestamp="1602113752442">
-      <screen x="0" y="0" width="1440" height="900" />
+    <state x="0" y="44" key="CommitChangelistDialog2/0.25.1440.875@0.25.1440.875" timestamp="1605562144913" />
+    <state width="1398" height="226" key="GridCell.Tab.0.bottom" timestamp="1605562168829">
+      <screen x="0" y="25" width="1440" height="875" />
     </state>
     <state width="1398" height="234" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1602113752442" />
     <state width="1398" height="229" key="GridCell.Tab.0.bottom/0.23.1440.877@0.23.1440.877" timestamp="1600816817036" />
-    <state width="1398" height="234" key="GridCell.Tab.0.center" timestamp="1602113752441">
-      <screen x="0" y="0" width="1440" height="900" />
+    <state width="1398" height="226" key="GridCell.Tab.0.bottom/0.25.1440.875@0.25.1440.875" timestamp="1605562168829" />
+    <state width="1398" height="226" key="GridCell.Tab.0.center" timestamp="1605562168828">
+      <screen x="0" y="25" width="1440" height="875" />
     </state>
     <state width="1398" height="234" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1602113752441" />
     <state width="1398" height="229" key="GridCell.Tab.0.center/0.23.1440.877@0.23.1440.877" timestamp="1600816817035" />
-    <state width="1398" height="234" key="GridCell.Tab.0.left" timestamp="1602113752441">
-      <screen x="0" y="0" width="1440" height="900" />
+    <state width="1398" height="226" key="GridCell.Tab.0.center/0.25.1440.875@0.25.1440.875" timestamp="1605562168828" />
+    <state width="1398" height="226" key="GridCell.Tab.0.left" timestamp="1605562168828">
+      <screen x="0" y="25" width="1440" height="875" />
     </state>
     <state width="1398" height="234" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1602113752441" />
     <state width="1398" height="229" key="GridCell.Tab.0.left/0.23.1440.877@0.23.1440.877" timestamp="1600816817035" />
-    <state width="1398" height="234" key="GridCell.Tab.0.right" timestamp="1602113752442">
-      <screen x="0" y="0" width="1440" height="900" />
+    <state width="1398" height="226" key="GridCell.Tab.0.left/0.25.1440.875@0.25.1440.875" timestamp="1605562168828" />
+    <state width="1398" height="226" key="GridCell.Tab.0.right" timestamp="1605562168828">
+      <screen x="0" y="25" width="1440" height="875" />
     </state>
     <state width="1398" height="234" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1602113752442" />
     <state width="1398" height="229" key="GridCell.Tab.0.right/0.23.1440.877@0.23.1440.877" timestamp="1600816817036" />
+    <state width="1398" height="226" key="GridCell.Tab.0.right/0.25.1440.875@0.25.1440.875" timestamp="1605562168828" />
     <state x="213" y="94" key="SettingsEditor" timestamp="1605453390619">
       <screen x="0" y="25" width="1440" height="875" />
     </state>
     <state x="356" y="172" key="SettingsEditor/0.0.1440.900@0.0.1440.900" timestamp="1602114032742" />
     <state x="217" y="105" key="SettingsEditor/0.23.1440.877@0.23.1440.877" timestamp="1604089802363" />
     <state x="213" y="94" key="SettingsEditor/0.25.1440.875@0.25.1440.875" timestamp="1605453390619" />
-    <state x="319" y="203" key="Vcs.Push.Dialog.v2" timestamp="1605453335236">
+    <state x="319" y="203" key="Vcs.Push.Dialog.v2" timestamp="1605454043328">
       <screen x="0" y="25" width="1440" height="875" />
     </state>
     <state x="319" y="183" key="Vcs.Push.Dialog.v2/0.0.1440.900@0.0.1440.900" timestamp="1602113961174" />
     <state x="319" y="201" key="Vcs.Push.Dialog.v2/0.23.1440.877@0.23.1440.877" timestamp="1603998224705" />
-    <state x="319" y="203" key="Vcs.Push.Dialog.v2/0.25.1440.875@0.25.1440.875" timestamp="1605453335236" />
+    <state x="319" y="203" key="Vcs.Push.Dialog.v2/0.25.1440.875@0.25.1440.875" timestamp="1605454043328" />
     <state x="497" y="246" key="chooseDestDirectoryDialog" timestamp="1600624764080">
       <screen x="0" y="23" width="1440" height="877" />
     </state>

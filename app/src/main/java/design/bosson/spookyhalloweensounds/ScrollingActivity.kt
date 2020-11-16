@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.content_scrolling.*
+import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -415,7 +416,6 @@ class ScrollingActivity : AppCompatActivity() {
         //                    Calendar.getInstance().get(Calendar.YEAR);
         //set event date//YYYY-MM-DD
         val runnable: Runnable = object : Runnable {
-            @SuppressLint("SimpleDateFormat", "SetTextI18n")
             override fun run() {
                 handler!!.postDelayed(this, 1000)
                 try {
@@ -431,13 +431,14 @@ class ScrollingActivity : AppCompatActivity() {
                                 - currentDate.time)
                         val days = diff / (24 * 60 * 60 * 1000)
                         diff -= days * (24 * 60 * 60 * 1000)
-//                        val hours = diff / (60 * 60 * 1000)
-//                        diff -= hours * (60 * 60 * 1000)
-//                        val minutes = diff / (60 * 1000)
-//                        diff -= minutes * (60 * 1000)
-//                        val seconds = diff / 1000
+                        val hours = diff / (60 * 60 * 1000)
+                        diff -= hours * (60 * 60 * 1000)
+                        val minutes = diff / (60 * 1000)
+                        diff -= minutes * (60 * 1000)
+                        val seconds = diff / 1000
                         textCountdown.setText("" + String.format("%02d", days) + " days till Halloween")
                     } else {
+                        textCountdown.setText("Happy Halloween")
 //                            tvEvent!!.visibility = View.VISIBLE
 //                            tvEvent.text = "The event started!"
 //                            textViewGone()
