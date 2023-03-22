@@ -5,26 +5,35 @@ import android.content.Intent
 import android.graphics.Typeface
 import android.media.MediaPlayer
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.os.Handler
+import android.util.Log
+import android.util.TypedValue
+import android.view.ActionMode
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
+//import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat.startActivity
+//import androidx.appcompat.widget.Toolbar
 import com.google.firebase.analytics.FirebaseAnalytics
+import kotlinx.android.synthetic.main.content_movie.*
 import kotlinx.android.synthetic.main.content_scrolling.*
+import kotlinx.android.synthetic.main.content_scrolling.view.*
 import java.text.DateFormat
 import java.text.SimpleDateFormat
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 
 class ScrollingActivity : AppCompatActivity() {
 
-    lateinit var textCountdown: TextView
+    private lateinit var countdownTimer: CountDownTimer
+    private lateinit var textCountdown: TextView
 
-    //    val tvEvent: TextView? = null
     var handler: Handler? = null
 
     private var mp: MediaPlayer? = null
@@ -34,19 +43,93 @@ class ScrollingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_scrolling)
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        val toolbar = findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
         textCountdown = findViewById(R.id.textCountdown)
-        countDownStart()
+
+        //countDownStart() //old code
 
         mp = MediaPlayer() //added to resolve NullPointerException 10/27/17
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
 
-        AppRater(this).show()
+        //AppRater(this).show()
 
-        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+        // Set the target date to October 31 of the current year
+        val targetCalendar = Calendar.getInstance()
+        targetCalendar.set(Calendar.MONTH, Calendar.NOVEMBER)
+        targetCalendar.set(Calendar.DAY_OF_MONTH, 1)
+        targetCalendar.set(Calendar.HOUR_OF_DAY, 0)
+        targetCalendar.set(Calendar.MINUTE, 0)
+        targetCalendar.set(Calendar.SECOND, 0)
+        targetCalendar.set(Calendar.MILLISECOND, 0)
+        val targetTimeInMillis = targetCalendar.timeInMillis
+
+        // Set up the countdown timer
+        countdownTimer = object : CountDownTimer(targetTimeInMillis - System.currentTimeMillis(), 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                val remainingDays = millisUntilFinished / (24 * 60 * 60 * 1000)
+                if (remainingDays == 1L) {
+                    textCountdown.text = "Tomorrow is Halloween!"
+                    textCountdown.setTextSize(TypedValue.COMPLEX_UNIT_PT, 11F)
+                } else if (remainingDays == 0L) {
+                    textCountdown.text = "Happy Halloween!"
+                    textCountdown.setTextSize(TypedValue.COMPLEX_UNIT_PT, 12F)
+                    //textCountdown.text = "$remainingDays days until Halloween"
+                } else {
+                    textCountdown.text = "$remainingDays days until Halloween"
+                    textCountdown.setTextSize(TypedValue.COMPLEX_UNIT_PT, 11F)
+                }
+            }
+
+            override fun onFinish() {
+                //textCountdown.text = "Happy Halloween!"
+                resetTimerForNextYear()
+            }
+        }
+
+        // Start the countdown timer
+        countdownTimer.start()
+    }
+        private fun resetTimerForNextYear() {
+        // Reset the timer for the next year
+        val currentYear = Calendar.getInstance().get(Calendar.YEAR)
+        val nextYearCalendar = Calendar.getInstance()
+        nextYearCalendar.set(Calendar.YEAR, currentYear + 1)
+        nextYearCalendar.set(Calendar.MONTH, Calendar.NOVEMBER)
+        nextYearCalendar.set(Calendar.DAY_OF_MONTH, 1)
+        nextYearCalendar.set(Calendar.HOUR_OF_DAY, 0)
+        nextYearCalendar.set(Calendar.MINUTE, 0)
+        nextYearCalendar.set(Calendar.SECOND, 0)
+        nextYearCalendar.set(Calendar.MILLISECOND, 0)
+        val nextYearTimeInMillis = nextYearCalendar.timeInMillis
+
+        countdownTimer = object : CountDownTimer(nextYearTimeInMillis - System.currentTimeMillis(), 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                val remainingDays = millisUntilFinished / (24 * 60 * 60 * 1000)
+                if (remainingDays == 1L) {
+                    textCountdown.text = "Tomorrow is Halloween!"
+                    textCountdown.setTextSize(TypedValue.COMPLEX_UNIT_PT, 11F)
+                } else if (remainingDays == 0L) {
+                    textCountdown.text = "Happy Halloween!"
+                    textCountdown.setTextSize(TypedValue.COMPLEX_UNIT_PT, 12F)
+                    //textCountdown.text = "$remainingDays days until Halloween"
+                } else {
+                    textCountdown.text = "$remainingDays days till Halloween"
+                    textCountdown.setTextSize(TypedValue.COMPLEX_UNIT_PT, 11F)
+                }
+            }
+            override fun onFinish() {
+                //textCountdown.text = "$remainingDays days until Halloween"
+                resetTimerForNextYear()
+            }
+        }
+
+        countdownTimer.start()
+
+
+    window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
 
         //button initializers
         val bLoopingMix = this.buttonLoopingMix
@@ -410,38 +493,52 @@ class ScrollingActivity : AppCompatActivity() {
 
         return true
     }
-
+/*
+    //@SuppressLint("SimpleDateFormat")
     private fun countDownStart() {
         handler = Handler()
-        //                    Calendar.getInstance().get(Calendar.YEAR);
+        //Calendar.getInstance().get(Calendar.YEAR);
         //set event date//YYYY-MM-DD
+        //val year = Calendar.getInstance().get(Calendar.YEAR);
+
         val runnable: Runnable = object : Runnable {
             override fun run() {
+                val dateFormat = SimpleDateFormat(getString(R.string.dateFormat))
+                val halloweenDate = dateFormat.parse(getString(R.string.halloweenDate))
+                val halloweenTomorrow = dateFormat.parse(getString(R.string.halloweenTomorrow))
+                val today = Date()
+                val diff = (halloweenDate!!.time - today.time)
+                val days = diff / (24 * 60 * 60 * 1000)
                 handler!!.postDelayed(this, 1000)
+
+                //textCountdown.setText(String.format((diff / (24 * 60 * 60 * 1000)).toString()))
+                //textCountdown.setText(String.format(today.toString()))
+
                 try {
-//                    Calendar.getInstance().get(Calendar.YEAR);
-                    val dateFormat = SimpleDateFormat(
-                            "yyyy-MM-dd")
-                    //set event date//YYYY-MM-DD
-                    val futureDate = dateFormat.parse(getString(R.string.date))
-                    val currentDate = Date()
-                    if (!currentDate.after(futureDate)) {
-                        assert(futureDate != null)
-                        var diff = (futureDate!!.time
-                                - currentDate.time)
-                        val days = diff / (24 * 60 * 60 * 1000)
-                        diff -= days * (24 * 60 * 60 * 1000)
-                        val hours = diff / (60 * 60 * 1000)
-                        diff -= hours * (60 * 60 * 1000)
-                        val minutes = diff / (60 * 1000)
-                        diff -= minutes * (60 * 1000)
-                        val seconds = diff / 1000
-                        textCountdown.setText("" + String.format("%02d", days) + " days till Halloween")
-                    } else {
+
+                    if (today.before(halloweenDate)) {
+                        textCountdown.setText("" + String.format("%01d", days) + " days till Halloween")
+                        textCountdown.setTextSize(TypedValue.COMPLEX_UNIT_PT, 12F)
+
+                    } else if (today.equals(halloweenDate)) {
                         textCountdown.setText("Happy Halloween")
-//                            tvEvent!!.visibility = View.VISIBLE
-//                            tvEvent.text = "The event started!"
-//                            textViewGone()
+                        textCountdown.setTextSize(TypedValue.COMPLEX_UNIT_PT, 12F)
+
+                        /*if (!today.equals(halloweenDate)) {
+                        textCountdown.setText("Happy Halloween")
+                        textCountdown.setTextSize(TypedValue.COMPLEX_UNIT_PT, 12F)*/
+
+                        //} else  {
+                        //  textCountdown.setText("" + String.format("%01d", days) + " days till Halloween")
+                        //textCountdown.setTextSize(TypedValue.COMPLEX_UNIT_PT, 12F)
+
+                        /*} else if (!today.equals(halloweenTomorrow)) {
+                        textCountdown.setText("Halloween is Tomorrow")
+                        textCountdown.setTextSize(TypedValue.COMPLEX_UNIT_PT, 12F)
+
+                    } else
+                        textCountdown.setText("Spooky Halloween")
+                        textCountdown.setTextSize(TypedValue.COMPLEX_UNIT_PT, 12F)*/
                     }
                 } catch (e: Exception) {
                     e.printStackTrace()
@@ -450,7 +547,7 @@ class ScrollingActivity : AppCompatActivity() {
         }
         handler!!.postDelayed(runnable, 1000)
     }
-
+*/
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         val id = item.itemId
@@ -480,3 +577,4 @@ class ScrollingActivity : AppCompatActivity() {
 
     }
 }
+

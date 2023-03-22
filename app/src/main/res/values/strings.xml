@@ -7,7 +7,7 @@
     <string name="phone">443.527.9022</string>
     <string name="email">sean@bosson.design</string>
     <string name="bosson">Bosson Design</string>
-    <string name="version_code">App Version 1.9.36 Oct 07, 2020</string>
+    <string name="version_code">App Version 1.9.37 Jan 03, 2021</string>
     <string name="title_activity_secret">You Were Warned</string>
     <string name="secret">Curiosity Killed the Black Cat</string>
     <string name="title_activity_ghost_song">The Ghost Song</string>
@@ -32,6 +32,8 @@
     <string name="payment_text">If you love Spooky Halloween Sounds and want to see it getting better each year, why not buy us a coffee so we can keep building</string>
     <string name="don_t_let_them_in">Don\'t Let Them In</string>
     <string name="friday_the_13th">Friday the 13th</string>
-    <string name="date">2021-10-31</string>
     <string name="amityville_horror">Amityville Horror</string>
+    <string name="halloweenDate">2023-10-31</string>
+    <string name="halloweenTomorrow">2023-10-30</string>
+    <string name="dateFormat">yyyy-MM-dd</string>
 </resources>

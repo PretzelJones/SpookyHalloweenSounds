@@ -34,7 +34,6 @@
         android:text="The Exorcist"
         app:backgroundTint="@color/colorTitle"
         tools:ignore="MissingPrefix" />
-
     <Button
         android:id="@+id/buttonShining"
         android:layout_width="match_parent"
