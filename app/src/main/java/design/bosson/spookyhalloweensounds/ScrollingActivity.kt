@@ -54,7 +54,7 @@ class ScrollingActivity : AppCompatActivity() {
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
 
-        //AppRater(this).show()
+        AppRater(this).show()
 
         // Set the target date to October 31 of the current year
         val targetCalendar = Calendar.getInstance()
@@ -127,7 +127,6 @@ class ScrollingActivity : AppCompatActivity() {
         }
 
         countdownTimer.start()
-
 
     window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
 
