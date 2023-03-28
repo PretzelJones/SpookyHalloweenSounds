@@ -1,40 +1,38 @@
 package design.bosson.spookyhalloweensounds
 
-import android.annotation.SuppressLint
+//import android.widget.Toolbar
+//import androidx.appcompat.widget.Toolbar
 import android.content.Intent
 import android.graphics.Typeface
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
-import android.util.Log
-import android.util.TypedValue
-import android.view.ActionMode
 import android.view.Menu
-import android.view.MenuItem
 import android.view.View
-import android.widget.TextView
 import android.widget.Toast
-//import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat.startActivity
-//import androidx.appcompat.widget.Toolbar
+import androidx.appcompat.widget.Toolbar
 import com.google.firebase.analytics.FirebaseAnalytics
-import kotlinx.android.synthetic.main.content_movie.*
 import kotlinx.android.synthetic.main.content_scrolling.*
-import kotlinx.android.synthetic.main.content_scrolling.view.*
-import java.text.DateFormat
-import java.text.SimpleDateFormat
-import java.time.format.DateTimeFormatter
 import java.util.*
 
 
 class ScrollingActivity : AppCompatActivity() {
 
-    private lateinit var countdownTimer: CountDownTimer
-    private lateinit var textCountdown: TextView
+    private lateinit var timer: CountDownTimer
+    private var halloweenDate = Calendar.getInstance().apply {
+        set(Calendar.MONTH, Calendar.NOVEMBER)
+        set(Calendar.DAY_OF_MONTH, 1)
+        set(Calendar.HOUR_OF_DAY, 0)
+        set(Calendar.MINUTE, 0)
+        set(Calendar.SECOND, 0)
+    }.timeInMillis
 
-    var handler: Handler? = null
+    //private lateinit var countdownTimer: CountDownTimer
+    //private lateinit var textCountdown: TextView
+
+    //var handler: Handler? = null
 
     private var mp: MediaPlayer? = null
     private lateinit var mFirebaseAnalytics: FirebaseAnalytics
@@ -43,10 +41,10 @@ class ScrollingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_scrolling)
-        val toolbar = findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar)
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
-        textCountdown = findViewById(R.id.textCountdown)
+        //textCountdown = findViewById(R.id.textCountdown)
 
         //countDownStart() //old code
 
@@ -57,78 +55,20 @@ class ScrollingActivity : AppCompatActivity() {
         AppRater(this).show()
 
         // Set the target date to October 31 of the current year
-        val targetCalendar = Calendar.getInstance()
-        targetCalendar.set(Calendar.MONTH, Calendar.NOVEMBER)
-        targetCalendar.set(Calendar.DAY_OF_MONTH, 1)
-        targetCalendar.set(Calendar.HOUR_OF_DAY, 0)
-        targetCalendar.set(Calendar.MINUTE, 0)
-        targetCalendar.set(Calendar.SECOND, 0)
-        targetCalendar.set(Calendar.MILLISECOND, 0)
-        val targetTimeInMillis = targetCalendar.timeInMillis
-
-        // Set up the countdown timer
-        countdownTimer = object : CountDownTimer(targetTimeInMillis - System.currentTimeMillis(), 1000) {
+        // Countdown to Halloween
+        updateCountdown()
+        timer = object : CountDownTimer(halloweenDate - System.currentTimeMillis(), 1000) {
             override fun onTick(millisUntilFinished: Long) {
-                val remainingDays = millisUntilFinished / (24 * 60 * 60 * 1000)
-                if (remainingDays == 1L) {
-                    textCountdown.text = "Tomorrow is Halloween!"
-                    textCountdown.setTextSize(TypedValue.COMPLEX_UNIT_PT, 11F)
-                } else if (remainingDays == 0L) {
-                    textCountdown.text = "Happy Halloween!"
-                    textCountdown.setTextSize(TypedValue.COMPLEX_UNIT_PT, 12F)
-                    //textCountdown.text = "$remainingDays days until Halloween"
-                } else {
-                    textCountdown.text = "$remainingDays days until Halloween"
-                    textCountdown.setTextSize(TypedValue.COMPLEX_UNIT_PT, 11F)
-                }
+                updateCountdown()
             }
 
             override fun onFinish() {
-                //textCountdown.text = "Happy Halloween!"
-                resetTimerForNextYear()
+                resetTimer()
             }
         }
+        timer.start()
 
-        // Start the countdown timer
-        countdownTimer.start()
-    }
-        private fun resetTimerForNextYear() {
-        // Reset the timer for the next year
-        val currentYear = Calendar.getInstance().get(Calendar.YEAR)
-        val nextYearCalendar = Calendar.getInstance()
-        nextYearCalendar.set(Calendar.YEAR, currentYear + 1)
-        nextYearCalendar.set(Calendar.MONTH, Calendar.NOVEMBER)
-        nextYearCalendar.set(Calendar.DAY_OF_MONTH, 1)
-        nextYearCalendar.set(Calendar.HOUR_OF_DAY, 0)
-        nextYearCalendar.set(Calendar.MINUTE, 0)
-        nextYearCalendar.set(Calendar.SECOND, 0)
-        nextYearCalendar.set(Calendar.MILLISECOND, 0)
-        val nextYearTimeInMillis = nextYearCalendar.timeInMillis
-
-        countdownTimer = object : CountDownTimer(nextYearTimeInMillis - System.currentTimeMillis(), 1000) {
-            override fun onTick(millisUntilFinished: Long) {
-                val remainingDays = millisUntilFinished / (24 * 60 * 60 * 1000)
-                if (remainingDays == 1L) {
-                    textCountdown.text = "Tomorrow is Halloween!"
-                    textCountdown.setTextSize(TypedValue.COMPLEX_UNIT_PT, 11F)
-                } else if (remainingDays == 0L) {
-                    textCountdown.text = "Happy Halloween!"
-                    textCountdown.setTextSize(TypedValue.COMPLEX_UNIT_PT, 12F)
-                    //textCountdown.text = "$remainingDays days until Halloween"
-                } else {
-                    textCountdown.text = "$remainingDays days till Halloween"
-                    textCountdown.setTextSize(TypedValue.COMPLEX_UNIT_PT, 11F)
-                }
-            }
-            override fun onFinish() {
-                //textCountdown.text = "$remainingDays days until Halloween"
-                resetTimerForNextYear()
-            }
-        }
-
-        countdownTimer.start()
-
-    window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+        //window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
 
         //button initializers
         val bLoopingMix = this.buttonLoopingMix
@@ -468,6 +408,42 @@ class ScrollingActivity : AppCompatActivity() {
         }
     }
 
+    private fun updateCountdown() {
+        val currentDate = Calendar.getInstance().timeInMillis
+        val remainingDays = ((halloweenDate - currentDate) / (1000 * 60 * 60 * 24)).toInt()
+        textCountdown.text = if (remainingDays > 0) {
+            "$remainingDays days till Halloween"
+        } else {
+            "Happy Halloween"
+        }
+        if (remainingDays == 1) {
+            textCountdown.text = "Tomorrow is Halloween"
+        }
+    }
+
+    private fun resetTimer() {
+        // Reset the timer for next year's Halloween
+        val currentYear = Calendar.getInstance().get(Calendar.YEAR)
+        val nextYear = currentYear + 1
+        halloweenDate = Calendar.getInstance().apply {
+            set(Calendar.YEAR, nextYear)
+            set(Calendar.MONTH, Calendar.NOVEMBER)
+            set(Calendar.DAY_OF_MONTH, 1)
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+        }.timeInMillis
+        timer = object : CountDownTimer(halloweenDate - System.currentTimeMillis(), 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                updateCountdown()
+            }
+
+            override fun onFinish() {
+                resetTimer()
+            }
+        }
+        timer.start()
+    }
     private fun mPlay() {
         mp!!.start()
     }
@@ -492,6 +468,7 @@ class ScrollingActivity : AppCompatActivity() {
 
         return true
     }
+}
 /*
     //@SuppressLint("SimpleDateFormat")
     private fun countDownStart() {
@@ -519,7 +496,7 @@ class ScrollingActivity : AppCompatActivity() {
                         textCountdown.setText("" + String.format("%01d", days) + " days till Halloween")
                         textCountdown.setTextSize(TypedValue.COMPLEX_UNIT_PT, 12F)
 
-                    } else if (today.equals(halloweenDate)) {
+                    } else if (days.equals("%01d")) {
                         textCountdown.setText("Happy Halloween")
                         textCountdown.setTextSize(TypedValue.COMPLEX_UNIT_PT, 12F)
 
@@ -546,7 +523,7 @@ class ScrollingActivity : AppCompatActivity() {
         }
         handler!!.postDelayed(runnable, 1000)
     }
-*/
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         val id = item.itemId
@@ -576,4 +553,4 @@ class ScrollingActivity : AppCompatActivity() {
 
     }
 }
-
+*/
