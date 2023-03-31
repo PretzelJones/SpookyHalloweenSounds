@@ -9,7 +9,7 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
 import android.view.Menu
-import android.view.View
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -444,6 +444,7 @@ class ScrollingActivity : AppCompatActivity() {
         }
         timer.start()
     }
+
     private fun mPlay() {
         mp!!.start()
     }
@@ -467,6 +468,35 @@ class ScrollingActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.menu_scrolling, menu)
 
         return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        val id = item.itemId
+
+        /*
+    if (id == R.id.payment){
+        val intent = Intent(this, PaymentActivity::class.java)
+        this.startActivity(intent)
+    } else if
+            */
+        if (id == R.id.action_settings) {
+            val intent = Intent(this, DeveloperActivity::class.java)
+            this.startActivity(intent)
+
+        } else if (id == R.id.share) {
+            val sharingIntent = Intent(Intent.ACTION_SEND)
+            sharingIntent.type = "text/plain"
+            sharingIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.google_play_store))
+            startActivity(Intent.createChooser(sharingIntent, "Share via"))
+
+        } else if (id == R.id.secret) {
+            val intent = Intent(this, SecretActivity::class.java)
+            this.startActivity(intent)
+        }
+
+        return true
+
     }
 }
 /*
