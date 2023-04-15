@@ -1,24 +1,70 @@
 package design.bosson.spookyhalloweensounds
 
-//import android.widget.Toolbar
-//import androidx.appcompat.widget.Toolbar
+import android.Manifest
+import android.app.AlertDialog
+import android.content.ContentValues
 import android.content.Intent
-import android.graphics.Typeface
+import android.content.pm.PackageManager
 import android.media.MediaPlayer
-import android.os.Bundle
-import android.os.CountDownTimer
-import android.os.Handler
+import android.net.Uri
+import android.os.*
+import android.provider.MediaStore
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Button
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.content_scrolling.*
+import java.io.*
 import java.util.*
 
-
 class ScrollingActivity : AppCompatActivity() {
+
+    private lateinit var bWitchLaugh: Button
+    private lateinit var bBlackCat: Button
+    private lateinit var bEvilMan: Button
+    private lateinit var bCreakyDoor: Button
+    private lateinit var bHorrorAmbience: Button
+    private lateinit var bMonsterGrowl: Button
+    private lateinit var bMonsterWalking: Button
+    private lateinit var bScaryScream: Button
+    private lateinit var bSpookyChains: Button
+    private lateinit var bThunder: Button
+    private lateinit var bVampireBat: Button
+    private lateinit var bZombie: Button
+    private lateinit var bGhostBoo: Button
+    private lateinit var bWerewolfHowl: Button
+    private lateinit var bPoltergeistVoice: Button
+    private lateinit var bZombieCome: Button
+    private lateinit var bCatScream: Button
+    private lateinit var bWraithWail: Button
+    private lateinit var bSpookyOwl: Button
+    private lateinit var bChainedGhoul: Button
+    private lateinit var bTerrifiedScream: Button
+    private lateinit var bHauntedOrgan: Button
+    private lateinit var bScareCrow: Button
+    private lateinit var bBlowingWind: Button
+    private lateinit var bLoopingMix: Button
+    private lateinit var bMovieThemes: Button
+    private lateinit var bGhostlyWhisper: Button
+    private lateinit var bDraculaLaugh: Button
+    private lateinit var bWolfCry: Button
+    private lateinit var bKnockKnock: Button
+    private lateinit var bIgorGrumble: Button
+    private lateinit var bHorrorMovie: Button
+    private lateinit var bTwoBells: Button
+    private lateinit var bPainfulMoan: Button
+    private lateinit var bWitchesCauldron: Button
+    private lateinit var bGhostlyChildren: Button
+    private lateinit var bHauntedSwamp: Button
+    private lateinit var bTorturedSouls: Button
+    private lateinit var bChillingHorn: Button
+    //private val requestCodeWriteStorage = 1
+    private lateinit var mFirebaseAnalytics: FirebaseAnalytics
+    //private var doubleBackToExitPressedOnce = false
 
     private lateinit var timer: CountDownTimer
     private var halloweenDate = Calendar.getInstance().apply {
@@ -29,14 +75,6 @@ class ScrollingActivity : AppCompatActivity() {
         set(Calendar.SECOND, 0)
     }.timeInMillis
 
-    //private lateinit var countdownTimer: CountDownTimer
-    //private lateinit var textCountdown: TextView
-
-    //var handler: Handler? = null
-
-    private var mp: MediaPlayer? = null
-    private lateinit var mFirebaseAnalytics: FirebaseAnalytics
-    private var doubleBackToExitPressedOnce = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,12 +82,11 @@ class ScrollingActivity : AppCompatActivity() {
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
-        //textCountdown = findViewById(R.id.textCountdown)
-
-        //countDownStart() //old code
-
-        mp = MediaPlayer() //added to resolve NullPointerException 10/27/17
-
+        // Check for storage permission and show pop-up dialog if needed
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            PopupHelper.showPopupIfNeeded(this)
+        }
+        // Obtain the FirebaseAnalytics instance.
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
 
         AppRater(this).show()
@@ -68,343 +105,425 @@ class ScrollingActivity : AppCompatActivity() {
         }
         timer.start()
 
-        //window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-
-        //button initializers
-        val bLoopingMix = this.buttonLoopingMix
-        val bWitchLaugh = this.buttonWitch
-        val bBlackCat = this.buttonBlackCat
-        val bEvilMan = this.buttonEvilMan
-        val bCreakyDoor = this.buttonCreakyDoor
-        val bHorrorAmbience = this.buttonHorrorAmbience
-        val bMonsterGrowl = this.buttonMonsterGrowl
-        val bMonsterWalking = this.buttonMonsterWalking
-        val bScaryScream = this.buttonScaryScream
-        val bSpookyChains = this.buttonSpookyChains
-        val bThunder = this.buttonThunder
-        val bVampireBat = this.buttonVampireBat
-        val bZombie = this.buttonZombie
-        val bGhostBoo = this.buttonGhostBoo
-        val bWerewolfHowl = this.buttonWerewolfHowl
-        val bPoltergeistVoice = this.buttonPoltergeistVoice
-        val bZombieCome = this.buttonZombieCome
-        val bCatScream = this.buttonCatScream
-        val bWraithWail = this.buttonWraithWail
-        val bSpookyOwl = this.buttonSpookyOwl
-        val bChainedGhoul = this.buttonChainedGhoul
-        val bTerrifiedScream = this.buttonTerrifiedScream
-        val bHauntedOrgan = this.buttonHauntedOrgan
-        val bScareCrow = this.buttonScareCrow
-        val bBlowingWind = this.buttonBlowingWind
-        val bGhostlyWhisper = this.buttonGhostlyWhisper
-        val bDraculaLaugh = this.buttonDraculaLaugh
-        val bWolfCry = this.buttonWolfCry
-        val bKnockKnock = this.buttonKnockKnock
-        val bIgorGrumble = this.buttonIgorGrumble
-        val bHorrorMovie = this.buttonHorrorMovie
-        val bTwoBells = this.buttonTwoBells
-        val bPainfulMoan = this.buttonPainfulMoans
-        val bWitchesCauldron = this.buttonWitchesCauldron
-        val bGhostlyChildren = this.buttonGhostlyChildren
-        val bHauntedSwamp = this.buttonHauntedSwamp
-        val bTorturedSouls = this.buttonTorturedSouls
-        val bChillingHorn = this.buttonChillingHorn
-        val bMovieThemes = this.buttonMovieThemes
-
-        //sets font for buttons on API 16
-        val mTypeFace = Typeface.createFromAsset(assets, "Creepster.ttf")
-
-        //font
-        bLoopingMix.typeface = mTypeFace
-        bWitchLaugh.typeface = mTypeFace
-        bBlackCat.typeface = mTypeFace
-        bEvilMan.typeface = mTypeFace
-        bCreakyDoor.typeface = mTypeFace
-        bHorrorAmbience.typeface = mTypeFace
-        bMonsterGrowl.typeface = mTypeFace
-        bMonsterWalking.typeface = mTypeFace
-        bScaryScream.typeface = mTypeFace
-        bSpookyChains.typeface = mTypeFace
-        bThunder.typeface = mTypeFace
-        bVampireBat.typeface = mTypeFace
-        bZombie.typeface = mTypeFace
-        bGhostBoo.typeface = mTypeFace
-        bWerewolfHowl.typeface = mTypeFace
-        bPoltergeistVoice.typeface = mTypeFace
-        bZombieCome.typeface = mTypeFace
-        bCatScream.typeface = mTypeFace
-        bWraithWail.typeface = mTypeFace
-        bSpookyOwl.typeface = mTypeFace
-        bChainedGhoul.typeface = mTypeFace
-        bTerrifiedScream.typeface = mTypeFace
-        bHauntedOrgan.typeface = mTypeFace
-        bScareCrow.typeface = mTypeFace
-        bBlowingWind.typeface = mTypeFace
-        bGhostlyWhisper.typeface = mTypeFace
-        bDraculaLaugh.typeface = mTypeFace
-        bWolfCry.typeface = mTypeFace
-        bKnockKnock.typeface = mTypeFace
-        bIgorGrumble.typeface = mTypeFace
-        bHorrorMovie.typeface = mTypeFace
-        bTwoBells.typeface = mTypeFace
-        bPainfulMoan.typeface = mTypeFace
-        bWitchesCauldron.typeface = mTypeFace
-        bGhostlyChildren.typeface = mTypeFace
-        bHauntedSwamp.typeface = mTypeFace
-        bTorturedSouls.typeface = mTypeFace
-        bChillingHorn.typeface = mTypeFace
-        bMovieThemes.typeface = mTypeFace
+        bLoopingMix = findViewById(R.id.buttonLoopingMix)
+        bMovieThemes = findViewById(R.id.buttonMovieThemes)
+        bWitchLaugh = findViewById(R.id.buttonWitch)
+        bBlackCat = findViewById(R.id.buttonBlackCat)
+        bEvilMan = findViewById(R.id.buttonEvilMan)
+        bCreakyDoor = findViewById(R.id.buttonCreakyDoor)
+        bHorrorAmbience = findViewById(R.id.buttonHorrorAmbience)
+        bMonsterGrowl = findViewById(R.id.buttonMonsterGrowl)
+        bMonsterWalking = findViewById(R.id.buttonMonsterWalking)
+        bScaryScream = findViewById(R.id.buttonScaryScream)
+        bSpookyChains = findViewById(R.id.buttonSpookyChains)
+        bThunder = findViewById(R.id.buttonThunder)
+        bVampireBat = findViewById(R.id.buttonVampireBat)
+        bZombie = findViewById(R.id.buttonZombie)
+        bGhostBoo = findViewById(R.id.buttonGhostBoo)
+        bWerewolfHowl = findViewById(R.id.buttonWerewolfHowl)
+        bPoltergeistVoice = findViewById(R.id.buttonPoltergeistVoice)
+        bZombieCome = findViewById(R.id.buttonZombieCome)
+        bCatScream = findViewById(R.id.buttonCatScream)
+        bWraithWail = findViewById(R.id.buttonWraithWail)
+        bSpookyOwl = findViewById(R.id.buttonSpookyOwl)
+        bChainedGhoul = findViewById(R.id.buttonChainedGhoul)
+        bTerrifiedScream = findViewById(R.id.buttonTerrifiedScream)
+        bHauntedOrgan = findViewById(R.id.buttonHauntedOrgan)
+        bScareCrow = findViewById(R.id.buttonScareCrow)
+        bBlowingWind = findViewById(R.id.buttonBlowingWind)
+        bGhostlyWhisper = findViewById(R.id.buttonGhostlyWhisper)
+        bDraculaLaugh = findViewById(R.id.buttonDraculaLaugh)
+        bWolfCry = findViewById(R.id.buttonWolfCry)
+        bKnockKnock = findViewById(R.id.buttonKnockKnock)
+        bIgorGrumble = findViewById(R.id.buttonIgorGrumble)
+        bHorrorMovie = findViewById(R.id.buttonHorrorMovie)
+        bTwoBells = findViewById(R.id.buttonTwoBells)
+        bPainfulMoan = findViewById(R.id.buttonPainfulMoans)
+        bWitchesCauldron = findViewById(R.id.buttonWitchesCauldron)
+        bGhostlyChildren = findViewById(R.id.buttonGhostlyChildren)
+        bHauntedSwamp = findViewById(R.id.buttonHauntedSwamp)
+        bTorturedSouls = findViewById(R.id.buttonTorturedSouls)
+        bChillingHorn = findViewById(R.id.buttonChillingHorn)
 
         //media player sounds
-        buttonLoopingMix.setOnClickListener {
+        bLoopingMix.setOnClickListener {
             val intent = Intent(this, LongActivity::class.java)
             this.startActivity(intent)
         }
 
-        buttonMovieThemes.setOnClickListener {
+        bMovieThemes.setOnClickListener {
             val intent = Intent(this, MovieActivity::class.java)
             this.startActivity(intent)
         }
 
         bWitchLaugh.setOnClickListener {
-
-            mp = MediaPlayer.create(this@ScrollingActivity, R.raw.witch_laugh)
-            mPlay()
+            playSound(R.raw.witch_laugh)
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            bWitchLaugh.setOnLongClickListener {
+                saveRingtone("Witch Laugh", R.raw.witch_laugh)
+                true
+            }
         }
 
         bBlackCat.setOnClickListener {
-
-            mp = MediaPlayer.create(this@ScrollingActivity, R.raw.black_cat)
-            mPlay()
+            playSound(R.raw.black_cat)
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            bBlackCat.setOnLongClickListener {
+                saveRingtone("Black Cat", R.raw.black_cat)
+                true
+            }
         }
 
         bEvilMan.setOnClickListener {
-
-            mp = MediaPlayer.create(this@ScrollingActivity, R.raw.evil_man)
-//            mp!!.start()
-            mPlay()
+            playSound(R.raw.evil_man)
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            bEvilMan.setOnLongClickListener {
+                saveRingtone("Evil Man", R.raw.evil_man)
+                true
+            }
         }
 
         bCreakyDoor.setOnClickListener {
-
-            mp = MediaPlayer.create(this@ScrollingActivity, R.raw.creaky_door)
-            mPlay()
+            playSound(R.raw.creaky_door)
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            bCreakyDoor.setOnLongClickListener {
+                saveRingtone("Creaky Door", R.raw.creaky_door)
+                true
+            }
         }
 
         bHorrorAmbience.setOnClickListener {
-
-            mp = MediaPlayer.create(this@ScrollingActivity, R.raw.horror_ambience)
-            mPlay()
+            playSound(R.raw.horror_ambience)
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            bHorrorAmbience.setOnLongClickListener {
+                saveRingtone("Horror Ambience", R.raw.horror_ambience)
+                true
+            }
         }
 
         bMonsterGrowl.setOnClickListener {
-
-            mp = MediaPlayer.create(this@ScrollingActivity, R.raw.monster_growl)
-            mPlay()
+            playSound(R.raw.monster_growl)
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            bMonsterGrowl.setOnLongClickListener {
+                saveRingtone("Monster Growl", R.raw.monster_growl)
+                true
+            }
         }
 
         bMonsterWalking.setOnClickListener {
-
-            mp = MediaPlayer.create(this@ScrollingActivity, R.raw.monster_walking)
-            mPlay()
+            playSound(R.raw.monster_walking)
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            bMonsterWalking.setOnLongClickListener {
+                saveRingtone("Monster Walking", R.raw.monster_walking)
+                true
+            }
         }
 
         bScaryScream.setOnClickListener {
-
-            mp = MediaPlayer.create(this@ScrollingActivity, R.raw.scary_scream)
-            mPlay()
+            playSound(R.raw.scary_scream)
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            bScaryScream.setOnLongClickListener {
+                saveRingtone("Scary Scream", R.raw.scary_scream)
+                true
+            }
         }
 
         bSpookyChains.setOnClickListener {
-
-            mp = MediaPlayer.create(this@ScrollingActivity, R.raw.spooky_chains)
-            mPlay()
+            playSound(R.raw.spooky_chains)
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            bSpookyChains.setOnLongClickListener {
+                saveRingtone("Spooky Chains", R.raw.spooky_chains)
+                true
+            }
         }
 
         bThunder.setOnClickListener {
-
-            mp = MediaPlayer.create(this@ScrollingActivity, R.raw.thunder)
-            mPlay()
+            playSound(R.raw.thunder)
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            bThunder.setOnLongClickListener {
+                saveRingtone("Thunder", R.raw.thunder)
+                true
+            }
         }
 
         bVampireBat.setOnClickListener {
-
-            mp = MediaPlayer.create(this@ScrollingActivity, R.raw.vampire_bat)
-            mPlay()
+            playSound(R.raw.vampire_bat)
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            bVampireBat.setOnLongClickListener {
+                saveRingtone("Vampire Bat", R.raw.vampire_bat)
+                true
+            }
         }
 
         bZombie.setOnClickListener {
-
-            mp = MediaPlayer.create(this@ScrollingActivity, R.raw.zombie)
-            mPlay()
+            playSound(R.raw.zombie)
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            bZombie.setOnLongClickListener {
+                saveRingtone("Zombie", R.raw.zombie)
+                true
+            }
         }
 
         bGhostBoo.setOnClickListener {
-
-            mp = MediaPlayer.create(this@ScrollingActivity, R.raw.ghost_boo)
-            mPlay()
+            playSound(R.raw.ghost_boo)
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            bGhostBoo.setOnLongClickListener {
+                saveRingtone("Ghost Boo", R.raw.ghost_boo)
+                true
+            }
         }
 
         bWerewolfHowl.setOnClickListener {
-
-            mp = MediaPlayer.create(this@ScrollingActivity, R.raw.werewolf_howl)
-            mPlay()
+            playSound(R.raw.werewolf_howl)
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            bWerewolfHowl.setOnLongClickListener {
+                saveRingtone("Werewolf Howl", R.raw.werewolf_howl)
+                true
+            }
         }
 
         bPoltergeistVoice.setOnClickListener {
-
-            mp = MediaPlayer.create(this@ScrollingActivity, R.raw.poltergeist_voice)
-            mPlay()
+            playSound(R.raw.poltergeist_voice)
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            bPoltergeistVoice.setOnLongClickListener {
+                saveRingtone("Poltergeist Voice", R.raw.poltergeist_voice)
+                true
+            }
         }
 
         bZombieCome.setOnClickListener {
-
-            mp = MediaPlayer.create(this@ScrollingActivity, R.raw.zombie_come)
-            mPlay()
+            playSound(R.raw.zombie_come)
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            bZombieCome.setOnLongClickListener {
+                saveRingtone("Zombie Come", R.raw.zombie_come)
+                true
+            }
         }
 
         bCatScream.setOnClickListener {
-
-            mp = MediaPlayer.create(this@ScrollingActivity, R.raw.cat_scream)
-            mPlay()
+            playSound(R.raw.cat_scream)
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            bCatScream.setOnLongClickListener {
+                saveRingtone("Cat Scream", R.raw.cat_scream)
+                true
+            }
         }
 
         bWraithWail.setOnClickListener {
-
-            mp = MediaPlayer.create(this@ScrollingActivity, R.raw.wraith_wail)
-            mPlay()
+            playSound(R.raw.wraith_wail)
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            bWraithWail.setOnLongClickListener {
+                saveRingtone("Wraith Wail", R.raw.wraith_wail)
+                true
+            }
         }
 
         bSpookyOwl.setOnClickListener {
-
-            mp = MediaPlayer.create(this@ScrollingActivity, R.raw.spooky_owl)
-            mPlay()
+            playSound(R.raw.spooky_owl)
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            bSpookyOwl.setOnLongClickListener {
+                saveRingtone("Spooky Owl", R.raw.spooky_owl)
+                true
+            }
         }
 
         bChainedGhoul.setOnClickListener {
-
-            mp = MediaPlayer.create(this@ScrollingActivity, R.raw.chained_ghoul)
-            mPlay()
+            playSound(R.raw.chained_ghoul)
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            bChainedGhoul.setOnLongClickListener {
+                saveRingtone("Chained Ghoul", R.raw.chained_ghoul)
+                true
+            }
         }
 
         bTerrifiedScream.setOnClickListener {
-
-            mp = MediaPlayer.create(this@ScrollingActivity, R.raw.terrified_scream)
-            mPlay()
+            playSound(R.raw.terrified_scream)
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            bTerrifiedScream.setOnLongClickListener {
+                saveRingtone("Terrified Scream", R.raw.terrified_scream)
+                true
+            }
         }
 
         bHauntedOrgan.setOnClickListener {
-
-            mp = MediaPlayer.create(this@ScrollingActivity, R.raw.haunted_organ)
-            mPlay()
+            playSound(R.raw.haunted_organ)
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            bHauntedOrgan.setOnLongClickListener {
+                saveRingtone("Haunted Organ", R.raw.haunted_organ)
+                true
+            }
         }
 
         bScareCrow.setOnClickListener {
-
-            mp = MediaPlayer.create(this@ScrollingActivity, R.raw.scarecrow)
-            mPlay()
+            playSound(R.raw.scarecrow)
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            bScareCrow.setOnLongClickListener {
+                saveRingtone("Scarecrow", R.raw.scarecrow)
+                true
+            }
         }
 
         bBlowingWind.setOnClickListener {
-
-            mp = MediaPlayer.create(this@ScrollingActivity, R.raw.blowing_wind)
-            mPlay()
+            playSound(R.raw.blowing_wind)
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            bBlowingWind.setOnLongClickListener {
+                saveRingtone("Blowing Wind", R.raw.blowing_wind)
+                true
+            }
         }
 
         bGhostlyWhisper.setOnClickListener {
-
-            mp = MediaPlayer.create(this@ScrollingActivity, R.raw.ghostly_whisper)
-            mPlay()
+            playSound(R.raw.ghostly_whisper)
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            bGhostlyWhisper.setOnLongClickListener {
+                saveRingtone("Ghostly Whisper", R.raw.ghostly_whisper)
+                true
+            }
         }
 
         bDraculaLaugh.setOnClickListener {
-
-            mp = MediaPlayer.create(this@ScrollingActivity, R.raw.dracula_laugh)
-            mPlay()
+            playSound(R.raw.dracula_laugh)
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            bDraculaLaugh.setOnLongClickListener {
+                saveRingtone("Dracula Laugh", R.raw.dracula_laugh)
+                true
+            }
         }
 
         bWolfCry.setOnClickListener {
-
-            mp = MediaPlayer.create(this@ScrollingActivity, R.raw.wolf_cry)
-            mPlay()
+            playSound(R.raw.wolf_cry)
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            bWolfCry.setOnLongClickListener {
+                saveRingtone("Wolf Cry", R.raw.wolf_cry)
+                true
+            }
         }
 
         bKnockKnock.setOnClickListener {
-
-            mp = MediaPlayer.create(this@ScrollingActivity, R.raw.knock_knock)
-            mPlay()
+            playSound(R.raw.knock_knock)
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            bKnockKnock.setOnLongClickListener {
+                saveRingtone("Knock Knock", R.raw.knock_knock)
+                true
+            }
         }
 
         bIgorGrumble.setOnClickListener {
-
-            mp = MediaPlayer.create(this@ScrollingActivity, R.raw.igor_grumble)
-            mPlay()
+            playSound(R.raw.igor_grumble)
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            bIgorGrumble.setOnLongClickListener {
+                saveRingtone("Igor Grumble", R.raw.igor_grumble)
+                true
+            }
         }
 
         bHorrorMovie.setOnClickListener {
-
-            mp = MediaPlayer.create(this@ScrollingActivity, R.raw.horror_film)
-            mPlay()
+            playSound(R.raw.horror_film)
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            bHorrorMovie.setOnLongClickListener {
+                saveRingtone("Horror Movie", R.raw.horror_film)
+                true
+            }
         }
 
         bTwoBells.setOnClickListener {
-
-            mp = MediaPlayer.create(this@ScrollingActivity, R.raw.warning_bells)
-            mPlay()
+            playSound(R.raw.warning_bells)
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            bTwoBells.setOnLongClickListener {
+                saveRingtone("Two Bells", R.raw.warning_bells)
+                true
+            }
         }
 
         bPainfulMoan.setOnClickListener {
-
-            mp = MediaPlayer.create(this@ScrollingActivity, R.raw.painful_moan)
-            mPlay()
+            playSound(R.raw.painful_moan)
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            bPainfulMoan.setOnLongClickListener {
+                saveRingtone("Painful Moan", R.raw.painful_moan)
+                true
+            }
         }
 
         bWitchesCauldron.setOnClickListener {
-
-            mp = MediaPlayer.create(this@ScrollingActivity, R.raw.bubbles)
-            mPlay()
+            playSound(R.raw.bubbles)
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            bWitchesCauldron.setOnLongClickListener {
+                saveRingtone("Witches Cauldron", R.raw.bubbles)
+                true
+            }
         }
 
         bGhostlyChildren.setOnClickListener {
-
-            mp = MediaPlayer.create(this@ScrollingActivity, R.raw.scary_nursery)
-            mPlay()
+            playSound(R.raw.scary_nursery)
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            bGhostlyChildren.setOnLongClickListener {
+                saveRingtone("Ghostly Children", R.raw.scary_nursery)
+                true
+            }
         }
 
         bHauntedSwamp.setOnClickListener {
-
-            mp = MediaPlayer.create(this@ScrollingActivity, R.raw.haunted_swamp)
-            mPlay()
+            playSound(R.raw.haunted_swamp)
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            bHauntedSwamp.setOnLongClickListener {
+                saveRingtone("Haunted Swamp", R.raw.haunted_swamp)
+                true
+            }
         }
 
         bTorturedSouls.setOnClickListener {
-
-            mp = MediaPlayer.create(this@ScrollingActivity, R.raw.tortured_souls)
-            mPlay()
+            playSound(R.raw.tortured_souls)
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            bTorturedSouls.setOnLongClickListener {
+                saveRingtone("Tortured Souls", R.raw.tortured_souls)
+                true
+            }
         }
 
         bChillingHorn.setOnClickListener {
-
-            mp = MediaPlayer.create(this@ScrollingActivity, R.raw.chilling_horn)
-            mPlay()
+            playSound(R.raw.chilling_horn)
         }
-
-    }
-
-    override fun onBackPressed() {
-
-        if (!doubleBackToExitPressedOnce) {
-            this.doubleBackToExitPressedOnce = true
-
-            //display msg
-            Toast.makeText(this, "Press again to exit", Toast.LENGTH_SHORT).show()
-
-            Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
-
-        } else {
-
-            super.onBackPressed()
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            bChillingHorn.setOnLongClickListener {
+                saveRingtone("Chilling Horn", R.raw.chilling_horn)
+                true
+            }
         }
     }
 
@@ -417,7 +536,7 @@ class ScrollingActivity : AppCompatActivity() {
             "Happy Halloween"
         }
         if (remainingDays == 1) {
-            textCountdown.text = "Tomorrow is Halloween"
+            textCountdown.text = getString(R.string.tomorrow)
         }
     }
 
@@ -444,7 +563,7 @@ class ScrollingActivity : AppCompatActivity() {
         }
         timer.start()
     }
-
+/*
     private fun mPlay() {
         mp!!.start()
     }
@@ -454,7 +573,7 @@ class ScrollingActivity : AppCompatActivity() {
         mp?.release()
         mp = null
     }
-
+*/
 //    override fun onPause() {
 //        super.onPause()
 //        if (mp != null) {
@@ -462,6 +581,14 @@ class ScrollingActivity : AppCompatActivity() {
 //            mp = null
 //        }
 //    }
+
+    private fun playSound(soundId: Int) {
+        val mediaPlayer = MediaPlayer.create(this, soundId)
+        mediaPlayer.setOnCompletionListener {
+            mediaPlayer.release()
+        }
+        mediaPlayer.start()
+    }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
 
@@ -480,107 +607,78 @@ class ScrollingActivity : AppCompatActivity() {
         this.startActivity(intent)
     } else if
             */
-        if (id == R.id.action_settings) {
-            val intent = Intent(this, DeveloperActivity::class.java)
-            this.startActivity(intent)
+        when (id) {
+            R.id.action_settings -> {
+                val intent = Intent(this, DeveloperActivity::class.java)
+                this.startActivity(intent)
 
-        } else if (id == R.id.share) {
-            val sharingIntent = Intent(Intent.ACTION_SEND)
-            sharingIntent.type = "text/plain"
-            sharingIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.google_play_store))
-            startActivity(Intent.createChooser(sharingIntent, "Share via"))
+            }
+            R.id.share -> {
+                val sharingIntent = Intent(Intent.ACTION_SEND)
+                sharingIntent.type = "text/plain"
+                sharingIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.google_play_store))
+                startActivity(Intent.createChooser(sharingIntent, "Share via"))
 
-        } else if (id == R.id.secret) {
-            val intent = Intent(this, SecretActivity::class.java)
-            this.startActivity(intent)
-        }
-
-        return true
-
-    }
-}
-/*
-    //@SuppressLint("SimpleDateFormat")
-    private fun countDownStart() {
-        handler = Handler()
-        //Calendar.getInstance().get(Calendar.YEAR);
-        //set event date//YYYY-MM-DD
-        //val year = Calendar.getInstance().get(Calendar.YEAR);
-
-        val runnable: Runnable = object : Runnable {
-            override fun run() {
-                val dateFormat = SimpleDateFormat(getString(R.string.dateFormat))
-                val halloweenDate = dateFormat.parse(getString(R.string.halloweenDate))
-                val halloweenTomorrow = dateFormat.parse(getString(R.string.halloweenTomorrow))
-                val today = Date()
-                val diff = (halloweenDate!!.time - today.time)
-                val days = diff / (24 * 60 * 60 * 1000)
-                handler!!.postDelayed(this, 1000)
-
-                //textCountdown.setText(String.format((diff / (24 * 60 * 60 * 1000)).toString()))
-                //textCountdown.setText(String.format(today.toString()))
-
-                try {
-
-                    if (today.before(halloweenDate)) {
-                        textCountdown.setText("" + String.format("%01d", days) + " days till Halloween")
-                        textCountdown.setTextSize(TypedValue.COMPLEX_UNIT_PT, 12F)
-
-                    } else if (days.equals("%01d")) {
-                        textCountdown.setText("Happy Halloween")
-                        textCountdown.setTextSize(TypedValue.COMPLEX_UNIT_PT, 12F)
-
-                        /*if (!today.equals(halloweenDate)) {
-                        textCountdown.setText("Happy Halloween")
-                        textCountdown.setTextSize(TypedValue.COMPLEX_UNIT_PT, 12F)*/
-
-                        //} else  {
-                        //  textCountdown.setText("" + String.format("%01d", days) + " days till Halloween")
-                        //textCountdown.setTextSize(TypedValue.COMPLEX_UNIT_PT, 12F)
-
-                        /*} else if (!today.equals(halloweenTomorrow)) {
-                        textCountdown.setText("Halloween is Tomorrow")
-                        textCountdown.setTextSize(TypedValue.COMPLEX_UNIT_PT, 12F)
-
-                    } else
-                        textCountdown.setText("Spooky Halloween")
-                        textCountdown.setTextSize(TypedValue.COMPLEX_UNIT_PT, 12F)*/
-                    }
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
+            }
+            R.id.secret -> {
+                val intent = Intent(this, SecretActivity::class.java)
+                this.startActivity(intent)
             }
         }
-        handler!!.postDelayed(runnable, 1000)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
-        val id = item.itemId
-
-        /*
-        if (id == R.id.payment){
-            val intent = Intent(this, PaymentActivity::class.java)
-            this.startActivity(intent)
-        } else if
-                */
-        if (id == R.id.action_settings) {
-            val intent = Intent(this, DeveloperActivity::class.java)
-            this.startActivity(intent)
-
-        } else if (id == R.id.share) {
-            val sharingIntent = Intent(Intent.ACTION_SEND)
-            sharingIntent.type = "text/plain"
-            sharingIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.google_play_store))
-            startActivity(Intent.createChooser(sharingIntent, "Share via"))
-
-        } else if (id == R.id.secret) {
-            val intent = Intent(this, SecretActivity::class.java)
-            this.startActivity(intent)
-        }
 
         return true
 
     }
+
+    @RequiresApi(Build.VERSION_CODES.Q)
+    private fun saveRingtone(title: String, rawResourceId: Int) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 0)
+            return
+        }
+
+        val resolver = contentResolver
+        val contentValues = ContentValues().apply {
+            put(MediaStore.MediaColumns.DISPLAY_NAME, "$title.mp3")
+            put(MediaStore.MediaColumns.MIME_TYPE, "audio/mp3")
+            put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_RINGTONES)
+            put(MediaStore.Audio.Media.IS_RINGTONE, true)
+            put(MediaStore.Audio.Media.IS_NOTIFICATION, false)
+            put(MediaStore.Audio.Media.IS_ALARM, false)
+            put(MediaStore.Audio.Media.IS_MUSIC, false)
+        }
+        var ringtoneUri: Uri? = null
+        try {
+            val ringtoneFileUri = resolver.insert(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, contentValues)
+                    ?: throw IOException("Failed to create new MediaStore record.")
+            ringtoneUri = ringtoneFileUri
+            val outputStream: OutputStream = (resolver.openOutputStream(ringtoneFileUri)
+                    ?: throw IOException("Failed to get output stream.")) as FileOutputStream
+            val inputStream: InputStream = resources.openRawResource(rawResourceId)
+            val buffer = ByteArray(1024)
+            var read: Int
+            while (inputStream.read(buffer).also { read = it } > 0) {
+                outputStream.write(buffer, 0, read)
+            }
+            outputStream.close()
+            inputStream.close()
+
+            // Show a confirmation dialog to the user
+            AlertDialog.Builder(this)
+                    .setMessage("Ringtone saved.")
+                    .setPositiveButton("OK", null)
+                    .show()
+
+        } catch (e: IOException) {
+            Toast.makeText(this, "Error saving ringtone: ${e.message}", Toast.LENGTH_LONG).show()
+            if (ringtoneUri != null) {
+                resolver.delete(ringtoneUri, null, null)
+            }
+        }
+    }
 }
-*/
+
+
+
+
+

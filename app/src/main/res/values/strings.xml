@@ -36,4 +36,9 @@
     <string name="halloweenDate">2023-10-31</string>
     <string name="halloweenTomorrow">2023-10-30</string>
     <string name="dateFormat">yyyy-MM-dd</string>
+    <string name="tomorrow">Tomorrow is Halloween</string>
+    <string name="popup_title">GREAT NEWS!!!</string>
+    <string name="popup_text">You can now set any Spooky Halloween sound as a ringtone, notification, or alarm. Just long press on the sound you want to use and select the sound in your phone\'s sound settings!</string>
+    <string name="ok_button_text">OK</string>
+    <string name="permission_denied_message">Permission Denied</string>
 </resources>

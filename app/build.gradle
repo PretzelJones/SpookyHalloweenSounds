@@ -9,9 +9,9 @@ android {
     defaultConfig {
         applicationId "design.bosson.spookyhalloweensounds"
         minSdkVersion 16
-        targetSdkVersion 33
-        versionCode 52
-        versionName "1.9.41"
+        targetSdkVersion 32
+        versionCode 53
+        versionName "2.0.0"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         lintOptions {
 
@@ -36,7 +36,7 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.4.10"
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.4.10'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.3'
     implementation 'androidx.legacy:legacy-support-core-utils:1.0.0'
     implementation 'androidx.appcompat:appcompat:1.3.1'
@@ -48,6 +48,7 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.google.firebase:firebase-crashlytics:17.2.2'
     implementation 'com.google.firebase:firebase-analytics:18.0.0'
+    implementation 'org.chromium.net:cronet-embedded:98.4758.101'
     androidTestImplementation 'junit:junit:4.13.1'
     androidTestImplementation('androidx.test.espresso:espresso-core:3.1.0', {
         exclude group: 'com.android.support', module: 'support-annotations'
