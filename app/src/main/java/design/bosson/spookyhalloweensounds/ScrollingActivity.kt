@@ -1,25 +1,22 @@
 package design.bosson.spookyhalloweensounds
 
-import android.Manifest
-import android.app.AlertDialog
-import android.content.ContentValues
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.media.MediaPlayer
-import android.net.Uri
-import android.os.*
-import android.provider.MediaStore
+import android.os.Bundle
+import android.os.CountDownTimer
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Button
-import android.widget.Toast
-import androidx.annotation.RequiresApi
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat.startActivity
 import com.google.firebase.analytics.FirebaseAnalytics
-import kotlinx.android.synthetic.main.content_scrolling.*
-import java.io.*
-import java.util.*
+import kotlinx.android.synthetic.main.content_scrolling.textCountdown
+import java.util.Calendar
+import java.util.LinkedList
+
 
 class ScrollingActivity : AppCompatActivity() {
 
@@ -62,9 +59,12 @@ class ScrollingActivity : AppCompatActivity() {
     private lateinit var bHauntedSwamp: Button
     private lateinit var bTorturedSouls: Button
     private lateinit var bChillingHorn: Button
-    //private val requestCodeWriteStorage = 1
+
+    // Initialize FirebaseAnalytics instance
     private lateinit var mFirebaseAnalytics: FirebaseAnalytics
-    //private var doubleBackToExitPressedOnce = false
+
+    private val mediaPlayerQueue = LinkedList<MediaPlayer>()
+
 
     private lateinit var timer: CountDownTimer
     private var halloweenDate = Calendar.getInstance().apply {
@@ -75,21 +75,18 @@ class ScrollingActivity : AppCompatActivity() {
         set(Calendar.SECOND, 0)
     }.timeInMillis
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_scrolling)
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
-        // Check for storage permission and show pop-up dialog if needed
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            PopupHelper.showPopupIfNeeded(this)
-        }
         // Obtain the FirebaseAnalytics instance.
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
-
+        //present popup to rate app
         AppRater(this).show()
+
+        val overlayImageView = findViewById<View>(R.id.overlayImageView)
 
         // Set the target date to October 31 of the current year
         // Countdown to Halloween
@@ -145,7 +142,6 @@ class ScrollingActivity : AppCompatActivity() {
         bTorturedSouls = findViewById(R.id.buttonTorturedSouls)
         bChillingHorn = findViewById(R.id.buttonChillingHorn)
 
-        //media player sounds
         bLoopingMix.setOnClickListener {
             val intent = Intent(this, LongActivity::class.java)
             this.startActivity(intent)
@@ -155,378 +151,166 @@ class ScrollingActivity : AppCompatActivity() {
             val intent = Intent(this, MovieActivity::class.java)
             this.startActivity(intent)
         }
-
+        //media player sounds
         bWitchLaugh.setOnClickListener {
             playSound(R.raw.witch_laugh)
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            bWitchLaugh.setOnLongClickListener {
-                saveRingtone("Witch Laugh", R.raw.witch_laugh)
-                true
-            }
         }
 
         bBlackCat.setOnClickListener {
             playSound(R.raw.black_cat)
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            bBlackCat.setOnLongClickListener {
-                saveRingtone("Black Cat", R.raw.black_cat)
-                true
-            }
-        }
 
         bEvilMan.setOnClickListener {
             playSound(R.raw.evil_man)
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            bEvilMan.setOnLongClickListener {
-                saveRingtone("Evil Man", R.raw.evil_man)
-                true
-            }
         }
 
         bCreakyDoor.setOnClickListener {
             playSound(R.raw.creaky_door)
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            bCreakyDoor.setOnLongClickListener {
-                saveRingtone("Creaky Door", R.raw.creaky_door)
-                true
-            }
-        }
 
         bHorrorAmbience.setOnClickListener {
             playSound(R.raw.horror_ambience)
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            bHorrorAmbience.setOnLongClickListener {
-                saveRingtone("Horror Ambience", R.raw.horror_ambience)
-                true
-            }
         }
 
         bMonsterGrowl.setOnClickListener {
             playSound(R.raw.monster_growl)
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            bMonsterGrowl.setOnLongClickListener {
-                saveRingtone("Monster Growl", R.raw.monster_growl)
-                true
-            }
-        }
 
         bMonsterWalking.setOnClickListener {
             playSound(R.raw.monster_walking)
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            bMonsterWalking.setOnLongClickListener {
-                saveRingtone("Monster Walking", R.raw.monster_walking)
-                true
-            }
         }
 
         bScaryScream.setOnClickListener {
             playSound(R.raw.scary_scream)
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            bScaryScream.setOnLongClickListener {
-                saveRingtone("Scary Scream", R.raw.scary_scream)
-                true
-            }
-        }
 
         bSpookyChains.setOnClickListener {
             playSound(R.raw.spooky_chains)
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            bSpookyChains.setOnLongClickListener {
-                saveRingtone("Spooky Chains", R.raw.spooky_chains)
-                true
-            }
         }
 
         bThunder.setOnClickListener {
             playSound(R.raw.thunder)
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            bThunder.setOnLongClickListener {
-                saveRingtone("Thunder", R.raw.thunder)
-                true
-            }
-        }
 
         bVampireBat.setOnClickListener {
             playSound(R.raw.vampire_bat)
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            bVampireBat.setOnLongClickListener {
-                saveRingtone("Vampire Bat", R.raw.vampire_bat)
-                true
-            }
         }
 
         bZombie.setOnClickListener {
             playSound(R.raw.zombie)
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            bZombie.setOnLongClickListener {
-                saveRingtone("Zombie", R.raw.zombie)
-                true
-            }
-        }
 
         bGhostBoo.setOnClickListener {
             playSound(R.raw.ghost_boo)
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            bGhostBoo.setOnLongClickListener {
-                saveRingtone("Ghost Boo", R.raw.ghost_boo)
-                true
-            }
         }
 
         bWerewolfHowl.setOnClickListener {
             playSound(R.raw.werewolf_howl)
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            bWerewolfHowl.setOnLongClickListener {
-                saveRingtone("Werewolf Howl", R.raw.werewolf_howl)
-                true
-            }
-        }
 
         bPoltergeistVoice.setOnClickListener {
             playSound(R.raw.poltergeist_voice)
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            bPoltergeistVoice.setOnLongClickListener {
-                saveRingtone("Poltergeist Voice", R.raw.poltergeist_voice)
-                true
-            }
         }
 
         bZombieCome.setOnClickListener {
             playSound(R.raw.zombie_come)
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            bZombieCome.setOnLongClickListener {
-                saveRingtone("Zombie Come", R.raw.zombie_come)
-                true
-            }
-        }
 
         bCatScream.setOnClickListener {
             playSound(R.raw.cat_scream)
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            bCatScream.setOnLongClickListener {
-                saveRingtone("Cat Scream", R.raw.cat_scream)
-                true
-            }
         }
 
         bWraithWail.setOnClickListener {
             playSound(R.raw.wraith_wail)
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            bWraithWail.setOnLongClickListener {
-                saveRingtone("Wraith Wail", R.raw.wraith_wail)
-                true
-            }
-        }
 
         bSpookyOwl.setOnClickListener {
             playSound(R.raw.spooky_owl)
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            bSpookyOwl.setOnLongClickListener {
-                saveRingtone("Spooky Owl", R.raw.spooky_owl)
-                true
-            }
         }
 
         bChainedGhoul.setOnClickListener {
             playSound(R.raw.chained_ghoul)
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            bChainedGhoul.setOnLongClickListener {
-                saveRingtone("Chained Ghoul", R.raw.chained_ghoul)
-                true
-            }
-        }
 
         bTerrifiedScream.setOnClickListener {
             playSound(R.raw.terrified_scream)
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            bTerrifiedScream.setOnLongClickListener {
-                saveRingtone("Terrified Scream", R.raw.terrified_scream)
-                true
-            }
         }
 
         bHauntedOrgan.setOnClickListener {
             playSound(R.raw.haunted_organ)
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            bHauntedOrgan.setOnLongClickListener {
-                saveRingtone("Haunted Organ", R.raw.haunted_organ)
-                true
-            }
-        }
 
         bScareCrow.setOnClickListener {
             playSound(R.raw.scarecrow)
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            bScareCrow.setOnLongClickListener {
-                saveRingtone("Scarecrow", R.raw.scarecrow)
-                true
-            }
         }
 
         bBlowingWind.setOnClickListener {
             playSound(R.raw.blowing_wind)
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            bBlowingWind.setOnLongClickListener {
-                saveRingtone("Blowing Wind", R.raw.blowing_wind)
-                true
-            }
-        }
 
         bGhostlyWhisper.setOnClickListener {
             playSound(R.raw.ghostly_whisper)
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            bGhostlyWhisper.setOnLongClickListener {
-                saveRingtone("Ghostly Whisper", R.raw.ghostly_whisper)
-                true
-            }
         }
 
         bDraculaLaugh.setOnClickListener {
             playSound(R.raw.dracula_laugh)
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            bDraculaLaugh.setOnLongClickListener {
-                saveRingtone("Dracula Laugh", R.raw.dracula_laugh)
-                true
-            }
-        }
 
         bWolfCry.setOnClickListener {
             playSound(R.raw.wolf_cry)
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            bWolfCry.setOnLongClickListener {
-                saveRingtone("Wolf Cry", R.raw.wolf_cry)
-                true
-            }
         }
 
         bKnockKnock.setOnClickListener {
             playSound(R.raw.knock_knock)
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            bKnockKnock.setOnLongClickListener {
-                saveRingtone("Knock Knock", R.raw.knock_knock)
-                true
-            }
-        }
 
         bIgorGrumble.setOnClickListener {
             playSound(R.raw.igor_grumble)
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            bIgorGrumble.setOnLongClickListener {
-                saveRingtone("Igor Grumble", R.raw.igor_grumble)
-                true
-            }
         }
 
         bHorrorMovie.setOnClickListener {
             playSound(R.raw.horror_film)
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            bHorrorMovie.setOnLongClickListener {
-                saveRingtone("Horror Movie", R.raw.horror_film)
-                true
-            }
-        }
 
         bTwoBells.setOnClickListener {
             playSound(R.raw.warning_bells)
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            bTwoBells.setOnLongClickListener {
-                saveRingtone("Two Bells", R.raw.warning_bells)
-                true
-            }
         }
 
         bPainfulMoan.setOnClickListener {
             playSound(R.raw.painful_moan)
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            bPainfulMoan.setOnLongClickListener {
-                saveRingtone("Painful Moan", R.raw.painful_moan)
-                true
-            }
-        }
 
         bWitchesCauldron.setOnClickListener {
             playSound(R.raw.bubbles)
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            bWitchesCauldron.setOnLongClickListener {
-                saveRingtone("Witches Cauldron", R.raw.bubbles)
-                true
-            }
         }
 
         bGhostlyChildren.setOnClickListener {
             playSound(R.raw.scary_nursery)
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            bGhostlyChildren.setOnLongClickListener {
-                saveRingtone("Ghostly Children", R.raw.scary_nursery)
-                true
-            }
-        }
 
         bHauntedSwamp.setOnClickListener {
             playSound(R.raw.haunted_swamp)
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            bHauntedSwamp.setOnLongClickListener {
-                saveRingtone("Haunted Swamp", R.raw.haunted_swamp)
-                true
-            }
         }
 
         bTorturedSouls.setOnClickListener {
             playSound(R.raw.tortured_souls)
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            bTorturedSouls.setOnLongClickListener {
-                saveRingtone("Tortured Souls", R.raw.tortured_souls)
-                true
-            }
-        }
 
         bChillingHorn.setOnClickListener {
             playSound(R.raw.chilling_horn)
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            bChillingHorn.setOnLongClickListener {
-                saveRingtone("Chilling Horn", R.raw.chilling_horn)
-                true
-            }
+        // Set an OnClickListener to handle the click event
+        overlayImageView.setOnClickListener {
+            openSecretActivity()
         }
+
     }
 
+    private fun openSecretActivity() {
+        // Open the SecretActivity here
+        val intent = Intent(this, SecretActivity::class.java)
+        startActivity(intent)
+    }
     private fun updateCountdown() {
         val currentDate = Calendar.getInstance().timeInMillis
         val remainingDays = ((halloweenDate - currentDate) / (1000 * 60 * 60 * 24)).toInt()
@@ -563,121 +347,74 @@ class ScrollingActivity : AppCompatActivity() {
         }
         timer.start()
     }
-/*
-    private fun mPlay() {
-        mp!!.start()
-    }
-
-    override fun onStop() {
-        super.onStop()
-        mp?.release()
-        mp = null
-    }
-*/
-//    override fun onPause() {
-//        super.onPause()
-//        if (mp != null) {
-//            mp!!.release()
-//            mp = null
-//        }
-//    }
 
     private fun playSound(soundId: Int) {
+        // Create a new MediaPlayer instance for the current sound
         val mediaPlayer = MediaPlayer.create(this, soundId)
+
+        // Set completion listener to release the MediaPlayer when sound finishes
         mediaPlayer.setOnCompletionListener {
+            it.release()
+            mediaPlayerQueue.remove(it)
+        }
+
+        // Add the new MediaPlayer to the queue
+        mediaPlayerQueue.add(mediaPlayer)
+
+        // Check if the queue size exceeds the limit (e.g., 10)
+        if (mediaPlayerQueue.size > 10) {
+            // Release the oldest MediaPlayer
+            val oldestMediaPlayer = mediaPlayerQueue.poll()
+            oldestMediaPlayer?.release()
+        }
+        // Start playing the current sound
+        mediaPlayer.start()
+    }
+    override fun onDestroy() {
+        super.onDestroy()
+        mediaPlayerQueue.forEach { mediaPlayer ->
             mediaPlayer.release()
         }
-        mediaPlayer.start()
+        mediaPlayerQueue.clear()
+    }
+
+    private fun releaseAllMediaPlayers() {
+        mediaPlayerQueue.forEach { mediaPlayer ->
+            mediaPlayer.release()
+        }
+        mediaPlayerQueue.clear()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        releaseAllMediaPlayers()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-
         menuInflater.inflate(R.menu.menu_scrolling, menu)
-
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
-        val id = item.itemId
-
-        /*
-    if (id == R.id.payment){
-        val intent = Intent(this, PaymentActivity::class.java)
-        this.startActivity(intent)
-    } else if
-            */
-        when (id) {
+        when (item.itemId) {
             R.id.action_settings -> {
                 val intent = Intent(this, DeveloperActivity::class.java)
                 this.startActivity(intent)
-
             }
             R.id.share -> {
                 val sharingIntent = Intent(Intent.ACTION_SEND)
                 sharingIntent.type = "text/plain"
                 sharingIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.google_play_store))
                 startActivity(Intent.createChooser(sharingIntent, "Share via"))
-
             }
-            R.id.secret -> {
-                val intent = Intent(this, SecretActivity::class.java)
-                this.startActivity(intent)
-            }
+            //R.id.secret -> {
+            //    val intent = Intent(this, SecretActivity::class.java)
+            //    this.startActivity(intent)
+            //}
         }
-
         return true
-
-    }
-
-    @RequiresApi(Build.VERSION_CODES.Q)
-    private fun saveRingtone(title: String, rawResourceId: Int) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 0)
-            return
-        }
-
-        val resolver = contentResolver
-        val contentValues = ContentValues().apply {
-            put(MediaStore.MediaColumns.DISPLAY_NAME, "$title.mp3")
-            put(MediaStore.MediaColumns.MIME_TYPE, "audio/mp3")
-            put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_RINGTONES)
-            put(MediaStore.Audio.Media.IS_RINGTONE, true)
-            put(MediaStore.Audio.Media.IS_NOTIFICATION, false)
-            put(MediaStore.Audio.Media.IS_ALARM, false)
-            put(MediaStore.Audio.Media.IS_MUSIC, false)
-        }
-        var ringtoneUri: Uri? = null
-        try {
-            val ringtoneFileUri = resolver.insert(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, contentValues)
-                    ?: throw IOException("Failed to create new MediaStore record.")
-            ringtoneUri = ringtoneFileUri
-            val outputStream: OutputStream = (resolver.openOutputStream(ringtoneFileUri)
-                    ?: throw IOException("Failed to get output stream.")) as FileOutputStream
-            val inputStream: InputStream = resources.openRawResource(rawResourceId)
-            val buffer = ByteArray(1024)
-            var read: Int
-            while (inputStream.read(buffer).also { read = it } > 0) {
-                outputStream.write(buffer, 0, read)
-            }
-            outputStream.close()
-            inputStream.close()
-
-            // Show a confirmation dialog to the user
-            AlertDialog.Builder(this)
-                    .setMessage("Ringtone saved.")
-                    .setPositiveButton("OK", null)
-                    .show()
-
-        } catch (e: IOException) {
-            Toast.makeText(this, "Error saving ringtone: ${e.message}", Toast.LENGTH_LONG).show()
-            if (ringtoneUri != null) {
-                resolver.delete(ringtoneUri, null, null)
-            }
-        }
     }
 }
-
 
 
 

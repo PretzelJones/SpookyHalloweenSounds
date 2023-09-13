@@ -530,6 +530,14 @@
                 android:scaleType="fitStart"
                 app:srcCompat="@drawable/graveyard" />
 
+            <ImageView
+                android:id="@+id/overlayImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_key"
+                app:tint="@android:color/holo_orange_light" />
+
         </androidx.cardview.widget.CardView>
 
     </RelativeLayout>

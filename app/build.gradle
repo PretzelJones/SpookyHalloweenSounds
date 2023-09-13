@@ -8,10 +8,10 @@ android {
     compileSdkVersion 33
     defaultConfig {
         applicationId "design.bosson.spookyhalloweensounds"
-        minSdkVersion 16
-        targetSdkVersion 32
-        versionCode 53
-        versionName "2.0.0"
+        minSdkVersion 24
+        targetSdkVersion 33
+        versionCode 54
+        versionName "1.2.1"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         lintOptions {
 

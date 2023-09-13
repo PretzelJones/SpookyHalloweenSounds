@@ -20,10 +20,10 @@
         android:title="@string/share"
         app:actionProviderClass="androidx.appcompat.widget.ShareActionProvider"
         app:showAsAction="never" />
-    <item
+    <!--<item
         android:id="@+id/secret"
         android:orderInCategory="103"
         android:title="@string/secret"
-        app:showAsAction="never" />
+        app:showAsAction="never" />-->
 
 </menu>
