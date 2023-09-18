@@ -16,15 +16,34 @@ package design.bosson.spookyhalloweensounds;
  * limitations under the License.
  */
 
+import static java.sql.DriverManager.println;
+
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.RoundRectShape;
 import android.net.Uri;
 import android.os.Build;
 import android.text.format.DateUtils;
+import android.view.Gravity;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import androidx.core.content.ContextCompat;
+
+import java.util.Objects;
 
 public class AppRater {
 
@@ -296,6 +315,85 @@ public class AppRater {
         closeDialog(dialog);
     }
 
+    //new app rater dialog
+    private AlertDialog showDialog(final Context context, final SharedPreferences.Editor editor, final long firstLaunchTime) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        AlertDialog dialog = builder.create();
+        // Set dialog background color and rounded corners
+        Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+
+        LinearLayout customLayout = new LinearLayout(context);
+        customLayout.setOrientation(LinearLayout.VERTICAL);
+        customLayout.setPadding(32, 16, 32, 16);
+
+        TextView titleTextView = new TextView(context);
+        titleTextView.setText(mText_title);
+        titleTextView.setTextSize(18);
+        titleTextView.setTextColor(Color.BLACK);
+
+        TextView messageTextView = new TextView(context);
+        messageTextView.setText(mText_explanation);
+        messageTextView.setTextSize(16);
+        messageTextView.setTextColor(Color.DKGRAY);
+
+        Button buttonNow = new Button(context);
+        buttonNow.setText(mText_buttonNow);
+        buttonNow.setTextSize(14);
+        buttonNow.setTextColor(Color.WHITE);
+        buttonNow.setBackgroundResource(R.drawable.rounded_dialog_bg);
+        buttonNow.setPadding(32, 16, 32, 16);
+        buttonNow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+                buttonNowClick(editor, dialog, context);
+            }
+        });
+
+        Button buttonLater = new Button(context);
+        buttonLater.setText(mText_buttonLater);
+        buttonLater.setTextSize(14);
+        buttonLater.setTextColor(Color.WHITE);
+        buttonLater.setBackgroundResource(R.drawable.rounded_dialog_bg);
+        buttonLater.setPadding(32, 16, 32, 16);
+        buttonLater.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+                buttonLaterClick(editor, dialog, firstLaunchTime);
+            }
+        });
+
+        Button buttonNever = new Button(context);
+        buttonNever.setText(mText_buttonNever);
+        buttonNever.setTextSize(14);
+        buttonNever.setTextColor(Color.WHITE);
+        buttonNever.setBackgroundResource(R.drawable.rounded_dialog_bg);
+        buttonNever.setPadding(32, 16, 32, 16);
+        buttonNever.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+                buttonNeverClick(editor, dialog);
+            }
+        });
+
+        customLayout.addView(titleTextView);
+        customLayout.addView(messageTextView);
+        customLayout.addView(buttonNow);
+        customLayout.addView(buttonLater);
+        customLayout.addView(buttonNever);
+
+        dialog.setView(customLayout);
+
+        return dialog;
+    }
+
+
+    // old app rater dialog
+    /*
     private AlertDialog showDialog(final Context context, final SharedPreferences.Editor editor, final long firstLaunchTime) {
         final AlertDialog.Builder rateDialog = new AlertDialog.Builder(context);
         rateDialog.setTitle(mText_title);
@@ -320,5 +418,5 @@ public class AppRater {
         });
         return rateDialog.show();
     }
-
+*/
 }

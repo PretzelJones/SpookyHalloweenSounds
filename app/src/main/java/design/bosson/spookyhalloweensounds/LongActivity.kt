@@ -1,234 +1,156 @@
 package design.bosson.spookyhalloweensounds
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.animation.AnimationUtils
 import android.widget.Button
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat.startActivity
+import androidx.core.content.res.ResourcesCompat
 import com.google.firebase.analytics.FirebaseAnalytics
-import kotlinx.android.synthetic.main.activity_long.*
+import kotlinx.android.synthetic.main.activity_long.toolbar
 
-@Suppress("NAME_SHADOWING")
 class LongActivity : AppCompatActivity() {
 
-    private lateinit var bTerrorMix: Button
-    private lateinit var bHauntedMix: Button
-    private lateinit var bLongMix: Button
-    private lateinit var bSpaceTerror: Button
-    private lateinit var bDontLetIn: Button
-
+    private lateinit var prefManager: MovieActivity.PrefManager
     private lateinit var mediaPlayerList: MutableList<MediaPlayer>
-    private lateinit var isPlayingList_ultra_terror: BooleanArray
-    private lateinit var isPlayingList_haunted_house: BooleanArray
-    private lateinit var isPlayingList_long_mix: BooleanArray
-    private lateinit var isPlayingList_space_terror: BooleanArray
-    private lateinit var isPlayingList_dont_let_in: BooleanArray
-
-    // Initialize FirebaseAnalytics instance
+    private lateinit var isPlayingList: BooleanArray
     private lateinit var mFirebaseAnalytics: FirebaseAnalytics
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_long)
         setSupportActionBar(toolbar)
-        supportActionBar!!.setDisplayShowTitleEnabled(false) //prevent title display
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
-        if (!PopupHelper.showPopupIfNeeded(this)) {
-            val popupShown = PopupHelper.showPopupIfNeeded(this)
-        }
-
-        // Obtain the FirebaseAnalytics instance.
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
 
-        bTerrorMix = findViewById(R.id.buttonTerrorMix)
-        bHauntedMix = findViewById(R.id.buttonHauntedMix)
-        bLongMix = findViewById(R.id.buttonLongMix)
-        bSpaceTerror = findViewById(R.id.buttonSpaceTerror)
-        bDontLetIn = findViewById(R.id.buttonDontLetIn)
+        // Initialize MediaPlayer instances and isPlayingList
+        initMediaPlayer()
 
-        val ultra_terror = MediaPlayer.create(this, R.raw.ultra_terror)
-        val haunted_house = MediaPlayer.create(this, R.raw.haunted_house)
-        val long_mix = MediaPlayer.create(this, R.raw.long_mix)
-        val space_terror = MediaPlayer.create(this, R.raw.space_terror)
-        val dont_let_in = MediaPlayer.create(this, R.raw.dont_let_in)
+        // Set click listeners for buttons
+        setButtonClickListeners()
 
-        mediaPlayerList =
-            mutableListOf(ultra_terror, haunted_house, long_mix, space_terror, dont_let_in)
-        isPlayingList_ultra_terror = BooleanArray(1)
-        isPlayingList_haunted_house = BooleanArray(1)
-        isPlayingList_long_mix = BooleanArray(1)
-        isPlayingList_space_terror = BooleanArray(1)
-        isPlayingList_dont_let_in = BooleanArray(1)
+        // Initialize prefManager
+        prefManager = MovieActivity.PrefManager(this)
 
-        //play sound on button click
-        bTerrorMix.setOnClickListener {
-            val mediaPlayer = mediaPlayerList[0]
-            val isPlaying = isPlayingList_ultra_terror[0]
-
-            if (mediaPlayer.isPlaying) {
-                mediaPlayer.pause()
-                isPlayingList_ultra_terror[0] = false
-                bTerrorMix.setCompoundDrawablesWithIntrinsicBounds(
-                    null, resources.getDrawable(R.drawable.ic_play), null, null
-                )
-            } else {
-                if (!isPlaying) {
-                    mediaPlayer.start()
-                    isPlayingList_ultra_terror[0] = true
-                    bTerrorMix.setCompoundDrawablesWithIntrinsicBounds(
-                        null, resources.getDrawable(R.drawable.ic_pause), null, null
-                    )
-                }
+        // Check if it's the first time
+        if (prefManager.isFirstTimeMainActivity()) {
+            showPopup()
+            prefManager.setFirstTimeMainActivity(false) // Mark as visited
+        }
+    }
+    // temporary popup to notiffy users of new restart feature
+    private fun showPopup() {
+        // Create the AlertDialog with your custom style
+        val builder = AlertDialog.Builder(this, R.style.RoundedAlertDialog)
+        builder.setMessage(getString(R.string.popup_text_pause))
+            .setPositiveButton("OK") { dialog, _ ->
+                dialog.dismiss()
             }
-            bTerrorMix.setOnLongClickListener {
-                val mediaPlayer = mediaPlayerList[0]
-                //if (mediaPlayer.isPlaying) {
-                //    mediaPlayer.pause()
-                //}
-                mediaPlayer.seekTo(0) // Restart from the beginning
-                isPlayingList_ultra_terror[0] = false
-                mediaPlayer.pause()
-                bTerrorMix.setCompoundDrawablesWithIntrinsicBounds(
-                    null, resources.getDrawable(R.drawable.ic_ultra_terror), null, null
-                )
-                true // Return true to indicate that the long click event is consumed
+
+        val dialog = builder.create()
+
+        // Set up custom animations
+        val scaleX = ObjectAnimator.ofFloat(dialog.window!!.decorView, "scaleX", 0.5f, 1f)
+        val scaleY = ObjectAnimator.ofFloat(dialog.window!!.decorView, "scaleY", 0.5f, 1f)
+        val fadeIn = ObjectAnimator.ofFloat(dialog.window!!.decorView, "alpha", 0f, 1f)
+
+        val animatorSet = AnimatorSet()
+        animatorSet.duration = 300 // Set the duration as needed
+        animatorSet.playTogether(scaleX, scaleY, fadeIn)
+        animatorSet.start()
+
+        // Show the dialog after setting up the animations
+        dialog.show()
+    }
+
+    private fun initMediaPlayer() {
+        val halloween = MediaPlayer.create(this, R.raw.ultra_terror)
+        val exorcist = MediaPlayer.create(this, R.raw.haunted_house)
+        val shining = MediaPlayer.create(this, R.raw.long_mix)
+        val elmstreet = MediaPlayer.create(this, R.raw.space_terror)
+        val friday = MediaPlayer.create(this, R.raw.dont_let_in)
+
+        mediaPlayerList = mutableListOf(halloween, exorcist, shining, elmstreet, friday)
+        isPlayingList = BooleanArray(mediaPlayerList.size) { false }
+
+        // Set OnCompletionListener for each MediaPlayer to loop indefinitely
+        mediaPlayerList.forEach { mediaPlayer ->
+            mediaPlayer.setOnCompletionListener {
+                mediaPlayer.start() // Start playback again when it completes
+                mediaPlayer.isLooping = true // Set looping to true
             }
         }
-        bHauntedMix.setOnClickListener {
-            val mediaPlayer = mediaPlayerList[1]
-            val isPlaying = isPlayingList_haunted_house[0]
+    }
 
-            if (mediaPlayer.isPlaying) {
-                mediaPlayer.pause()
-                isPlayingList_haunted_house[0] = false
-                bHauntedMix.setCompoundDrawablesWithIntrinsicBounds(
-                    null, resources.getDrawable(R.drawable.ic_play), null, null
-                )
-            } else {
-                if (!isPlaying) {
-                    mediaPlayer.start()
-                    isPlayingList_haunted_house[0] = true
-                    bHauntedMix.setCompoundDrawablesWithIntrinsicBounds(
-                        null, resources.getDrawable(R.drawable.ic_pause), null, null
-                    )
+    private fun setButtonClickListeners() {
+        val buttons = listOf(
+            findViewById(R.id.buttonTerrorMix),
+            findViewById(R.id.buttonHauntedMix),
+            findViewById(R.id.buttonLongMix),
+            findViewById(R.id.buttonSpaceTerror),
+            findViewById<Button>(R.id.buttonDontLetIn)
+        )
+
+        buttons.forEachIndexed { index, button ->
+            button.setOnClickListener {
+                val mediaPlayer = mediaPlayerList[index]
+                val isPlaying = isPlayingList[index]
+
+                if (mediaPlayer.isPlaying) {
+                    mediaPlayer.pause()
+                    isPlayingList[index] = false
+                    val playDrawable =
+                        ResourcesCompat.getDrawable(resources, R.drawable.ic_play, null)
+                    button.setCompoundDrawablesWithIntrinsicBounds(null, playDrawable, null, null)
+                } else {
+                    if (!isPlaying) {
+                        mediaPlayer.start()
+                        isPlayingList[index] = true
+                        val pauseDrawable =
+                            ResourcesCompat.getDrawable(resources, R.drawable.ic_pause, null)
+                        button.setCompoundDrawablesWithIntrinsicBounds(
+                            null,
+                            pauseDrawable,
+                            null,
+                            null
+                        )
+                    }
                 }
+                // Apply the button animation here
+                val animation = AnimationUtils.loadAnimation(this@LongActivity, R.anim.button_animation)
+                button.startAnimation(animation)
             }
-            bHauntedMix.setOnLongClickListener {
-                val mediaPlayer = mediaPlayerList[1]
-                //if (mediaPlayer.isPlaying) {
-                //    mediaPlayer.pause()
-                //}
+
+            button.setOnLongClickListener {
+                val mediaPlayer = mediaPlayerList[index]
                 mediaPlayer.seekTo(0) // Restart from the beginning
-                isPlayingList_haunted_house[0] = false
+                isPlayingList[index] = false
                 mediaPlayer.pause()
-                bHauntedMix.setCompoundDrawablesWithIntrinsicBounds(
-                    null, resources.getDrawable(R.drawable.ic_haunted_circus), null, null
-                )
-                true // Return true to indicate that the long click event is consumed
-            }
-        }
 
-        bLongMix.setOnClickListener {
-            val mediaPlayer = mediaPlayerList[2]
-            val isPlaying = isPlayingList_long_mix[0]
-
-            if (mediaPlayer.isPlaying) {
-                mediaPlayer.pause()
-                isPlayingList_long_mix[0] = false
-                bLongMix.setCompoundDrawablesWithIntrinsicBounds(
-                    null, resources.getDrawable(R.drawable.ic_play), null, null
-                )
-            } else {
-                if (!isPlaying) {
-                    mediaPlayer.start()
-                    isPlayingList_long_mix[0] = true
-                    bLongMix.setCompoundDrawablesWithIntrinsicBounds(
-                        null, resources.getDrawable(R.drawable.ic_pause), null, null
-                    )
+                val drawableResId = when (index) {
+                    0 -> R.drawable.ic_ultra_terror
+                    1 -> R.drawable.ic_haunted_circus
+                    2 -> R.drawable.ic_spooky_sounds
+                    3 -> R.drawable.ic_space_terrors
+                    4 -> R.drawable.ic_key
+                    else -> R.drawable.ic_play // Default
                 }
-            }
-            bLongMix.setOnLongClickListener {
-                val mediaPlayer = mediaPlayerList[2]
-                //if (mediaPlayer.isPlaying) {
-                //    mediaPlayer.pause()
-                //}
-                mediaPlayer.seekTo(0) // Restart from the beginning
-                isPlayingList_long_mix[0] = false
-                mediaPlayer.pause()
-                bLongMix.setCompoundDrawablesWithIntrinsicBounds(
-                    null, resources.getDrawable(R.drawable.ic_spooky_sounds), null, null
-                )
-                true // Return true to indicate that the long click event is consumed
-            }
-        }
 
-        bSpaceTerror.setOnClickListener {
-            val mediaPlayer = mediaPlayerList[3]
-            val isPlaying = isPlayingList_space_terror[0]
+                val drawable = ResourcesCompat.getDrawable(resources, drawableResId, null)
+                button.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null)
 
-            if (mediaPlayer.isPlaying) {
-                mediaPlayer.pause()
-                isPlayingList_space_terror[0] = false
-                bSpaceTerror.setCompoundDrawablesWithIntrinsicBounds(
-                    null, resources.getDrawable(R.drawable.ic_play), null, null
-                )
-            } else {
-                if (!isPlaying) {
-                    mediaPlayer.start()
-                    isPlayingList_space_terror[0] = true
-                    bSpaceTerror.setCompoundDrawablesWithIntrinsicBounds(
-                        null, resources.getDrawable(R.drawable.ic_pause), null, null
-                    )
-                }
-            }
-            bSpaceTerror.setOnLongClickListener {
-                val mediaPlayer = mediaPlayerList[3]
-                //if (mediaPlayer.isPlaying) {
-                //    mediaPlayer.pause()
-                //}
-                mediaPlayer.seekTo(0) // Restart from the beginning
-                isPlayingList_space_terror[0] = false
-                mediaPlayer.pause()
-                bSpaceTerror.setCompoundDrawablesWithIntrinsicBounds(
-                    null, resources.getDrawable(R.drawable.ic_space_terrors), null, null
-                )
-                true // Return true to indicate that the long click event is consumed
-            }
-        }
+                val animation = AnimationUtils.loadAnimation(this@LongActivity, R.anim.button_animation)
+                button.startAnimation(animation)
 
-        bDontLetIn.setOnClickListener {
-            val mediaPlayer = mediaPlayerList[4]
-            val isPlaying = isPlayingList_dont_let_in[0]
-
-            if (mediaPlayer.isPlaying) {
-                mediaPlayer.pause()
-                isPlayingList_dont_let_in[0] = false
-                bDontLetIn.setCompoundDrawablesWithIntrinsicBounds(
-                    null, resources.getDrawable(R.drawable.ic_play), null, null
-                )
-            } else {
-                if (!isPlaying) {
-                    mediaPlayer.start()
-                    isPlayingList_dont_let_in[0] = true
-                    bDontLetIn.setCompoundDrawablesWithIntrinsicBounds(
-                        null, resources.getDrawable(R.drawable.ic_pause), null, null
-                    )
-                }
-            }
-            bDontLetIn.setOnLongClickListener {
-                val mediaPlayer = mediaPlayerList[4]
-                //if (mediaPlayer.isPlaying) {
-                //    mediaPlayer.pause()
-                //}
-                mediaPlayer.seekTo(0) // Restart from the beginning
-                isPlayingList_dont_let_in[0] = false
-                mediaPlayer.pause()
-                bDontLetIn.setCompoundDrawablesWithIntrinsicBounds(
-                    null, resources.getDrawable(R.drawable.ic_key), null, null
-                )
                 true // Return true to indicate that the long click event is consumed
             }
         }
@@ -259,11 +181,26 @@ class LongActivity : AppCompatActivity() {
                 sharingIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.google_play_store))
                 startActivity(Intent.createChooser(sharingIntent, "Share via"))
             }
-            //R.id.secret -> {
-            //    val intent = Intent(this, SecretActivity::class.java)
-            //    this.startActivity(intent)
-            //}
         }
         return true
+    }
+
+    // Define the PrefManager class outside onCreate
+    class PrefManager(context: Context) {
+        private val PREF_NAME = "MyAppPreferences"
+        private val KEY_FIRST_TIME_MAIN_ACTIVITY = "firstTimeMainActivity"
+
+        private val pref: SharedPreferences =
+            context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+        private val editor: SharedPreferences.Editor = pref.edit()
+
+        fun setFirstTimeMainActivity(isFirstTime: Boolean) {
+            editor.putBoolean(KEY_FIRST_TIME_MAIN_ACTIVITY, isFirstTime)
+            editor.apply()
+        }
+
+        fun isFirstTimeMainActivity(): Boolean {
+            return pref.getBoolean(KEY_FIRST_TIME_MAIN_ACTIVITY, true)
+        }
     }
 }

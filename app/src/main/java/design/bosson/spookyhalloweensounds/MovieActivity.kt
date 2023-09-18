@@ -1,57 +1,76 @@
 package design.bosson.spookyhalloweensounds
 
-import android.annotation.SuppressLint
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.media.MediaPlayer
 import android.os.Bundle
+import android.os.Vibrator
 import android.view.Menu
 import android.view.MenuItem
+import android.view.animation.AnimationUtils
 import android.widget.Button
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat.startActivity
+import androidx.core.content.res.ResourcesCompat
 import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.activity_long.toolbar
 
-@Suppress("NAME_SHADOWING")
 class MovieActivity : AppCompatActivity() {
 
-    private lateinit var bHalloween: Button
-    private lateinit var bExorcist: Button
-    private lateinit var bShining: Button
-    private lateinit var bElmStreet: Button
-    private lateinit var bFriday: Button
-    private lateinit var bAmityville: Button
-
+    private lateinit var prefManager: PrefManager
     private lateinit var mediaPlayerList: MutableList<MediaPlayer>
-    private lateinit var isPlayingList_halloween: BooleanArray
-    private lateinit var isPlayingList_exorcist: BooleanArray
-    private lateinit var isPlayingList_shining: BooleanArray
-    private lateinit var isPlayingList_elmstreet: BooleanArray
-    private lateinit var isPlayingList_friday: BooleanArray
-    private lateinit var isPlayingList_amityville: BooleanArray
-
-    // Initialize FirebaseAnalytics instance
+    private lateinit var isPlayingList: BooleanArray
     private lateinit var mFirebaseAnalytics: FirebaseAnalytics
 
-    //@SuppressLint("UseCompatLoadingForDrawables")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie)
         setSupportActionBar(toolbar)
-        supportActionBar!!.setDisplayShowTitleEnabled(false)
-
-        if (!PopupHelper.showPopupIfNeeded(this)) {
-            val popupShown = PopupHelper.showPopupIfNeeded(this)
-        }
-        // Obtain the FirebaseAnalytics instance.
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+        // Initialize firebase analytics
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
+        // Initialize MediaPlayer instances and isPlayingList
+        initMediaPlayer()
+        // Set click listeners for buttons
+        setButtonClickListeners()
+        // Initialize prefManager
+        prefManager = PrefManager(this)
+        // Check if it's the first time
+        if (prefManager.isFirstTimeMainActivity()) {
+            showPopup()
+            prefManager.setFirstTimeMainActivity(false) // Mark as visited
+        }
+    }
+    // temporary popup to notify users of new restart feature
+    private fun showPopup() {
+        // Create the AlertDialog with your custom style
+        val builder = AlertDialog.Builder(this, R.style.RoundedAlertDialog)
+        builder.setMessage(getString(R.string.popup_text_pause))
+            .setPositiveButton("OK") { dialog, _ ->
+                dialog.dismiss()
+            }
 
-        bHalloween = findViewById(R.id.buttonHalloween)
-        bExorcist = findViewById(R.id.buttonExorcist)
-        bShining = findViewById(R.id.buttonShining)
-        bElmStreet = findViewById(R.id.buttonElmStreet)
-        bFriday = findViewById(R.id.buttonFriday)
-        bAmityville = findViewById(R.id.buttonAmityville)
+        val dialog = builder.create()
 
+        // Set up custom animations
+        val scaleX = ObjectAnimator.ofFloat(dialog.window!!.decorView, "scaleX", 0.5f, 1f)
+        val scaleY = ObjectAnimator.ofFloat(dialog.window!!.decorView, "scaleY", 0.5f, 1f)
+        val fadeIn = ObjectAnimator.ofFloat(dialog.window!!.decorView, "alpha", 0f, 1f)
+
+        val animatorSet = AnimatorSet()
+        animatorSet.duration = 300 // Set the duration as needed
+        animatorSet.playTogether(scaleX, scaleY, fadeIn)
+        animatorSet.start()
+
+        // Show the dialog after setting up the animations
+        dialog.show()
+    }
+
+    private fun initMediaPlayer() {
         val halloween = MediaPlayer.create(this, R.raw.halloween)
         val exorcist = MediaPlayer.create(this, R.raw.exorcist)
         val shining = MediaPlayer.create(this, R.raw.shining)
@@ -60,224 +79,84 @@ class MovieActivity : AppCompatActivity() {
         val amityville = MediaPlayer.create(this, R.raw.amityville)
 
         mediaPlayerList = mutableListOf(halloween, exorcist, shining, elmstreet, friday, amityville)
-        isPlayingList_halloween = BooleanArray(1)
-        isPlayingList_exorcist = BooleanArray(1)
-        isPlayingList_shining = BooleanArray(1)
-        isPlayingList_elmstreet = BooleanArray(1)
-        isPlayingList_friday = BooleanArray(1)
-        isPlayingList_amityville = BooleanArray(1)
+        isPlayingList = BooleanArray(mediaPlayerList.size) { false }
 
-        //play sound on button click
-
-        bHalloween.setOnClickListener {
-            // Get the MediaPlayer instance from mediaPlayerList at index 0
-            val mediaPlayer = mediaPlayerList[0]
-            val isPlaying = isPlayingList_halloween[0]
-
-            if (mediaPlayer.isPlaying) {
-                mediaPlayer.pause()
-                isPlayingList_halloween[0] = false
-                bHalloween.setCompoundDrawablesWithIntrinsicBounds(
-                    null, resources.getDrawable(R.drawable.ic_play), null, null
-                )
-            } else {
-                if (!isPlaying) {
-                    mediaPlayer.start()
-
-                    isPlayingList_halloween[0] = true
-                    bHalloween.setCompoundDrawablesWithIntrinsicBounds(
-                        null, resources.getDrawable(R.drawable.ic_pause), null, null
-                    )
-                }
-            }
-            bHalloween.setOnLongClickListener {
-
-                val mediaPlayer = mediaPlayerList[0]
-
-                //if (mediaPlayer.isPlaying) {
-                //    mediaPlayer.pause()
-                //}
-                mediaPlayer.seekTo(0)
-                isPlayingList_halloween[0] = false
-                mediaPlayer.pause()
-                bHalloween.setCompoundDrawablesWithIntrinsicBounds(
-                    null, resources.getDrawable(R.drawable.ic_halloween), null, null
-                )
-                true
+        // Set OnCompletionListener for each MediaPlayer to loop indefinitely
+        mediaPlayerList.forEach { mediaPlayer ->
+            mediaPlayer.setOnCompletionListener {
+                mediaPlayer.start() // Start playback again when it completes
+                mediaPlayer.isLooping = true // Set looping to true
             }
         }
+    }
 
-        bExorcist.setOnClickListener {
-            val mediaPlayer = mediaPlayerList[1]
-            val isPlaying = isPlayingList_exorcist[0]
+    private fun setButtonClickListeners() {
+        val buttons = listOf(
+            findViewById(R.id.buttonHalloween),
+            findViewById(R.id.buttonExorcist),
+            findViewById(R.id.buttonShining),
+            findViewById(R.id.buttonElmStreet),
+            findViewById(R.id.buttonFriday),
+            findViewById<Button>(R.id.buttonAmityville)
+        )
 
-            if (mediaPlayer.isPlaying) {
-                mediaPlayer.pause()
-                isPlayingList_exorcist[0] = false
-                bExorcist.setCompoundDrawablesWithIntrinsicBounds(
-                    null, resources.getDrawable(R.drawable.ic_play), null, null
-                )
-            } else {
-                if (!isPlaying) {
-                    mediaPlayer.start()
-                    isPlayingList_exorcist[0] = true
-                    bExorcist.setCompoundDrawablesWithIntrinsicBounds(
-                        null, resources.getDrawable(R.drawable.ic_pause), null, null
-                    )
+        buttons.forEachIndexed { index, button ->
+            button.setOnClickListener {
+                val mediaPlayer = mediaPlayerList[index]
+                val isPlaying = isPlayingList[index]
+
+                if (mediaPlayer.isPlaying) {
+                    mediaPlayer.pause()
+                    isPlayingList[index] = false
+                    val playDrawable =
+                        ResourcesCompat.getDrawable(resources, R.drawable.ic_play, null)
+                    button.setCompoundDrawablesWithIntrinsicBounds(null, playDrawable, null, null)
+                } else {
+                    if (!isPlaying) {
+                        mediaPlayer.start()
+                        isPlayingList[index] = true
+                        val pauseDrawable =
+                            ResourcesCompat.getDrawable(resources, R.drawable.ic_pause, null)
+                        button.setCompoundDrawablesWithIntrinsicBounds(
+                            null,
+                            pauseDrawable,
+                            null,
+                            null
+                        )
+                    }
                 }
+                // Apply the button animation here
+                val animation = AnimationUtils.loadAnimation(this@MovieActivity, R.anim.button_animation)
+                button.startAnimation(animation)
             }
-            bExorcist.setOnLongClickListener {
-                val mediaPlayer = mediaPlayerList[1]
 
-                //if (mediaPlayer.isPlaying) {
-                //    mediaPlayer.pause()
-                //}
+            button.setOnLongClickListener {
+                val mediaPlayer = mediaPlayerList[index]
                 mediaPlayer.seekTo(0) // Restart from the beginning
-                isPlayingList_exorcist[0] = false
+                isPlayingList[index] = false
                 mediaPlayer.pause()
-                bExorcist.setCompoundDrawablesWithIntrinsicBounds(
-                    null, resources.getDrawable(R.drawable.ic_cross), null, null
-                )
-                true // Return true to indicate that the long click event is consumed
-            }
-        }
 
-        bShining.setOnClickListener {
-            val mediaPlayer = mediaPlayerList[2]
-            val isPlaying = isPlayingList_shining[0]
-
-            if (mediaPlayer.isPlaying) {
-                mediaPlayer.pause()
-                isPlayingList_shining[0] = false
-                bShining.setCompoundDrawablesWithIntrinsicBounds(
-                    null, resources.getDrawable(R.drawable.ic_play), null, null
-                )
-            } else {
-                if (!isPlaying) {
-                    mediaPlayer.start()
-                    isPlayingList_shining[0] = true
-                    bShining.setCompoundDrawablesWithIntrinsicBounds(
-                        null, resources.getDrawable(R.drawable.ic_pause), null, null
-                    )
+                val drawableResId = when (index) {
+                    0 -> R.drawable.ic_halloween
+                    1 -> R.drawable.ic_cross
+                    2 -> R.drawable.ic_axe
+                    3 -> R.drawable.ic_krueger
+                    4 -> R.drawable.ic_vorhees
+                    5 -> R.drawable.ic_amityville
+                    else -> R.drawable.ic_play // Default
                 }
-            }
-            bShining.setOnLongClickListener {
-                val mediaPlayer = mediaPlayerList[2]
-                //if (mediaPlayer.isPlaying) {
-                //    mediaPlayer.pause()
-                //}
-                mediaPlayer.seekTo(0) // Restart from the beginning
-                isPlayingList_shining[0] = false
-                mediaPlayer.pause()
-                bShining.setCompoundDrawablesWithIntrinsicBounds(
-                    null, resources.getDrawable(R.drawable.ic_axe), null, null
-                )
-                true // Return true to indicate that the long click event is consumed
-            }
-        }
 
-        bElmStreet.setOnClickListener {
-            val mediaPlayer = mediaPlayerList[3]
-            val isPlaying = isPlayingList_elmstreet[0]
+                val drawable = ResourcesCompat.getDrawable(resources, drawableResId, null)
+                button.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null)
 
-            if (mediaPlayer.isPlaying) {
-                mediaPlayer.pause()
-                isPlayingList_elmstreet[0] = false
-                bElmStreet.setCompoundDrawablesWithIntrinsicBounds(
-                    null, resources.getDrawable(R.drawable.ic_play), null, null
-                )
-            } else {
-                if (!isPlaying) {
-                    mediaPlayer.start()
-                    isPlayingList_elmstreet[0] = true
-                    bElmStreet.setCompoundDrawablesWithIntrinsicBounds(
-                        null, resources.getDrawable(R.drawable.ic_pause), null, null
-                    )
-                }
-            }
-            bElmStreet.setOnLongClickListener {
-                val mediaPlayer = mediaPlayerList[3]
-                //if (mediaPlayer.isPlaying) {
-                //    mediaPlayer.pause()
-                //}
-                mediaPlayer.seekTo(0) // Restart from the beginning
-                isPlayingList_elmstreet[0] = false
-                mediaPlayer.pause()
-                bElmStreet.setCompoundDrawablesWithIntrinsicBounds(
-                    null, resources.getDrawable(R.drawable.ic_krueger), null, null
-                )
-                true // Return true to indicate that the long click event is consumed
-            }
-        }
+                val animation = AnimationUtils.loadAnimation(this@MovieActivity, R.anim.button_animation)
+                button.startAnimation(animation)
 
-        bFriday.setOnClickListener {
-            val mediaPlayer = mediaPlayerList[4]
-            val isPlaying = isPlayingList_friday[0]
-
-            if (mediaPlayer.isPlaying) {
-                mediaPlayer.pause()
-                isPlayingList_friday[0] = false
-                bFriday.setCompoundDrawablesWithIntrinsicBounds(
-                    null, resources.getDrawable(R.drawable.ic_play), null, null
-                )
-            } else {
-                if (!isPlaying) {
-                    mediaPlayer.start()
-                    isPlayingList_friday[0] = true
-                    bFriday.setCompoundDrawablesWithIntrinsicBounds(
-                        null, resources.getDrawable(R.drawable.ic_pause), null, null
-                    )
-                }
-            }
-            bFriday.setOnLongClickListener {
-                val mediaPlayer = mediaPlayerList[4]
-                //if (mediaPlayer.isPlaying) {
-                //    mediaPlayer.pause()
-                //}
-                mediaPlayer.seekTo(0) // Restart from the beginning
-                isPlayingList_friday[0] = false
-                mediaPlayer.pause()
-                bFriday.setCompoundDrawablesWithIntrinsicBounds(
-                    null, resources.getDrawable(R.drawable.ic_vorhees), null, null
-                )
-                true // Return true to indicate that the long click event is consumed
-            }
-        }
-
-        bAmityville.setOnClickListener {
-            val mediaPlayer = mediaPlayerList[5]
-            val isPlaying = isPlayingList_amityville[0]
-
-            if (mediaPlayer.isPlaying) {
-                mediaPlayer.pause()
-                isPlayingList_amityville[0] = false
-                bAmityville.setCompoundDrawablesWithIntrinsicBounds(
-                    null, resources.getDrawable(R.drawable.ic_play), null, null
-                )
-            } else {
-                if (!isPlaying) {
-                    mediaPlayer.start()
-                    isPlayingList_amityville[0] = true
-                    bAmityville.setCompoundDrawablesWithIntrinsicBounds(
-                        null, resources.getDrawable(R.drawable.ic_pause), null, null
-                    )
-                }
-            }
-            bAmityville.setOnLongClickListener {
-                val mediaPlayer = mediaPlayerList[5]
-                //if (mediaPlayer.isPlaying) {
-                //    mediaPlayer.pause()
-                //}
-                mediaPlayer.seekTo(0) // Restart from the beginning
-                isPlayingList_amityville[0] = false
-                mediaPlayer.pause()
-                bAmityville.setCompoundDrawablesWithIntrinsicBounds(
-                    null, resources.getDrawable(R.drawable.ic_amityville), null, null
-                )
                 true // Return true to indicate that the long click event is consumed
             }
         }
     }
+
     // Release media player when switching between activities
     override fun onStop() {
         super.onStop()
@@ -295,7 +174,7 @@ class MovieActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.action_settings -> {
                 val intent = Intent(this, DeveloperActivity::class.java)
-                this.startActivity(intent)
+                startActivity(intent)
             }
             R.id.share -> {
                 val sharingIntent = Intent(Intent.ACTION_SEND)
@@ -303,16 +182,26 @@ class MovieActivity : AppCompatActivity() {
                 sharingIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.google_play_store))
                 startActivity(Intent.createChooser(sharingIntent, "Share via"))
             }
-            //R.id.secret -> {
-            //    val intent = Intent(this, SecretActivity::class.java)
-            //    this.startActivity(intent)
-            //}
         }
         return true
     }
+
+    // Define the PrefManager class outside onCreate
+    class PrefManager(context: Context) {
+        private val PREF_NAME = "MyAppPreferences"
+        private val KEY_FIRST_TIME_MAIN_ACTIVITY = "firstTimeMainActivity"
+
+        private val pref: SharedPreferences =
+            context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+        private val editor: SharedPreferences.Editor = pref.edit()
+
+        fun setFirstTimeMainActivity(isFirstTime: Boolean) {
+            editor.putBoolean(KEY_FIRST_TIME_MAIN_ACTIVITY, isFirstTime)
+            editor.apply()
+        }
+
+        fun isFirstTimeMainActivity(): Boolean {
+            return pref.getBoolean(KEY_FIRST_TIME_MAIN_ACTIVITY, true)
+        }
+    }
 }
-
-
-
-
-

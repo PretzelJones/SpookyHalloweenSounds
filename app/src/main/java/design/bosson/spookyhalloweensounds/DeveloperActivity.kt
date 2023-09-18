@@ -7,10 +7,7 @@ import android.view.MenuItem
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat.startActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import kotlinx.android.synthetic.main.content_developer.privacypolicy
-import kotlinx.android.synthetic.main.content_developer.textViewEmail
 
 class DeveloperActivity : AppCompatActivity() {
 

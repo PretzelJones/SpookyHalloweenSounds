@@ -48,19 +48,19 @@
         <activity
             android:name=".DeveloperActivity"
             android:label="@string/title_activity_developer"
-            android:screenOrientation="portrait"
+            android:screenOrientation="fullSensor"
             android:theme="@style/AppTheme.NoActionBar"
             android:exported="true"/>
         <activity
             android:name=".SecretActivity"
             android:label="@string/title_activity_secret"
-            android:screenOrientation="portrait"
+            android:screenOrientation="fullSensor"
             android:theme="@style/AppTheme.NoActionBar"
             android:exported="true"/>
         <activity
             android:name=".LongActivity"
             android:label="@string/title_activity_long"
-            android:screenOrientation="portrait"
+            android:screenOrientation="fullSensor"
             android:theme="@style/AppTheme.NoActionBar"
             android:exported="true"/>
     </application>
