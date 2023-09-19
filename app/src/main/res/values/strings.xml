@@ -42,4 +42,8 @@
     <string name="ok_button_text">OK</string>
     <string name="permission_denied_message">Permission Denied</string>
     <string name="contact_us">Contact Us</string>
+    <string name="nightmare_on_elm_street">Nightmare on Elm Street</string>
+    <string name="the_shining">The Shining</string>
+    <string name="the_exorcist">The Exorcist</string>
+    <string name="halloween">Halloween</string>
 </resources>

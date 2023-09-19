@@ -5,16 +5,16 @@ import android.animation.ObjectAnimator
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.res.ColorStateList
 import android.media.MediaPlayer
 import android.os.Bundle
-import android.os.Vibrator
 import android.view.Menu
 import android.view.MenuItem
 import android.view.animation.AnimationUtils
 import android.widget.Button
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat.startActivity
+import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.activity_long.toolbar
@@ -89,15 +89,14 @@ class MovieActivity : AppCompatActivity() {
             }
         }
     }
-
     private fun setButtonClickListeners() {
         val buttons = listOf(
-            findViewById(R.id.buttonHalloween),
+            findViewById<Button>(R.id.buttonHalloween),
             findViewById(R.id.buttonExorcist),
             findViewById(R.id.buttonShining),
             findViewById(R.id.buttonElmStreet),
             findViewById(R.id.buttonFriday),
-            findViewById<Button>(R.id.buttonAmityville)
+            findViewById(R.id.buttonAmityville)
         )
 
         buttons.forEachIndexed { index, button ->
@@ -108,25 +107,51 @@ class MovieActivity : AppCompatActivity() {
                 if (mediaPlayer.isPlaying) {
                     mediaPlayer.pause()
                     isPlayingList[index] = false
-                    val playDrawable =
-                        ResourcesCompat.getDrawable(resources, R.drawable.ic_play, null)
-                    button.setCompoundDrawablesWithIntrinsicBounds(null, playDrawable, null, null)
+                    val playDrawable = ResourcesCompat.getDrawable(
+                        resources,
+                        R.drawable.ic_play,
+                        null
+                    )
+                    button.setCompoundDrawablesWithIntrinsicBounds(
+                        null,
+                        playDrawable,
+                        null,
+                        null
+                    )
+                    button.backgroundTintList = ColorStateList.valueOf(
+                        ContextCompat.getColor(
+                            this,
+                            R.color.colorTitle
+                        )
+                    )
                 } else {
                     if (!isPlaying) {
                         mediaPlayer.start()
                         isPlayingList[index] = true
-                        val pauseDrawable =
-                            ResourcesCompat.getDrawable(resources, R.drawable.ic_pause, null)
+                        val pauseDrawable = ResourcesCompat.getDrawable(
+                            resources,
+                            R.drawable.ic_pause,
+                            null
+                        )
                         button.setCompoundDrawablesWithIntrinsicBounds(
                             null,
                             pauseDrawable,
                             null,
                             null
                         )
+                        button.backgroundTintList = ColorStateList.valueOf(
+                            ContextCompat.getColor(
+                                this,
+                                R.color.colorTitleLight
+                            )
+                        )
                     }
                 }
                 // Apply the button animation here
-                val animation = AnimationUtils.loadAnimation(this@MovieActivity, R.anim.button_animation)
+                val animation = AnimationUtils.loadAnimation(
+                    this@MovieActivity,
+                    R.anim.button_animation
+                )
                 button.startAnimation(animation)
             }
 
@@ -145,18 +170,27 @@ class MovieActivity : AppCompatActivity() {
                     5 -> R.drawable.ic_amityville
                     else -> R.drawable.ic_play // Default
                 }
-
-                val drawable = ResourcesCompat.getDrawable(resources, drawableResId, null)
-                button.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null)
-
-                val animation = AnimationUtils.loadAnimation(this@MovieActivity, R.anim.button_animation)
+                val drawable = ResourcesCompat.getDrawable(
+                    resources,
+                    drawableResId,
+                    null
+                )
+                button.setCompoundDrawablesWithIntrinsicBounds(
+                    null,
+                    drawable,
+                    null,
+                    null
+                )
+                val animation = AnimationUtils.loadAnimation(
+                    this@MovieActivity,
+                    R.anim.button_animation
+                )
                 button.startAnimation(animation)
 
                 true // Return true to indicate that the long click event is consumed
             }
         }
     }
-
     // Release media player when switching between activities
     override fun onStop() {
         super.onStop()
@@ -185,7 +219,6 @@ class MovieActivity : AppCompatActivity() {
         }
         return true
     }
-
     // Define the PrefManager class outside onCreate
     class PrefManager(context: Context) {
         private val PREF_NAME = "MyAppPreferences"

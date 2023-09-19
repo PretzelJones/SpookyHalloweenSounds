@@ -18,7 +18,7 @@
         android:elevation="0dp"
         android:fontFamily="@font/creepster"
         android:keepScreenOn="true"
-        android:text="Halloween"
+        android:text="@string/halloween"
         app:backgroundTint="@color/colorTitle"
         tools:ignore="MissingPrefix" />
 
@@ -31,8 +31,8 @@
         android:elevation="0dp"
         android:fontFamily="@font/creepster"
         android:keepScreenOn="true"
-        android:text="The Exorcist"
-        app:backgroundTint="@color/colorTitle"
+        android:text="@string/the_exorcist"
+        android:backgroundTint="@color/colorTitle"
         tools:ignore="MissingPrefix" />
     <Button
         android:id="@+id/buttonShining"
@@ -43,8 +43,8 @@
         android:elevation="0dp"
         android:fontFamily="@font/creepster"
         android:keepScreenOn="true"
-        android:text="The Shining"
-        app:backgroundTint="@color/colorTitle"
+        android:text="@string/the_shining"
+        android:backgroundTint="@color/colorTitle"
         tools:ignore="MissingPrefix" />
 
     <Button
@@ -56,8 +56,8 @@
         android:elevation="0dp"
         android:fontFamily="@font/creepster"
         android:keepScreenOn="true"
-        android:text="Nightmare on Elm Street"
-        app:backgroundTint="@color/colorTitle"
+        android:text="@string/nightmare_on_elm_street"
+        android:backgroundTint="@color/colorTitle"
         tools:ignore="MissingPrefix" />
 
     <Button
@@ -70,7 +70,7 @@
         android:fontFamily="@font/creepster"
         android:keepScreenOn="true"
         android:text="@string/friday_the_13th"
-        app:backgroundTint="@color/colorTitle"
+        android:backgroundTint="@color/colorTitle"
         tools:ignore="MissingPrefix" />
 
     <Button
@@ -83,7 +83,7 @@
         android:fontFamily="@font/creepster"
         android:keepScreenOn="true"
         android:text="@string/amityville_horror"
-        app:backgroundTint="@color/colorTitle"
+        android:backgroundTint="@color/colorTitle"
         tools:ignore="MissingPrefix" />
 
     <androidx.cardview.widget.CardView

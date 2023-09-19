@@ -56,18 +56,17 @@ class ScrollingActivity : AppCompatActivity() {
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
+        // Initialize Firebase instance
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
 
         val buttonAnimation = AnimationUtils.loadAnimation(this, R.anim.button_animation)
-        showFeedbackDialog()
+
+        showFeedbackDialog() // Prompt users to rate app via in-app review
+
+        updateCountdown() // Update the display with the remaining days until Halloween
 
         // Retrieves the view with the ID overlayImageView (ic_key) for secretactivity
         val overlayImageView = findViewById<View>(R.id.overlayImageView)
-
-
-        // Updates the Halloween countdown timer and starts it.
-        updateCountdown() // Update the display with the remaining days until Halloween
-
         // Create and start a new countdown timer based on the time remaining until Halloween.
         timer = object : CountDownTimer(halloweenDate - System.currentTimeMillis(), 1000) {
             override fun onTick(millisUntilFinished: Long) {
@@ -80,7 +79,6 @@ class ScrollingActivity : AppCompatActivity() {
         }
 
         timer.start() // Start the countdown timer
-
         // Initializes and sets click listeners for all buttons.
         for (buttonId in buttonIds) {
             val button = findViewById<Button>(buttonId) // Find the button by its resource ID
@@ -91,6 +89,7 @@ class ScrollingActivity : AppCompatActivity() {
                 playSound(soundId) // Play the corresponding sound
             }
         }
+
 
         // Set an OnClickListener to handle the click event for secretactivity
         overlayImageView.setOnClickListener {

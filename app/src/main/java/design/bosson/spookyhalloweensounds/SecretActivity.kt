@@ -1,6 +1,7 @@
 package design.bosson.spookyhalloweensounds
 
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.Menu
@@ -8,6 +9,7 @@ import android.view.MenuItem
 import android.view.animation.AnimationUtils
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.activity_secret.toolbar
@@ -34,12 +36,12 @@ class SecretActivity : AppCompatActivity() {
     }
 
     private fun initMediaPlayer() {
-        val theOldTape = MediaPlayer.create(this, R.raw.the_old_tape)
         val theGhostSong = MediaPlayer.create(this, R.raw.the_ghost_song)
+        val theOldTape = MediaPlayer.create(this, R.raw.the_old_tape)
         val chillingCries = MediaPlayer.create(this, R.raw.chilling_cries)
         val criesFromHell = MediaPlayer.create(this, R.raw.cries_from_hell)
 
-        mediaPlayerList = mutableListOf(theOldTape, theGhostSong, chillingCries, criesFromHell)
+        mediaPlayerList = mutableListOf(theGhostSong, theOldTape, chillingCries, criesFromHell)
         isPlayingList = BooleanArray(mediaPlayerList.size) { false }
 
         // Set OnCompletionListener for each MediaPlayer to loop indefinitely
@@ -50,14 +52,12 @@ class SecretActivity : AppCompatActivity() {
             }
         }
     }
-
-
     private fun setButtonClickListeners() {
         val buttons = listOf(
+            findViewById<Button>(R.id.buttonTheGhostSong),
             findViewById(R.id.buttonTheOldTape),
-            findViewById(R.id.buttonTheGhostSong),
             findViewById(R.id.buttonChillingCries),
-            findViewById<Button>(R.id.buttonCriesFromHell)
+            findViewById(R.id.buttonCriesFromHell)
         )
 
         buttons.forEachIndexed { index, button ->
@@ -68,25 +68,51 @@ class SecretActivity : AppCompatActivity() {
                 if (mediaPlayer.isPlaying) {
                     mediaPlayer.pause()
                     isPlayingList[index] = false
-                    val playDrawable =
-                        ResourcesCompat.getDrawable(resources, R.drawable.ic_play, null)
-                    button.setCompoundDrawablesWithIntrinsicBounds(null, playDrawable, null, null)
+                    val playDrawable = ResourcesCompat.getDrawable(
+                        resources,
+                        R.drawable.ic_play,
+                        null
+                    )
+                    button.setCompoundDrawablesWithIntrinsicBounds(
+                        null,
+                        playDrawable,
+                        null,
+                        null
+                    )
+                    button.backgroundTintList = ColorStateList.valueOf(
+                        ContextCompat.getColor(
+                            this,
+                            R.color.colorTitle
+                        )
+                    )
                 } else {
                     if (!isPlaying) {
                         mediaPlayer.start()
                         isPlayingList[index] = true
-                        val pauseDrawable =
-                            ResourcesCompat.getDrawable(resources, R.drawable.ic_pause, null)
+                        val pauseDrawable = ResourcesCompat.getDrawable(
+                            resources,
+                            R.drawable.ic_pause,
+                            null
+                        )
                         button.setCompoundDrawablesWithIntrinsicBounds(
                             null,
                             pauseDrawable,
                             null,
                             null
                         )
+                        button.backgroundTintList = ColorStateList.valueOf(
+                            ContextCompat.getColor(
+                                this,
+                                R.color.colorTitleLight
+                            )
+                        )
                     }
                 }
                 // Apply the button animation here
-                val animation = AnimationUtils.loadAnimation(this@SecretActivity, R.anim.button_animation)
+                val animation = AnimationUtils.loadAnimation(
+                    this@SecretActivity,
+                    R.anim.button_animation
+                )
                 button.startAnimation(animation)
             }
 
@@ -103,18 +129,27 @@ class SecretActivity : AppCompatActivity() {
                     3 -> R.drawable.ic_cries_hell
                     else -> R.drawable.ic_play // Default
                 }
-
-                val drawable = ResourcesCompat.getDrawable(resources, drawableResId, null)
-                button.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null)
-
-                val animation = AnimationUtils.loadAnimation(this@SecretActivity, R.anim.button_animation)
+                val drawable = ResourcesCompat.getDrawable(
+                    resources,
+                    drawableResId,
+                    null
+                )
+                button.setCompoundDrawablesWithIntrinsicBounds(
+                    null,
+                    drawable,
+                    null,
+                    null
+                )
+                val animation = AnimationUtils.loadAnimation(
+                    this@SecretActivity,
+                    R.anim.button_animation
+                )
                 button.startAnimation(animation)
 
                 true // Return true to indicate that the long click event is consumed
             }
         }
     }
-
     // Release media player when switching between activities
     override fun onStop() {
         super.onStop()

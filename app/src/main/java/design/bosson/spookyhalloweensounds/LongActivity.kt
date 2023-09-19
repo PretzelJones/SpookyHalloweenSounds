@@ -5,6 +5,7 @@ import android.animation.ObjectAnimator
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.res.ColorStateList
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.Menu
@@ -13,13 +14,14 @@ import android.view.animation.AnimationUtils
 import android.widget.Button
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.activity_long.toolbar
 
 class LongActivity : AppCompatActivity() {
 
-    private lateinit var prefManager: MovieActivity.PrefManager
+    private lateinit var prefManager: PrefManager
     private lateinit var mediaPlayerList: MutableList<MediaPlayer>
     private lateinit var isPlayingList: BooleanArray
     private lateinit var mFirebaseAnalytics: FirebaseAnalytics
@@ -29,18 +31,14 @@ class LongActivity : AppCompatActivity() {
         setContentView(R.layout.activity_long)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
-
+        // Initialize firebase analytics
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
-
         // Initialize MediaPlayer instances and isPlayingList
         initMediaPlayer()
-
         // Set click listeners for buttons
         setButtonClickListeners()
-
         // Initialize prefManager
-        prefManager = MovieActivity.PrefManager(this)
-
+        prefManager = PrefManager(this)
         // Check if it's the first time
         if (prefManager.isFirstTimeMainActivity()) {
             showPopup()
@@ -90,14 +88,13 @@ class LongActivity : AppCompatActivity() {
             }
         }
     }
-
     private fun setButtonClickListeners() {
         val buttons = listOf(
-            findViewById(R.id.buttonTerrorMix),
+            findViewById<Button>(R.id.buttonTerrorMix),
             findViewById(R.id.buttonHauntedMix),
             findViewById(R.id.buttonLongMix),
             findViewById(R.id.buttonSpaceTerror),
-            findViewById<Button>(R.id.buttonDontLetIn)
+            findViewById(R.id.buttonDontLetIn)
         )
 
         buttons.forEachIndexed { index, button ->
@@ -108,25 +105,51 @@ class LongActivity : AppCompatActivity() {
                 if (mediaPlayer.isPlaying) {
                     mediaPlayer.pause()
                     isPlayingList[index] = false
-                    val playDrawable =
-                        ResourcesCompat.getDrawable(resources, R.drawable.ic_play, null)
-                    button.setCompoundDrawablesWithIntrinsicBounds(null, playDrawable, null, null)
+                    val playDrawable = ResourcesCompat.getDrawable(
+                        resources,
+                        R.drawable.ic_play,
+                        null
+                    )
+                    button.setCompoundDrawablesWithIntrinsicBounds(
+                        null,
+                        playDrawable,
+                        null,
+                        null
+                    )
+                    button.backgroundTintList = ColorStateList.valueOf(
+                        ContextCompat.getColor(
+                            this,
+                            R.color.colorTitle
+                        )
+                    )
                 } else {
                     if (!isPlaying) {
                         mediaPlayer.start()
                         isPlayingList[index] = true
-                        val pauseDrawable =
-                            ResourcesCompat.getDrawable(resources, R.drawable.ic_pause, null)
+                        val pauseDrawable = ResourcesCompat.getDrawable(
+                            resources,
+                            R.drawable.ic_pause,
+                            null
+                        )
                         button.setCompoundDrawablesWithIntrinsicBounds(
                             null,
                             pauseDrawable,
                             null,
                             null
                         )
+                        button.backgroundTintList = ColorStateList.valueOf(
+                            ContextCompat.getColor(
+                                this,
+                                R.color.colorTitleLight
+                            )
+                        )
                     }
                 }
                 // Apply the button animation here
-                val animation = AnimationUtils.loadAnimation(this@LongActivity, R.anim.button_animation)
+                val animation = AnimationUtils.loadAnimation(
+                    this@LongActivity,
+                    R.anim.button_animation
+                )
                 button.startAnimation(animation)
             }
 
@@ -144,19 +167,28 @@ class LongActivity : AppCompatActivity() {
                     4 -> R.drawable.ic_key
                     else -> R.drawable.ic_play // Default
                 }
-
-                val drawable = ResourcesCompat.getDrawable(resources, drawableResId, null)
-                button.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null)
-
-                val animation = AnimationUtils.loadAnimation(this@LongActivity, R.anim.button_animation)
+                val drawable = ResourcesCompat.getDrawable(
+                    resources,
+                    drawableResId,
+                    null
+                )
+                button.setCompoundDrawablesWithIntrinsicBounds(
+                    null,
+                    drawable,
+                    null,
+                    null
+                )
+                val animation = AnimationUtils.loadAnimation(
+                    this@LongActivity,
+                    R.anim.button_animation
+                )
                 button.startAnimation(animation)
 
                 true // Return true to indicate that the long click event is consumed
             }
         }
     }
-
-    // Release media player when switching between activities
+        // Release media player when switching between activities
     override fun onStop() {
         super.onStop()
         mediaPlayerList.forEach {
@@ -184,7 +216,6 @@ class LongActivity : AppCompatActivity() {
         }
         return true
     }
-
     // Define the PrefManager class outside onCreate
     class PrefManager(context: Context) {
         private val PREF_NAME = "MyAppPreferences"

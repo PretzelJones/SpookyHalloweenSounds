@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#F59548</color>
     <color name="colorAccent">#000000</color>
     <color name="colorTitle">#f4863b</color>
+    <color name="colorTitleLight">#F59548</color>
     <color name="colorTimer">#ffffff</color>
     <color name="colorBossonLogo">#784579</color>
 </resources>
