@@ -1,5 +1,4 @@
 package design.bosson.spookyhalloweensounds
-
 import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Bundle
@@ -19,56 +18,36 @@ import java.util.LinkedList
 
 class ScrollingActivity : AppCompatActivity() {
 
-    private lateinit var bWitchLaugh: Button
-    private lateinit var bBlackCat: Button
-    private lateinit var bEvilMan: Button
-    private lateinit var bCreakyDoor: Button
-    private lateinit var bHorrorAmbience: Button
-    private lateinit var bMonsterGrowl: Button
-    private lateinit var bMonsterWalking: Button
-    private lateinit var bScaryScream: Button
-    private lateinit var bSpookyChains: Button
-    private lateinit var bThunder: Button
-    private lateinit var bVampireBat: Button
-    private lateinit var bZombie: Button
-    private lateinit var bGhostBoo: Button
-    private lateinit var bWerewolfHowl: Button
-    private lateinit var bPoltergeistVoice: Button
-    private lateinit var bZombieCome: Button
-    private lateinit var bCatScream: Button
-    private lateinit var bWraithWail: Button
-    private lateinit var bSpookyOwl: Button
-    private lateinit var bChainedGhoul: Button
-    private lateinit var bTerrifiedScream: Button
-    private lateinit var bHauntedOrgan: Button
-    private lateinit var bScareCrow: Button
-    private lateinit var bBlowingWind: Button
-    private lateinit var bLoopingMix: Button
-    private lateinit var bMovieThemes: Button
-    private lateinit var bGhostlyWhisper: Button
-    private lateinit var bDraculaLaugh: Button
-    private lateinit var bWolfCry: Button
-    private lateinit var bKnockKnock: Button
-    private lateinit var bIgorGrumble: Button
-    private lateinit var bHorrorMovie: Button
-    private lateinit var bTwoBells: Button
-    private lateinit var bPainfulMoan: Button
-    private lateinit var bWitchesCauldron: Button
-    private lateinit var bGhostlyChildren: Button
-    private lateinit var bHauntedSwamp: Button
-    private lateinit var bTorturedSouls: Button
-    private lateinit var bChillingHorn: Button
-
     private lateinit var mFirebaseAnalytics: FirebaseAnalytics
     private val mediaPlayerQueue = LinkedList<MediaPlayer>()
     private lateinit var timer: CountDownTimer
 
+    // Array of button resource IDs
+    private val buttonIds = arrayOf(
+        R.id.buttonWitch, R.id.buttonBlackCat, R.id.buttonEvilMan, R.id.buttonCreakyDoor,
+        R.id.buttonHorrorAmbience, R.id.buttonMonsterGrowl, R.id.buttonMonsterWalking,
+        R.id.buttonScaryScream, R.id.buttonSpookyChains, R.id.buttonThunder, R.id.buttonVampireBat,
+        R.id.buttonZombie, R.id.buttonGhostBoo, R.id.buttonWerewolfHowl,
+        R.id.buttonPoltergeistVoice, R.id.buttonZombieCome, R.id.buttonCatScream,
+        R.id.buttonWraithWail, R.id.buttonSpookyOwl, R.id.buttonChainedGhoul,
+        R.id.buttonTerrifiedScream, R.id.buttonHauntedOrgan, R.id.buttonScareCrow,
+        R.id.buttonBlowingWind, R.id.buttonLoopingMix, R.id.buttonMovieThemes,
+        R.id.buttonGhostlyWhisper, R.id.buttonDraculaLaugh, R.id.buttonWolfCry,
+        R.id.buttonKnockKnock, R.id.buttonIgorGrumble, R.id.buttonHorrorMovie,
+        R.id.buttonTwoBells, R.id.buttonPainfulMoans, R.id.buttonWitchesCauldron,
+        R.id.buttonGhostlyChildren, R.id.buttonHauntedSwamp, R.id.buttonTorturedSouls,
+        R.id.buttonChillingHorn
+    )
+
+    private val buttons = mutableListOf<Button>()
+
+    // Initializes the "halloweenDate" variable with a specific date and time.
     private var halloweenDate = Calendar.getInstance().apply {
-        set(Calendar.MONTH, Calendar.NOVEMBER)
-        set(Calendar.DAY_OF_MONTH, 1)
-        set(Calendar.HOUR_OF_DAY, 0)
-        set(Calendar.MINUTE, 0)
-        set(Calendar.SECOND, 0)
+        set(Calendar.MONTH, Calendar.NOVEMBER)     // Set the month to November
+        set(Calendar.DAY_OF_MONTH, 1)             // Set the day of the month to 1
+        set(Calendar.HOUR_OF_DAY, 0)              // Set the hour of the day to 0 (midnight)
+        set(Calendar.MINUTE, 0)                   // Set the minute to 0
+        set(Calendar.SECOND, 0)                   // Set the second to 0
     }.timeInMillis
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,326 +56,107 @@ class ScrollingActivity : AppCompatActivity() {
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
-        // Obtain the FirebaseAnalytics instance.
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
 
-        // load button animation
         val buttonAnimation = AnimationUtils.loadAnimation(this, R.anim.button_animation)
-
-        // present Google in-app review dialog
         showFeedbackDialog()
 
+        // Retrieves the view with the ID overlayImageView (ic_key) for secretactivity
         val overlayImageView = findViewById<View>(R.id.overlayImageView)
 
-        // Set the target date to October 31 of the current year
-        // Countdown to Halloween
-        updateCountdown()
+
+        // Updates the Halloween countdown timer and starts it.
+        updateCountdown() // Update the display with the remaining days until Halloween
+
+        // Create and start a new countdown timer based on the time remaining until Halloween.
         timer = object : CountDownTimer(halloweenDate - System.currentTimeMillis(), 1000) {
             override fun onTick(millisUntilFinished: Long) {
-                updateCountdown()
+                updateCountdown() // Continuously updates the countdown display as time elapses
             }
 
             override fun onFinish() {
-                resetTimer()
+                resetTimer() // When the timer finishes, reset it for the next year's Halloween
             }
         }
-        timer.start()
 
-        bLoopingMix = findViewById(R.id.buttonLoopingMix)
-        bMovieThemes = findViewById(R.id.buttonMovieThemes)
-        bWitchLaugh = findViewById(R.id.buttonWitch)
-        bBlackCat = findViewById(R.id.buttonBlackCat)
-        bEvilMan = findViewById(R.id.buttonEvilMan)
-        bCreakyDoor = findViewById(R.id.buttonCreakyDoor)
-        bHorrorAmbience = findViewById(R.id.buttonHorrorAmbience)
-        bMonsterGrowl = findViewById(R.id.buttonMonsterGrowl)
-        bMonsterWalking = findViewById(R.id.buttonMonsterWalking)
-        bScaryScream = findViewById(R.id.buttonScaryScream)
-        bSpookyChains = findViewById(R.id.buttonSpookyChains)
-        bThunder = findViewById(R.id.buttonThunder)
-        bVampireBat = findViewById(R.id.buttonVampireBat)
-        bZombie = findViewById(R.id.buttonZombie)
-        bGhostBoo = findViewById(R.id.buttonGhostBoo)
-        bWerewolfHowl = findViewById(R.id.buttonWerewolfHowl)
-        bPoltergeistVoice = findViewById(R.id.buttonPoltergeistVoice)
-        bZombieCome = findViewById(R.id.buttonZombieCome)
-        bCatScream = findViewById(R.id.buttonCatScream)
-        bWraithWail = findViewById(R.id.buttonWraithWail)
-        bSpookyOwl = findViewById(R.id.buttonSpookyOwl)
-        bChainedGhoul = findViewById(R.id.buttonChainedGhoul)
-        bTerrifiedScream = findViewById(R.id.buttonTerrifiedScream)
-        bHauntedOrgan = findViewById(R.id.buttonHauntedOrgan)
-        bScareCrow = findViewById(R.id.buttonScareCrow)
-        bBlowingWind = findViewById(R.id.buttonBlowingWind)
-        bGhostlyWhisper = findViewById(R.id.buttonGhostlyWhisper)
-        bDraculaLaugh = findViewById(R.id.buttonDraculaLaugh)
-        bWolfCry = findViewById(R.id.buttonWolfCry)
-        bKnockKnock = findViewById(R.id.buttonKnockKnock)
-        bIgorGrumble = findViewById(R.id.buttonIgorGrumble)
-        bHorrorMovie = findViewById(R.id.buttonHorrorMovie)
-        bTwoBells = findViewById(R.id.buttonTwoBells)
-        bPainfulMoan = findViewById(R.id.buttonPainfulMoans)
-        bWitchesCauldron = findViewById(R.id.buttonWitchesCauldron)
-        bGhostlyChildren = findViewById(R.id.buttonGhostlyChildren)
-        bHauntedSwamp = findViewById(R.id.buttonHauntedSwamp)
-        bTorturedSouls = findViewById(R.id.buttonTorturedSouls)
-        bChillingHorn = findViewById(R.id.buttonChillingHorn)
+        timer.start() // Start the countdown timer
 
-        bLoopingMix.setOnClickListener {
-            bLoopingMix.startAnimation(buttonAnimation)
-            val intent = Intent(this, LongActivity::class.java)
-            this.startActivity(intent)
+        // Initializes and sets click listeners for all buttons.
+        for (buttonId in buttonIds) {
+            val button = findViewById<Button>(buttonId) // Find the button by its resource ID
+            buttons.add(button) // Add the button to the list for future reference
+            button.setOnClickListener {
+                button.startAnimation(buttonAnimation) // Start a button animation on click
+                val soundId = getSoundResourceId(buttonId) // Get the associated sound resource ID
+                playSound(soundId) // Play the corresponding sound
+            }
         }
 
-        bMovieThemes.setOnClickListener {
-            bMovieThemes.startAnimation(buttonAnimation)
-            val intent = Intent(this, MovieActivity::class.java)
-            this.startActivity(intent)
-        }
-
-        bWitchLaugh.setOnClickListener {
-            bWitchLaugh.startAnimation(buttonAnimation)
-            playSound(R.raw.witch_laugh)
-        }
-
-        bBlackCat.setOnClickListener {
-            bBlackCat.startAnimation(buttonAnimation)
-            playSound(R.raw.black_cat)
-        }
-
-        bEvilMan.setOnClickListener {
-            bEvilMan.startAnimation(buttonAnimation)
-            playSound(R.raw.evil_man)
-        }
-
-        bCreakyDoor.setOnClickListener {
-            bCreakyDoor.startAnimation(buttonAnimation)
-            playSound(R.raw.creaky_door)
-        }
-
-        bHorrorAmbience.setOnClickListener {
-            bHorrorAmbience.startAnimation(buttonAnimation)
-            playSound(R.raw.horror_ambience)
-        }
-
-        bMonsterGrowl.setOnClickListener {
-            bMonsterGrowl.startAnimation(buttonAnimation)
-            playSound(R.raw.monster_growl)
-        }
-
-        bMonsterWalking.setOnClickListener {
-            bMonsterWalking.startAnimation(buttonAnimation)
-            playSound(R.raw.monster_walking)
-        }
-
-        bScaryScream.setOnClickListener {
-            bScaryScream.startAnimation(buttonAnimation)
-            playSound(R.raw.scary_scream)
-        }
-
-        bSpookyChains.setOnClickListener {
-            bSpookyChains.startAnimation(buttonAnimation)
-            playSound(R.raw.spooky_chains)
-        }
-
-        bThunder.setOnClickListener {
-            bThunder.startAnimation(buttonAnimation)
-            playSound(R.raw.thunder)
-        }
-
-        bVampireBat.setOnClickListener {
-            bVampireBat.startAnimation(buttonAnimation)
-            playSound(R.raw.vampire_bat)
-        }
-
-        bZombie.setOnClickListener {
-            bZombie.startAnimation(buttonAnimation)
-            playSound(R.raw.zombie)
-        }
-
-        bGhostBoo.setOnClickListener {
-            bGhostBoo.startAnimation(buttonAnimation)
-            playSound(R.raw.ghost_boo)
-        }
-
-        bWerewolfHowl.setOnClickListener {
-            bWerewolfHowl.startAnimation(buttonAnimation)
-            playSound(R.raw.werewolf_howl)
-        }
-
-        bPoltergeistVoice.setOnClickListener {
-            bPoltergeistVoice.startAnimation(buttonAnimation)
-            playSound(R.raw.poltergeist_voice)
-        }
-
-        bZombieCome.setOnClickListener {
-            bZombieCome.startAnimation(buttonAnimation)
-            playSound(R.raw.zombie_come)
-        }
-
-        bCatScream.setOnClickListener {
-            bCatScream.startAnimation(buttonAnimation)
-            playSound(R.raw.cat_scream)
-        }
-
-        bWraithWail.setOnClickListener {
-            bWraithWail.startAnimation(buttonAnimation)
-            playSound(R.raw.wraith_wail)
-        }
-
-        bSpookyOwl.setOnClickListener {
-            bSpookyOwl.startAnimation(buttonAnimation)
-            playSound(R.raw.spooky_owl)
-        }
-
-        bChainedGhoul.setOnClickListener {
-            bChainedGhoul.startAnimation(buttonAnimation)
-            playSound(R.raw.chained_ghoul)
-        }
-
-        bTerrifiedScream.setOnClickListener {
-            bTerrifiedScream.startAnimation(buttonAnimation)
-            playSound(R.raw.terrified_scream)
-        }
-
-        bHauntedOrgan.setOnClickListener {
-            bHauntedOrgan.startAnimation(buttonAnimation)
-            playSound(R.raw.haunted_organ)
-        }
-
-        bScareCrow.setOnClickListener {
-            bScareCrow.startAnimation(buttonAnimation)
-            playSound(R.raw.scarecrow)
-        }
-
-        bBlowingWind.setOnClickListener {
-            bBlowingWind.startAnimation(buttonAnimation)
-            playSound(R.raw.blowing_wind)
-        }
-
-        bGhostlyWhisper.setOnClickListener {
-            bGhostlyWhisper.startAnimation(buttonAnimation)
-            playSound(R.raw.ghostly_whisper)
-        }
-
-        bDraculaLaugh.setOnClickListener {
-            bDraculaLaugh.startAnimation(buttonAnimation)
-            playSound(R.raw.dracula_laugh)
-        }
-
-        bWolfCry.setOnClickListener {
-            bWolfCry.startAnimation(buttonAnimation)
-            playSound(R.raw.wolf_cry)
-        }
-
-        bKnockKnock.setOnClickListener {
-            bKnockKnock.startAnimation(buttonAnimation)
-            playSound(R.raw.knock_knock)
-        }
-
-        bIgorGrumble.setOnClickListener {
-            bIgorGrumble.startAnimation(buttonAnimation)
-            playSound(R.raw.igor_grumble)
-        }
-
-        bHorrorMovie.setOnClickListener {
-            bHorrorMovie.startAnimation(buttonAnimation)
-            playSound(R.raw.horror_film)
-        }
-
-        bTwoBells.setOnClickListener {
-            bTwoBells.startAnimation(buttonAnimation)
-            playSound(R.raw.warning_bells)
-        }
-
-        bPainfulMoan.setOnClickListener {
-            bPainfulMoan.startAnimation(buttonAnimation)
-            playSound(R.raw.painful_moan)
-        }
-
-        bWitchesCauldron.setOnClickListener {
-            bWitchesCauldron.startAnimation(buttonAnimation)
-            playSound(R.raw.bubbles)
-        }
-
-        bGhostlyChildren.setOnClickListener {
-            bGhostlyChildren.startAnimation(buttonAnimation)
-            playSound(R.raw.scary_nursery)
-        }
-
-        bHauntedSwamp.setOnClickListener {
-            bHauntedSwamp.startAnimation(buttonAnimation)
-            playSound(R.raw.haunted_swamp)
-        }
-
-        bTorturedSouls.setOnClickListener {
-            bTorturedSouls.startAnimation(buttonAnimation)
-            playSound(R.raw.tortured_souls)
-        }
-
-        bChillingHorn.setOnClickListener {
-            bChillingHorn.startAnimation(buttonAnimation)
-            playSound(R.raw.chilling_horn)
-        }
-        // Set an OnClickListener to handle the click event
+        // Set an OnClickListener to handle the click event for secretactivity
         overlayImageView.setOnClickListener {
             openSecretActivity()
         }
 
-    }
-    // Google in-app review dialog - do not delete
-    private fun showFeedbackDialog() {
-        val reviewManager = ReviewManagerFactory.create(applicationContext)
-        reviewManager.requestReviewFlow().addOnCompleteListener {
-            if(it.isSuccessful) {
-                reviewManager.launchReviewFlow(this, it.result)
-            }
+        val bLoopingMix: Button = findViewById(R.id.buttonLoopingMix)
+        bLoopingMix.setOnClickListener {
+            it.startAnimation(buttonAnimation)
+            val intent = Intent(this, LongActivity::class.java)
+            startActivity(intent)
+        }
+
+        val bMovieThemes: Button = findViewById(R.id.buttonMovieThemes)
+        bMovieThemes.setOnClickListener {
+            it.startAnimation(buttonAnimation)
+            val intent = Intent(this, MovieActivity::class.java)
+            startActivity(intent)
         }
     }
 
-    private fun openSecretActivity() {
-        // Open the SecretActivity here
-        val intent = Intent(this, SecretActivity::class.java)
-        startActivity(intent)
-    }
-    // update countdown timer - do not delete
-    private fun updateCountdown() {
-        val currentDate = Calendar.getInstance().timeInMillis
-        val remainingDays = ((halloweenDate - currentDate) / (1000 * 60 * 60 * 24)).toInt()
-        textCountdown.text = if (remainingDays > 0) {
-            "$remainingDays days till Halloween"
-        } else {
-            "Happy Halloween"
-        }
-        if (remainingDays == 1) {
-            textCountdown.text = getString(R.string.tomorrow)
+    // Function to get sound resource ID based on the clicked button
+    private fun getSoundResourceId(buttonId: Int): Int {
+        return when (buttonId) {
+            R.id.buttonWitch -> R.raw.witch_laugh
+            R.id.buttonBlackCat -> R.raw.black_cat
+            R.id.buttonEvilMan -> R.raw.evil_man
+            R.id.buttonCreakyDoor -> R.raw.creaky_door
+            R.id.buttonHorrorAmbience -> R.raw.horror_ambience
+            R.id.buttonMonsterGrowl -> R.raw.monster_growl
+            R.id.buttonMonsterWalking -> R.raw.monster_walking
+            R.id.buttonSpookyChains -> R.raw.spooky_chains
+            R.id.buttonThunder -> R.raw.thunder
+            R.id.buttonVampireBat -> R.raw.vampire_bat
+            R.id.buttonScaryScream -> R.raw.scary_scream
+            R.id.buttonZombie -> R.raw.zombie
+            R.id.buttonGhostBoo -> R.raw.ghost_boo
+            R.id.buttonWerewolfHowl -> R.raw.werewolf_howl
+            R.id.buttonPoltergeistVoice -> R.raw.poltergeist_voice
+            R.id.buttonZombieCome -> R.raw.zombie_come
+            R.id.buttonCatScream -> R.raw.cat_scream
+            R.id.buttonWraithWail -> R.raw.wraith_wail
+            R.id.buttonSpookyOwl -> R.raw.spooky_owl
+            R.id.buttonChainedGhoul -> R.raw.chained_ghoul
+            R.id.buttonTerrifiedScream -> R.raw.terrified_scream
+            R.id.buttonHauntedOrgan -> R.raw.haunted_organ
+            R.id.buttonScareCrow -> R.raw.scarecrow
+            R.id.buttonBlowingWind -> R.raw.blowing_wind
+            R.id.buttonGhostlyWhisper -> R.raw.ghostly_whisper
+            R.id.buttonDraculaLaugh -> R.raw.dracula_laugh
+            R.id.buttonWolfCry -> R.raw.wolf_cry
+            R.id.buttonKnockKnock -> R.raw.knock_knock
+            R.id.buttonIgorGrumble -> R.raw.igor_grumble
+            R.id.buttonHorrorMovie -> R.raw.horror_film
+            R.id.buttonTwoBells -> R.raw.warning_bells
+            R.id.buttonPainfulMoans -> R.raw.painful_moan
+            R.id.buttonWitchesCauldron -> R.raw.bubbles
+            R.id.buttonGhostlyChildren -> R.raw.scary_nursery
+            R.id.buttonHauntedSwamp -> R.raw.haunted_swamp
+            R.id.buttonTorturedSouls -> R.raw.tortured_souls
+            R.id.buttonChillingHorn -> R.raw.chilling_horn
+            else -> 0 // Default value, you can choose another value or behavior
         }
     }
 
-    private fun resetTimer() {
-        // Reset the timer for next year's Halloween
-        val currentYear = Calendar.getInstance().get(Calendar.YEAR)
-        val nextYear = currentYear + 1
-        halloweenDate = Calendar.getInstance().apply {
-            set(Calendar.YEAR, nextYear)
-            set(Calendar.MONTH, Calendar.NOVEMBER)
-            set(Calendar.DAY_OF_MONTH, 1)
-            set(Calendar.HOUR_OF_DAY, 0)
-            set(Calendar.MINUTE, 0)
-            set(Calendar.SECOND, 0)
-        }.timeInMillis
-        timer = object : CountDownTimer(halloweenDate - System.currentTimeMillis(), 1000) {
-            override fun onTick(millisUntilFinished: Long) {
-                updateCountdown()
-            }
-
-            override fun onFinish() {
-                resetTimer()
-            }
-        }
-        timer.start()
-    }
-
+    // Function to play sound
     private fun playSound(soundId: Int) {
         // Create a new MediaPlayer instance for the current sound
         val mediaPlayer = MediaPlayer.create(this, soundId)
@@ -419,6 +179,64 @@ class ScrollingActivity : AppCompatActivity() {
         // Start playing the current sound
         mediaPlayer.start()
     }
+
+    // Function to show feedback dialog
+    private fun showFeedbackDialog() {
+        val reviewManager = ReviewManagerFactory.create(applicationContext)
+        reviewManager.requestReviewFlow().addOnCompleteListener {
+            if (it.isSuccessful) {
+                reviewManager.launchReviewFlow(this, it.result)
+            }
+        }
+    }
+    // Launch hidden sounds activity on hidden icon press
+    private fun openSecretActivity() {
+        // Open the SecretActivity here
+        val intent = Intent(this, SecretActivity::class.java)
+        startActivity(intent)
+    }
+    // update countdown timer - do not delete
+    private fun updateCountdown() {
+        val currentDate = Calendar.getInstance().timeInMillis
+        val remainingDays = ((halloweenDate - currentDate) / (1000 * 60 * 60 * 24)).toInt()
+        textCountdown.text = if (remainingDays > 0) {
+            "$remainingDays days till Halloween"
+        } else {
+            "Happy Halloween"
+        }
+        if (remainingDays == 1) {
+            textCountdown.text = getString(R.string.tomorrow)
+        }
+    }
+    // Resets the countdown timer for the next year's Halloween
+    private fun resetTimer() {
+        // Calculate the date for next year's Halloween
+        val currentYear = Calendar.getInstance().get(Calendar.YEAR)
+        val nextYear = currentYear + 1
+        halloweenDate = Calendar.getInstance().apply {
+            set(Calendar.YEAR, nextYear)
+            set(Calendar.MONTH, Calendar.NOVEMBER)
+            set(Calendar.DAY_OF_MONTH, 1)
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+        }.timeInMillis
+
+        // Create a new countdown timer with the updated date
+        timer = object : CountDownTimer(halloweenDate - System.currentTimeMillis(), 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                updateCountdown()
+            }
+
+            override fun onFinish() {
+                resetTimer()
+            }
+        }
+
+        // Start the countdown timer
+        timer.start()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         mediaPlayerQueue.forEach { mediaPlayer ->
@@ -460,7 +278,3 @@ class ScrollingActivity : AppCompatActivity() {
         return true
     }
 }
-
-
-
-
