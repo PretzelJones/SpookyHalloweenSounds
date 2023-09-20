@@ -437,7 +437,7 @@
             android:drawableTop="@drawable/ic_warning_bells"
             android:elevation="0dp"
             android:fontFamily="@font/creepster"
-            android:text="Warning Bells"
+            android:text="Warning Bell"
             app:backgroundTint="@color/colorTitle"
             tools:ignore="MissingPrefix" />
 
