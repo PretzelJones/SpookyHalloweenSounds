@@ -1,0 +1,43 @@
+package design.bosson.spookyhalloweensounds
+
+object RawAudioProvider {
+    val audioResources = listOf(
+        R.raw.witch_laugh,
+        R.raw.black_cat,
+        R.raw.evil_man,
+        R.raw.creaky_door,
+        R.raw.horror_ambience,
+        R.raw.monster_growl,
+        R.raw.monster_walking,
+        R.raw.spooky_chains,
+        R.raw.thunder,
+        R.raw.vampire_bat,
+        R.raw.scary_scream,
+        R.raw.zombie,
+        R.raw.ghost_boo,
+        R.raw.werewolf_howl,
+        R.raw.poltergeist_voice,
+        R.raw.zombie_come,
+        R.raw.cat_scream,
+        R.raw.wraith_wail,
+        R.raw.spooky_owl,
+        R.raw.chained_ghoul,
+        R.raw.terrified_scream,
+        R.raw.haunted_organ,
+        R.raw.scarecrow,
+        R.raw.blowing_wind,
+        R.raw.ghostly_whisper,
+        R.raw.dracula_laugh,
+        R.raw.wolf_cry,
+        R.raw.knock_knock,
+        R.raw.igor_grumble,
+        R.raw.horror_film,
+        R.raw.warning_bells,
+        R.raw.painful_moan,
+        R.raw.bubbles,
+        R.raw.scary_nursery,
+        R.raw.haunted_swamp,
+        R.raw.tortured_souls,
+        R.raw.chilling_horn
+    )
+}

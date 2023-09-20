@@ -1,10 +1,6 @@
 package design.bosson.spookyhalloweensounds
 
-import android.animation.AnimatorSet
-import android.animation.ObjectAnimator
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.content.res.ColorStateList
 import android.media.MediaPlayer
 import android.os.Bundle
@@ -12,7 +8,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.animation.AnimationUtils
 import android.widget.Button
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
@@ -47,29 +42,8 @@ class LongActivity : AppCompatActivity() {
     }
     // temporary popup to notiffy users of new restart feature
     private fun showPopup() {
-        // Create the AlertDialog with your custom style
-        val builder = AlertDialog.Builder(this, R.style.RoundedAlertDialog)
-        builder.setMessage(getString(R.string.popup_text_pause))
-            .setPositiveButton("OK") { dialog, _ ->
-                dialog.dismiss()
-            }
-
-        val dialog = builder.create()
-
-        // Set up custom animations
-        val scaleX = ObjectAnimator.ofFloat(dialog.window!!.decorView, "scaleX", 0.5f, 1f)
-        val scaleY = ObjectAnimator.ofFloat(dialog.window!!.decorView, "scaleY", 0.5f, 1f)
-        val fadeIn = ObjectAnimator.ofFloat(dialog.window!!.decorView, "alpha", 0f, 1f)
-
-        val animatorSet = AnimatorSet()
-        animatorSet.duration = 300 // Set the duration as needed
-        animatorSet.playTogether(scaleX, scaleY, fadeIn)
-        animatorSet.start()
-
-        // Show the dialog after setting up the animations
-        dialog.show()
+        PopupUtils.showPopup(this)
     }
-
     private fun initMediaPlayer() {
         val halloween = MediaPlayer.create(this, R.raw.ultra_terror)
         val exorcist = MediaPlayer.create(this, R.raw.haunted_house)
@@ -159,6 +133,14 @@ class LongActivity : AppCompatActivity() {
                 isPlayingList[index] = false
                 mediaPlayer.pause()
 
+                // Change button background color
+                button.backgroundTintList = ColorStateList.valueOf(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.colorTitle
+                    )
+                )
+
                 val drawableResId = when (index) {
                     0 -> R.drawable.ic_ultra_terror
                     1 -> R.drawable.ic_haunted_circus
@@ -188,14 +170,14 @@ class LongActivity : AppCompatActivity() {
             }
         }
     }
-        // Release media player when switching between activities
-    override fun onStop() {
-        super.onStop()
-        mediaPlayerList.forEach {
-            it.release()
-        }
+    override fun onPause() {
+        super.onPause()
+        AudioControl.pauseAudio(mediaPlayerList)
     }
-
+    override fun onResume() {
+        super.onResume()
+        AudioControl.resumeAudio(mediaPlayerList)
+    }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_scrolling, menu)
         return true
@@ -215,23 +197,5 @@ class LongActivity : AppCompatActivity() {
             }
         }
         return true
-    }
-    // Define the PrefManager class outside onCreate
-    class PrefManager(context: Context) {
-        private val PREF_NAME = "MyAppPreferences"
-        private val KEY_FIRST_TIME_MAIN_ACTIVITY = "firstTimeMainActivity"
-
-        private val pref: SharedPreferences =
-            context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
-        private val editor: SharedPreferences.Editor = pref.edit()
-
-        fun setFirstTimeMainActivity(isFirstTime: Boolean) {
-            editor.putBoolean(KEY_FIRST_TIME_MAIN_ACTIVITY, isFirstTime)
-            editor.apply()
-        }
-
-        fun isFirstTimeMainActivity(): Boolean {
-            return pref.getBoolean(KEY_FIRST_TIME_MAIN_ACTIVITY, true)
-        }
     }
 }

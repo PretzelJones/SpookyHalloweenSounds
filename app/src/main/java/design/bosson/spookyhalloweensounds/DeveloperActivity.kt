@@ -85,10 +85,6 @@ class DeveloperActivity : AppCompatActivity() {
             sharingIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.google_play_store))
             startActivity(Intent.createChooser(sharingIntent, "Share via"))
         }
-        //R.id.secret -> {
-        //    val intent = Intent(this, SecretActivity::class.java)
-        //    this.startActivity(intent)
-        //}
     }
         return true
     }

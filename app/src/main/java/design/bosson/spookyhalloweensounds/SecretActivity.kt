@@ -16,6 +16,7 @@ import kotlinx.android.synthetic.main.activity_secret.toolbar
 
 class SecretActivity : AppCompatActivity() {
 
+    private lateinit var prefManager: PrefManager
     private lateinit var mediaPlayerList: MutableList<MediaPlayer>
     private lateinit var isPlayingList: BooleanArray
     private lateinit var mFirebaseAnalytics: FirebaseAnalytics
@@ -25,16 +26,23 @@ class SecretActivity : AppCompatActivity() {
         setContentView(R.layout.activity_secret)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
-
+        // Initialize firebase analytics
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
-
         // Initialize MediaPlayer instances and isPlayingList
         initMediaPlayer()
-
         // Set click listeners for buttons
         setButtonClickListeners()
+        // Initialize prefManager
+        prefManager = PrefManager(this)
+        // Check if it's the first time
+        if (prefManager.isFirstTimeMainActivity()) {
+            showPopup()
+            prefManager.setFirstTimeMainActivity(false) // Mark as visited
+        }
     }
-
+    private fun showPopup() {
+        PopupUtils.showPopup(this)
+    }
     private fun initMediaPlayer() {
         val theGhostSong = MediaPlayer.create(this, R.raw.the_ghost_song)
         val theOldTape = MediaPlayer.create(this, R.raw.the_old_tape)
@@ -122,6 +130,14 @@ class SecretActivity : AppCompatActivity() {
                 isPlayingList[index] = false
                 mediaPlayer.pause()
 
+                // Change button background color
+                button.backgroundTintList = ColorStateList.valueOf(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.colorTitle
+                    )
+                )
+
                 val drawableResId = when (index) {
                     0 -> R.drawable.ic_ghost_song
                     1 -> R.drawable.ic_old_tape
@@ -150,18 +166,18 @@ class SecretActivity : AppCompatActivity() {
             }
         }
     }
-    // Release media player when switching between activities
-    override fun onStop() {
-        super.onStop()
-        mediaPlayerList.forEach {
-            it.release()
-        }
+    override fun onPause() {
+        super.onPause()
+        AudioControl.pauseAudio(mediaPlayerList)
+    }
+    override fun onResume() {
+        super.onResume()
+        AudioControl.resumeAudio(mediaPlayerList)
     }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_scrolling, menu)
         return true
     }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_settings -> {

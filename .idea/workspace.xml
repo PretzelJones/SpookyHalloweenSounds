@@ -17,22 +17,28 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0ab9337d-686f-443d-85b5-d4995dd55070" name="Default Changelist" comment="overhaul of ScrollingActivity to match the code design of the long play activities.">
+    <list default="true" id="0ab9337d-686f-443d-85b5-d4995dd55070" name="Default Changelist" comment="1. added button color color changes to ScrollingActivity.&#10;2. created custom AudioControl.kt to handle pausing the audio when exiting the app and resuming when returning.&#10;3. Moved PrefManager to serperate file and added code in each activity to call it.">
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/AudioControl.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/ButtonListProvider.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/PopupUtils.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/RawAudioProvider.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.5/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.5/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.5/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.5/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.5/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.5/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.5/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.5/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.5/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.5/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/configuration-cache/cadx65my5juc9dcyzlsib2doc/work.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/configuration-cache/cadx65my5juc9dcyzlsib2doc/work.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/deploymentTargetDropDown.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/AppRater.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/AppRater.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/DeveloperActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/DeveloperActivity.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/LongActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/LongActivity.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/MovieActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/MovieActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/PrefManager.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/PrefManager.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/ScrollingActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/ScrollingActivity.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/SecretActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/SecretActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/content_movie.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/content_movie.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/sessions/kotlin-compiler-1096325755003978008.salive" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,8 +94,8 @@
       <list>
         <option value="valueResourceFile" />
         <option value="layoutResourceFile" />
-        <option value="Kotlin Class" />
         <option value="resourceFile" />
+        <option value="Kotlin Class" />
       </list>
     </option>
   </component>
@@ -137,10 +143,14 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "BundleExportedModule": "SpookyHalloweenSounds.app",
+    "DEBUGGABLE_DEVICE": "samsung-sm_g970u-adb-R58M32HPR8D-OTajSs._adb-tls-connect._tcp.",
+    "DEBUGGABLE_PROCESS": "design.bosson.spookyhalloweensounds",
+    "DEBUGGER_ID": "Auto",
     "ExportBundle.BundlePathForSpookyHalloweenSounds.app": "/Users/mac/Projects/Android/SpookyHalloweenSounds/app",
     "PROJECT_TRUSTED_KEY": "true",
     "RunOnceActivity.cidr.known.project.marker": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "SHOW_ALL_PROCESSES": "false",
     "cidr.known.project.marker": "true",
     "com.android.tools.idea.devicemanager.tab": "Physical",
     "com.google.services.firebase.aqiPopupShown": "true",
@@ -505,7 +515,14 @@
       <option name="project" value="LOCAL" />
       <updated>1695121535205</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="good play and animation configuration. Need to ad button color color changes to ScrollingActivity - this will require modifying the play format code to the same as long play activities.">
+      <created>1695144753190</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1695144753190</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -521,7 +538,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Added space terror sound to long mixes and movie themes" />
     <MESSAGE value="production version 1.9.26 build 37" />
     <MESSAGE value="Updated gradle kotlin extensions and changed build to 1.9.30 41" />
     <MESSAGE value="Centered text on secret activity" />
@@ -545,6 +561,8 @@
     <MESSAGE value="version 1.2.1(54) - removed save ringtone. Doesn't work on latest android due to permission changes. Added ability to restart audio via longpress on long play sounds." />
     <MESSAGE value="version 1.2.3(56) - significant modifications to longer play activities. Added button animation" />
     <MESSAGE value="overhaul of ScrollingActivity to match the code design of the long play activities." />
-    <option name="LAST_COMMIT_MESSAGE" value="overhaul of ScrollingActivity to match the code design of the long play activities." />
+    <MESSAGE value="good play and animation configuration. Need to ad button color color changes to ScrollingActivity - this will require modifying the play format code to the same as long play activities." />
+    <MESSAGE value="1. added button color color changes to ScrollingActivity.&#10;2. created custom AudioControl.kt to handle pausing the audio when exiting the app and resuming when returning.&#10;3. Moved PrefManager to serperate file and added code in each activity to call it." />
+    <option name="LAST_COMMIT_MESSAGE" value="1. added button color color changes to ScrollingActivity.&#10;2. created custom AudioControl.kt to handle pausing the audio when exiting the app and resuming when returning.&#10;3. Moved PrefManager to serperate file and added code in each activity to call it." />
   </component>
 </project>
