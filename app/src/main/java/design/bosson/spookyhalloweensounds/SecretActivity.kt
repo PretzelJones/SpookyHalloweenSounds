@@ -6,6 +6,7 @@ import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_secret.*
 import kotlinx.android.synthetic.main.content_secret.*
@@ -27,11 +28,8 @@ class SecretActivity : AppCompatActivity() {
         val bChillingCries = this.buttonChillingCries
         val bCriesFromHell = this.buttonCriesFromHell
 
-//        val oldPlayer = MediaPlayer.create(this@SecretActivity, R.raw.the_old_tape)
-//        val ghostPlayer = MediaPlayer.create(this@SecretActivity, R.raw.the_ghost_song)
-//        val chillingPlayer = MediaPlayer.create(this@SecretActivity, R.raw.chilling_cries)
-//        val criesPlayer = MediaPlayer.create(this@SecretActivity, R.raw.cries_from_hell)
-
+        // initialize button animation for long and movie buttons
+        val buttonAnimation = AnimationUtils.loadAnimation(this, R.anim.button_animation)
         //sets font for buttons
         val mTypeFace = Typeface.createFromAsset(assets, "Creepster.ttf")
 
@@ -44,24 +42,28 @@ class SecretActivity : AppCompatActivity() {
 
         //media player methods
         bTheOldTape.setOnClickListener {
+            bTheGhostSong.startAnimation(buttonAnimation)
             stopPlaying()
             mp = MediaPlayer.create(this@SecretActivity, R.raw.the_old_tape)
             mPlay()
         }
 
         bTheGhostSong.setOnClickListener {
+            bTheGhostSong.startAnimation(buttonAnimation)
             stopPlaying()
             mp = MediaPlayer.create(this@SecretActivity, R.raw.the_ghost_song)
             mPlay()
         }
 
         bChillingCries.setOnClickListener {
+            bChillingCries.startAnimation(buttonAnimation)
             stopPlaying()
             mp = MediaPlayer.create(this@SecretActivity, R.raw.chilling_cries)
             mPlay()
         }
 
         bCriesFromHell.setOnClickListener {
+            bCriesFromHell.startAnimation(buttonAnimation)
             stopPlaying()
             mp = MediaPlayer.create(this@SecretActivity, R.raw.cries_from_hell)
             mPlay()
@@ -109,13 +111,6 @@ class SecretActivity : AppCompatActivity() {
 
         val id = item.itemId
 
-        /*
-        if (id == R.id.payment){
-            val intent = Intent(this, PaymentActivity::class.java)
-            this.startActivity(intent)
-
-        } else if
-                */
         if (id == R.id.action_settings) {
             val intent = Intent(this, DeveloperActivity::class.java)
             this.startActivity(intent)
@@ -126,10 +121,10 @@ class SecretActivity : AppCompatActivity() {
             sharingIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.google_play_store))
             startActivity(Intent.createChooser(sharingIntent, "Share via"))
 
-        } else if (id == R.id.secret) {
+        } /*else if (id == R.id.secret) {
             val intent = Intent(this, SecretActivity::class.java)
             this.startActivity(intent)
-        }
+        }*/
 
         return true
 

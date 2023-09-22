@@ -6,10 +6,15 @@ import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
-import kotlinx.android.synthetic.main.activity_long.*
-import kotlinx.android.synthetic.main.content_movie.*
+import kotlinx.android.synthetic.main.activity_long.toolbar
+import kotlinx.android.synthetic.main.content_movie.buttonAmityville
+import kotlinx.android.synthetic.main.content_movie.buttonElmStreet
+import kotlinx.android.synthetic.main.content_movie.buttonExorcist
+import kotlinx.android.synthetic.main.content_movie.buttonFriday
+import kotlinx.android.synthetic.main.content_movie.buttonHalloween
+import kotlinx.android.synthetic.main.content_movie.buttonShining
 
 open class MovieActivity : AppCompatActivity() {
 
@@ -18,7 +23,7 @@ open class MovieActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie)
-        setSupportActionBar(toolbar as Toolbar?)
+        setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayShowTitleEnabled(false) //prevent title display
 
         //initialize buttons
@@ -29,12 +34,8 @@ open class MovieActivity : AppCompatActivity() {
         val bFriday = this.buttonFriday
         val bAmityville = this.buttonAmityville
 
-//        val halloweenPlayer = MediaPlayer.create(this@MovieActivity, R.raw.halloween)
-//        val exorcistPlayer = MediaPlayer.create(this@MovieActivity, R.raw.exorcist)
-//        val shiningPlayer = MediaPlayer.create(this@MovieActivity, R.raw.shining)
-//        val elmPlayer = MediaPlayer.create(this@MovieActivity, R.raw.elm_street)
-//        val fridayPlayer = MediaPlayer.create(this@MovieActivity, R.raw.vorhees)
-
+        // initialize button animation for long and movie buttons
+        val buttonAnimation = AnimationUtils.loadAnimation(this, R.anim.button_animation)
         //sets font for buttons on API 16
         val mTypeFace = Typeface.createFromAsset(assets, "Creepster.ttf")
 
@@ -47,36 +48,42 @@ open class MovieActivity : AppCompatActivity() {
 
         //sound managers
         bHalloween.setOnClickListener {
+            bHalloween.startAnimation(buttonAnimation)
             stopPlaying()
             mp = MediaPlayer.create(this@MovieActivity, R.raw.halloween)
             mPlay()
         }
 
         bExorcist.setOnClickListener {
+            bExorcist.startAnimation(buttonAnimation)
             stopPlaying()
             mp = MediaPlayer.create(this@MovieActivity, R.raw.exorcist)
             mPlay()
         }
 
         bShining.setOnClickListener {
+            bShining.startAnimation(buttonAnimation)
             stopPlaying()
             mp = MediaPlayer.create(this@MovieActivity, R.raw.shining)
             mPlay()
         }
 
         bElmStreet.setOnClickListener {
+            bElmStreet.startAnimation(buttonAnimation)
             stopPlaying()
             mp = MediaPlayer.create(this@MovieActivity, R.raw.elm_street)
             mPlay()
         }
 
         bFriday.setOnClickListener {
+            bFriday.startAnimation(buttonAnimation)
             stopPlaying()
             mp = MediaPlayer.create(this@MovieActivity, R.raw.vorhees)
             mPlay()
         }
 
         bAmityville.setOnClickListener {
+            bAmityville.startAnimation(buttonAnimation)
             stopPlaying()
             mp = MediaPlayer.create(this@MovieActivity, R.raw.amityville)
             mPlay()
@@ -123,13 +130,6 @@ open class MovieActivity : AppCompatActivity() {
 
         val id = item.itemId
 
-        /*
-    if (id == R.id.payment){
-        val intent = Intent(this, PaymentActivity::class.java)
-        this.startActivity(intent)
-
-    } else if
-            */
         if (id == R.id.action_settings) {
             val intent = Intent(this, DeveloperActivity::class.java)
             this.startActivity(intent)
@@ -140,10 +140,10 @@ open class MovieActivity : AppCompatActivity() {
             sharingIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.google_play_store))
             startActivity(Intent.createChooser(sharingIntent, "Share via"))
 
-        } else if (id == R.id.secret) {
+        } /*else if (id == R.id.secret) {
             val intent = Intent(this, SecretActivity::class.java)
             this.startActivity(intent)
-        }
+        }*/
 
         return true
 

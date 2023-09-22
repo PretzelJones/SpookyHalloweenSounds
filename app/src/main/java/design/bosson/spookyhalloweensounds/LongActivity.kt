@@ -6,10 +6,14 @@ import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
-import kotlinx.android.synthetic.main.activity_long.*
-import kotlinx.android.synthetic.main.content_long.*
+import kotlinx.android.synthetic.main.activity_long.toolbar
+import kotlinx.android.synthetic.main.content_long.buttonDontLetIn
+import kotlinx.android.synthetic.main.content_long.buttonHauntedMix
+import kotlinx.android.synthetic.main.content_long.buttonLongMix
+import kotlinx.android.synthetic.main.content_long.buttonSpaceTerror
+import kotlinx.android.synthetic.main.content_long.buttonTerrorMix
 
 class LongActivity : AppCompatActivity() {
 
@@ -18,7 +22,7 @@ class LongActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_long)
-        setSupportActionBar(toolbar as Toolbar?)
+        setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayShowTitleEnabled(false) //prevent title display
 
         //initialize buttons
@@ -28,12 +32,8 @@ class LongActivity : AppCompatActivity() {
         val bSpaceTerror = this.buttonSpaceTerror
         val bDontLetIn = this.buttonDontLetIn
 
-//        val terrorPlayer = MediaPlayer.create(this@LongActivity, R.raw.ultra_terror)
-//        val hauntedPlayer = MediaPlayer.create(this@LongActivity, R.raw.haunted_house)
-//        val longPlayer = MediaPlayer.create(this@LongActivity, R.raw.long_mix)
-//        val spacePlayer = MediaPlayer.create(this@LongActivity, R.raw.space_terror)
-//        val dontPlayer = MediaPlayer.create(this@LongActivity, R.raw.dont_let_in)
-
+        // initialize button animation for long and movie buttons
+        val buttonAnimation = AnimationUtils.loadAnimation(this, R.anim.button_animation)
         //sets font for buttons on API 16
         val mTypeFace = Typeface.createFromAsset(assets, "Creepster.ttf")
 
@@ -45,30 +45,35 @@ class LongActivity : AppCompatActivity() {
 
         //sound managers
         bTerrorMix.setOnClickListener {
+            bTerrorMix.startAnimation(buttonAnimation)
             stopPlaying()
             mp = MediaPlayer.create(this@LongActivity, R.raw.ultra_terror)
             mPlay()
         }
 
         bHauntedMix.setOnClickListener {
+            bHauntedMix.startAnimation(buttonAnimation)
             stopPlaying()
             mp = MediaPlayer.create(this@LongActivity, R.raw.haunted_house)
             mPlay()
         }
 
         bLongMix.setOnClickListener {
+            bLongMix.startAnimation(buttonAnimation)
             stopPlaying()
             mp = MediaPlayer.create(this@LongActivity, R.raw.long_mix)
             mPlay()
         }
 
         bSpaceTerror.setOnClickListener {
+            bSpaceTerror.startAnimation(buttonAnimation)
             stopPlaying()
             mp = MediaPlayer.create(this@LongActivity, R.raw.space_terror)
             mPlay()
         }
 
         bDontLetIn.setOnClickListener {
+            bDontLetIn.startAnimation(buttonAnimation)
             stopPlaying()
             mp = MediaPlayer.create(this@LongActivity, R.raw.dont_let_in)
             mPlay()
@@ -115,13 +120,6 @@ class LongActivity : AppCompatActivity() {
 
         val id = item.itemId
 
-        /*
-    if (id == R.id.payment){
-        val intent = Intent(this, PaymentActivity::class.java)
-        this.startActivity(intent)
-
-    } else if
-            */
         if (id == R.id.action_settings) {
             val intent = Intent(this, DeveloperActivity::class.java)
             this.startActivity(intent)
@@ -132,10 +130,10 @@ class LongActivity : AppCompatActivity() {
             sharingIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.google_play_store))
             startActivity(Intent.createChooser(sharingIntent, "Share via"))
 
-        } else if (id == R.id.secret) {
+        } /*else if (id == R.id.secret) {
             val intent = Intent(this, SecretActivity::class.java)
             this.startActivity(intent)
-        }
+        }*/
 
         return true
 

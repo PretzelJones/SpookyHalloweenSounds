@@ -1,0 +1,547 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_alignParentEnd="true"
+    android:background="@color/colorAccent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="design.bosson.spookyhalloweensounds.ScrollingActivity"
+    tools:showIn="@layout/activity_scrolling">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/bats_Right"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            app:srcCompat="@drawable/bat_icon"
+            android:layout_alignParentEnd="true"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/batsLeft"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            app:srcCompat="@drawable/bat_icon_flipped"
+            android:layout_alignParentStart="true"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/textCountdown"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:fontFamily="@font/creepster"
+            android:gravity="center"
+            android:text=""
+            android:textColor="@color/colorTitle"
+            android:autoSizeTextType="uniform"
+            android:autoSizeMinTextSize="18sp"
+            android:autoSizeMaxTextSize="22sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/bLoopingMix"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_below="@+id/textCountdown"
+            android:drawableTop="@drawable/ic_loop"
+            android:fontFamily="@font/creepster"
+            android:keepScreenOn="true"
+            android:text="Looping Mixes"
+            app:backgroundTint="@color/colorTitle"
+            tools:ignore="MissingPrefix" />
+
+        <Button
+            android:id="@+id/bMovieThemes"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_below="@+id/bLoopingMix"
+            android:drawableTop="@drawable/ic_projector"
+            android:elevation="0dp"
+            android:fontFamily="@font/creepster"
+            android:keepScreenOn="true"
+            android:text="Horror Movie Themes"
+            app:backgroundTint="@color/colorTitle"
+            tools:ignore="MissingPrefix" />
+
+        <Button
+            android:id="@+id/bWitchCackle"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_below="@+id/bMovieThemes"
+            android:drawableTop="@drawable/ic_witch"
+            android:elevation="0dp"
+            android:fontFamily="@font/creepster"
+            android:text="Witch Cackle"
+            app:backgroundTint="@color/colorTitle"
+            tools:ignore="MissingPrefix" />
+
+        <Button
+            android:id="@+id/bBlackCat"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_below="@+id/bWitchCackle"
+            android:drawableTop="@drawable/ic_black_cat"
+            android:elevation="0dp"
+            android:fontFamily="@font/creepster"
+            android:text="Black Cat"
+            app:backgroundTint="@color/colorTitle"
+            tools:ignore="MissingPrefix" />
+
+        <Button
+            android:id="@+id/bCreepyLaugh"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_below="@+id/bBlackCat"
+            android:drawableTop="@drawable/ic_evil_man"
+            android:elevation="0dp"
+            android:fontFamily="@font/creepster"
+            android:text="Creepy Laugh"
+            app:backgroundTint="@color/colorTitle"
+            tools:ignore="MissingPrefix" />
+
+        <Button
+            android:id="@+id/bCreakyDoor"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_below="@+id/bCreepyLaugh"
+            android:drawableTop="@drawable/ic_creaky_door"
+            android:elevation="0dp"
+            android:fontFamily="@font/creepster"
+            android:text="Creaky Door"
+            app:backgroundTint="@color/colorTitle"
+            tools:ignore="MissingPrefix" />
+
+        <Button
+            android:id="@+id/bHorrorAmbience"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_below="@+id/bCreakyDoor"
+            android:drawableTop="@drawable/ic_spider"
+            android:elevation="0dp"
+            android:fontFamily="@font/creepster"
+            android:text="Horror Ambiance"
+            app:backgroundTint="@color/colorTitle"
+            tools:ignore="MissingPrefix" />
+
+        <Button
+            android:id="@+id/bMonsterGrowl"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_below="@+id/bHorrorAmbience"
+            android:drawableTop="@drawable/ic_monster_growl"
+            android:elevation="0dp"
+            android:fontFamily="@font/creepster"
+            android:text="Monster Growl"
+            app:backgroundTint="@color/colorTitle"
+            tools:ignore="MissingPrefix" />
+
+        <Button
+            android:id="@+id/bMonsterWalking"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_below="@+id/bMonsterGrowl"
+            android:drawableTop="@drawable/ic_monster_walking"
+            android:elevation="0dp"
+            android:fontFamily="@font/creepster"
+            android:text="Monster Walking"
+            app:backgroundTint="@color/colorTitle"
+            tools:ignore="MissingPrefix" />
+
+        <Button
+            android:id="@+id/bSpookyChains"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_below="@+id/bMonsterWalking"
+            android:drawableTop="@drawable/ic_chains"
+            android:elevation="0dp"
+            android:fontFamily="@font/creepster"
+            android:text="Spooky Chains"
+            app:backgroundTint="@color/colorTitle"
+            tools:ignore="MissingPrefix" />
+
+        <Button
+            android:id="@+id/bThunderStorm"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_below="@+id/bSpookyChains"
+            android:drawableTop="@drawable/ic_thunder"
+            android:elevation="0dp"
+            android:fontFamily="@font/creepster"
+            android:text="Thunder Storm"
+            app:backgroundTint="@color/colorTitle"
+            tools:ignore="MissingPrefix" />
+
+        <Button
+            android:id="@+id/bVampireBat"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_below="@+id/bThunderStorm"
+            android:drawableTop="@drawable/ic_vampire_bat"
+            android:elevation="0dp"
+            android:fontFamily="@font/creepster"
+            android:text="Vampire Bat"
+            app:backgroundTint="@color/colorTitle"
+            tools:ignore="MissingPrefix" />
+
+        <Button
+            android:id="@+id/bScaryScream"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_below="@+id/bVampireBat"
+            android:drawableTop="@drawable/ic_scream"
+            android:elevation="0dp"
+            android:fontFamily="@font/creepster"
+            android:text="Scary Scream"
+            app:backgroundTint="@color/colorTitle"
+            tools:ignore="MissingPrefix" />
+
+        <Button
+            android:id="@+id/bZombieGroan"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_below="@+id/bScaryScream"
+            android:drawableTop="@drawable/ic_zombie"
+            android:elevation="0dp"
+            android:fontFamily="@font/creepster"
+            android:text="Zombie Groan"
+            app:backgroundTint="@color/colorTitle"
+            tools:ignore="MissingPrefix" />
+
+        <Button
+            android:id="@+id/bGhostBoo"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_below="@+id/bZombieGroan"
+            android:drawableTop="@drawable/ic_ghost_boo"
+            android:elevation="0dp"
+            android:fontFamily="@font/creepster"
+            android:text="Ghost Boo"
+            app:backgroundTint="@color/colorTitle"
+            tools:ignore="MissingPrefix" />
+
+        <Button
+            android:id="@+id/bWerewolfHowl"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_below="@+id/bGhostBoo"
+            android:drawableTop="@drawable/ic_werewolf"
+            android:elevation="0dp"
+            android:fontFamily="@font/creepster"
+            android:text="Werewolf Howl"
+            app:backgroundTint="@color/colorTitle"
+            tools:ignore="MissingPrefix" />
+
+        <Button
+            android:id="@+id/bPoltergeistVoice"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_below="@+id/bWerewolfHowl"
+            android:drawableTop="@drawable/poltergeist_tv"
+            android:elevation="0dp"
+            android:fontFamily="@font/creepster"
+            android:text="Poltergeist Voice"
+            app:backgroundTint="@color/colorTitle"
+            tools:ignore="MissingPrefix" />
+
+        <Button
+            android:id="@+id/bZombieCall"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_below="@+id/bPoltergeistVoice"
+            android:drawableTop="@drawable/ic_zombie_call"
+            android:elevation="0dp"
+            android:fontFamily="@font/creepster"
+            android:text="Zombie Call"
+            app:backgroundTint="@color/colorTitle"
+            tools:ignore="MissingPrefix" />
+
+        <Button
+            android:id="@+id/bCatScream"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_below="@+id/bZombieCall"
+            android:drawableTop="@drawable/ic_cat_scream"
+            android:elevation="0dp"
+            android:fontFamily="@font/creepster"
+            android:text="Cat Scream"
+            app:backgroundTint="@color/colorTitle"
+            tools:ignore="MissingPrefix" />
+
+        <Button
+            android:id="@+id/bWraithWail"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_below="@+id/bCatScream"
+            android:drawableTop="@drawable/ic_wraith_wail"
+            android:elevation="0dp"
+            android:fontFamily="@font/creepster"
+            android:text="Wraith Wail"
+            app:backgroundTint="@color/colorTitle"
+            tools:ignore="MissingPrefix" />
+
+        <Button
+            android:id="@+id/bSpookyOwl"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_below="@+id/bWraithWail"
+            android:drawableTop="@drawable/ic_spooky_owl"
+            android:elevation="0dp"
+            android:fontFamily="@font/creepster"
+            android:text="Spooky Owl"
+            app:backgroundTint="@color/colorTitle"
+            tools:ignore="MissingPrefix" />
+
+        <Button
+            android:id="@+id/bChainedGhoul"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_below="@+id/bSpookyOwl"
+            android:drawableTop="@drawable/ic_chained_ghoul"
+            android:elevation="0dp"
+            android:fontFamily="@font/creepster"
+            android:text="Chained Ghoul"
+            app:backgroundTint="@color/colorTitle"
+            tools:ignore="MissingPrefix" />
+
+        <Button
+            android:id="@+id/bTerrifiedScream"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_below="@+id/bChainedGhoul"
+            android:drawableTop="@drawable/ic_terrified_scream"
+            android:elevation="0dp"
+            android:fontFamily="@font/creepster"
+            android:text="Terrified Scream"
+            app:backgroundTint="@color/colorTitle"
+            tools:ignore="MissingPrefix" />
+
+        <Button
+            android:id="@+id/bHauntedOrgan"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_below="@+id/bTerrifiedScream"
+            android:drawableTop="@drawable/ic_haunted_organ"
+            android:elevation="0dp"
+            android:fontFamily="@font/creepster"
+            android:text="Haunted Organ"
+            app:backgroundTint="@color/colorTitle"
+            tools:ignore="MissingPrefix" />
+
+        <Button
+            android:id="@+id/bScareCrow"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_below="@+id/bHauntedOrgan"
+            android:drawableTop="@drawable/ic_scarecrow"
+            android:elevation="0dp"
+            android:fontFamily="@font/creepster"
+            android:text="Scarecrow"
+            app:backgroundTint="@color/colorTitle"
+            tools:ignore="MissingPrefix" />
+
+        <Button
+            android:id="@+id/bBlowingWind"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_below="@+id/bScareCrow"
+            android:drawableTop="@drawable/ic_blowing_wind"
+            android:elevation="0dp"
+            android:fontFamily="@font/creepster"
+            android:text="Blowing Wind"
+            app:backgroundTint="@color/colorTitle"
+            tools:ignore="MissingPrefix" />
+
+        <Button
+            android:id="@+id/bGhostlyWhisper"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_below="@+id/bBlowingWind"
+            android:drawableTop="@drawable/ic_ghostly_whisper"
+            android:elevation="0dp"
+            android:fontFamily="@font/creepster"
+            android:text="Ghostly Whisper"
+            app:backgroundTint="@color/colorTitle"
+            tools:ignore="MissingPrefix" />
+
+        <Button
+            android:id="@+id/bDraculaLaugh"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_below="@+id/bGhostlyWhisper"
+            android:drawableTop="@drawable/ic_dracula_laugh"
+            android:elevation="0dp"
+            android:fontFamily="@font/creepster"
+            android:text="Dracula Laugh"
+            app:backgroundTint="@color/colorTitle"
+            tools:ignore="MissingPrefix" />
+
+        <Button
+            android:id="@+id/bWolfCry"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_below="@+id/bDraculaLaugh"
+            android:drawableTop="@drawable/ic_wolf"
+            android:elevation="0dp"
+            android:fontFamily="@font/creepster"
+            android:text="Wolf Cry"
+            app:backgroundTint="@color/colorTitle"
+            tools:ignore="MissingPrefix" />
+
+        <Button
+            android:id="@+id/bKnockKnock"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_below="@+id/bWolfCry"
+            android:drawableTop="@drawable/ic_knock"
+            android:elevation="0dp"
+            android:fontFamily="@font/creepster"
+            android:text="Knock Knock"
+            app:backgroundTint="@color/colorTitle"
+            tools:ignore="MissingPrefix" />
+
+        <Button
+            android:id="@+id/bFrankenstein"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_below="@+id/bKnockKnock"
+            android:drawableTop="@drawable/ic_igor"
+            android:elevation="0dp"
+            android:fontFamily="@font/creepster"
+            android:text="Frankenstein"
+            app:backgroundTint="@color/colorTitle"
+            tools:ignore="MissingPrefix" />
+
+        <Button
+            android:id="@+id/bHorrorMovie"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_below="@+id/bFrankenstein"
+            android:drawableTop="@drawable/ic_film"
+            android:elevation="0dp"
+            android:fontFamily="@font/creepster"
+            android:text="Horror Movie"
+            app:backgroundTint="@color/colorTitle"
+            tools:ignore="MissingPrefix" />
+
+        <Button
+            android:id="@+id/bWarningBells"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_below="@+id/bHorrorMovie"
+            android:drawableTop="@drawable/ic_warning_bells"
+            android:elevation="0dp"
+            android:fontFamily="@font/creepster"
+            android:text="Warning Bells"
+            app:backgroundTint="@color/colorTitle"
+            tools:ignore="MissingPrefix" />
+
+        <Button
+            android:id="@+id/bPainfulMoan"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_below="@+id/bWarningBells"
+            android:drawableTop="@drawable/ic_painful_moan"
+            android:elevation="0dp"
+            android:fontFamily="@font/creepster"
+            android:text="Painful Moan"
+            app:backgroundTint="@color/colorTitle"
+            tools:ignore="MissingPrefix" />
+
+        <Button
+            android:id="@+id/bWitchesCauldron"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_below="@+id/bPainfulMoan"
+            android:drawableTop="@drawable/ic_witches_cauldron"
+            android:elevation="0dp"
+            android:fontFamily="@font/creepster"
+            android:text="Witches Cauldron"
+            app:backgroundTint="@color/colorTitle"
+            tools:ignore="MissingPrefix" />
+
+        <Button
+            android:id="@+id/bGhostlyChildren"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_below="@+id/bWitchesCauldron"
+            android:drawableTop="@drawable/ic_ghostly_children"
+            android:elevation="0dp"
+            android:fontFamily="@font/creepster"
+            android:text="Ghostly Children"
+            app:backgroundTint="@color/colorTitle"
+            tools:ignore="MissingPrefix" />
+
+        <Button
+            android:id="@+id/bHauntedSwamp"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_below="@+id/bGhostlyChildren"
+            android:drawableTop="@drawable/ic_haunted_swamp"
+            android:elevation="0dp"
+            android:fontFamily="@font/creepster"
+            android:text="Haunted Swamp"
+            app:backgroundTint="@color/colorTitle"
+            tools:ignore="MissingPrefix" />
+
+        <Button
+            android:id="@+id/bTorturedSouls"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_below="@+id/bHauntedSwamp"
+            android:drawableTop="@drawable/ic_zombie_three"
+            android:elevation="0dp"
+            android:fontFamily="@font/creepster"
+            android:text="Tortured Souls"
+            app:backgroundTint="@color/colorTitle"
+            tools:ignore="MissingPrefix" />
+
+        <Button
+            android:id="@+id/bChillingHorn"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_below="@+id/bTorturedSouls"
+            android:drawableTop="@drawable/ic_alien"
+            android:elevation="0dp"
+            android:fontFamily="@font/creepster"
+            android:text="Chilling Horn"
+            app:backgroundTint="@color/colorTitle"
+            tools:ignore="MissingPrefix" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_below="@+id/bChillingHorn"
+            android:layout_margin="4dp"
+            android:backgroundTint="@color/colorAccent"
+            android:paddingTop="15dp"
+            app:cardCornerRadius="5dp"
+            app:cardElevation="0dp">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:scaleType="fitStart"
+                app:srcCompat="@drawable/graveyard" />
+
+            <ImageView
+                android:id="@+id/overlayImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_black_cat"
+                app:tint="@android:color/holo_orange_light" />
+
+        </androidx.cardview.widget.CardView>
+
+    </RelativeLayout>
+
+</androidx.core.widget.NestedScrollView>
