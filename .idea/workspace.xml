@@ -17,35 +17,39 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0ab9337d-686f-443d-85b5-d4995dd55070" name="Default Changelist" comment="1. added button color color changes to ScrollingActivity.&#10;2. created custom AudioControl.kt to handle pausing the audio when exiting the app and resuming when returning.&#10;3. Moved PrefManager to serperate file and added code in each activity to call it.">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/AudioControl.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/ButtonListProvider.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/PopupUtils.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/RawAudioProvider.kt" afterDir="false" />
+    <list default="true" id="0ab9337d-686f-443d-85b5-d4995dd55070" name="Default Changelist" comment="A little cleanup">
+      <change afterPath="$PROJECT_DIR$/app/release/halloweensounds.aab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/7.5/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.5/checksums/checksums.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/7.5/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.5/checksums/sha1-checksums.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.5/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.5/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.5/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.5/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.5/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.5/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.5/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.5/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.5/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.5/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/configuration-cache/cac7qhgvzmzmt50lrbx3u7wtw/buildfingerprint.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/configuration-cache/cac7qhgvzmzmt50lrbx3u7wtw/buildfingerprint.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/configuration-cache/cac7qhgvzmzmt50lrbx3u7wtw/work.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/configuration-cache/cac7qhgvzmzmt50lrbx3u7wtw/work.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/configuration-cache/cadx65my5juc9dcyzlsib2doc/buildfingerprint.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/configuration-cache/cadx65my5juc9dcyzlsib2doc/buildfingerprint.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/configuration-cache/cadx65my5juc9dcyzlsib2doc/work.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/configuration-cache/cadx65my5juc9dcyzlsib2doc/work.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/deploymentTargetDropDown.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/app/SpookyHalloweenSounds.app.androidTest.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/app/SpookyHalloweenSounds.app.androidTest.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/app/SpookyHalloweenSounds.app.main.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/app/SpookyHalloweenSounds.app.main.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/app/SpookyHalloweenSounds.app.unitTest.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/app/SpookyHalloweenSounds.app.unitTest.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/AppRater.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/AppRater.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/DeveloperActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/DeveloperActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/LongActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/LongActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/MovieActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/MovieActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/PrefManager.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/PrefManager.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/ScrollingActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/ScrollingActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/SecretActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/SecretActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/release/halloweensounds_1.2.0.aab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/release/halloweensounds_1.2.1.aab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/release/halloweensounds_1.2.2.aab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/release/halloweensounds_1.2.3.aab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/kotlin/sessions/kotlin-compiler-18240457119271280485.salive" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[adb-R58M32HPR8D-OTajSs._adb-tls-connect._tcp.]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[/Users/mac/.android/avd/Phone_API_33_Android_13.avd]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -140,34 +144,34 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "BundleExportedModule": "SpookyHalloweenSounds.app",
-    "DEBUGGABLE_DEVICE": "samsung-sm_g970u-adb-R58M32HPR8D-OTajSs._adb-tls-connect._tcp.",
-    "DEBUGGABLE_PROCESS": "design.bosson.spookyhalloweensounds",
-    "DEBUGGER_ID": "Auto",
-    "ExportBundle.BundlePathForSpookyHalloweenSounds.app": "/Users/mac/Projects/Android/SpookyHalloweenSounds/app",
-    "PROJECT_TRUSTED_KEY": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "SHOW_ALL_PROCESSES": "false",
-    "cidr.known.project.marker": "true",
-    "com.android.tools.idea.devicemanager.tab": "Physical",
-    "com.google.services.firebase.aqiPopupShown": "true",
-    "kotlin.migration.detection.enabled": "false",
-    "last_opened_file_path": "/Users/mac/Projects/Android/SpookyHalloweenSounds",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.17",
-    "project.structure.side.proportion": "0.0",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "preferences.pluginManager"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;BundleExportedModule&quot;: &quot;SpookyHalloweenSounds.app&quot;,
+    &quot;DEBUGGABLE_DEVICE&quot;: &quot;samsung-sm_g970u-adb-R58M32HPR8D-OTajSs._adb-tls-connect._tcp.&quot;,
+    &quot;DEBUGGABLE_PROCESS&quot;: &quot;design.bosson.spookyhalloweensounds&quot;,
+    &quot;DEBUGGER_ID&quot;: &quot;Auto&quot;,
+    &quot;ExportBundle.BundlePathForSpookyHalloweenSounds.app&quot;: &quot;/Users/mac/Projects/Android/SpookyHalloweenSounds/app&quot;,
+    &quot;PROJECT_TRUSTED_KEY&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;SHOW_ALL_PROCESSES&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;com.android.tools.idea.devicemanager.tab&quot;: &quot;Physical&quot;,
+    &quot;com.google.services.firebase.aqiPopupShown&quot;: &quot;true&quot;,
+    &quot;kotlin.migration.detection.enabled&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/mac/Downloads/SpookyHalloweenSounds&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.17&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   },
-  "keyToStringList": {
-    "ExportApk.BuildVariants": [
-      "release"
+  &quot;keyToStringList&quot;: {
+    &quot;ExportApk.BuildVariants&quot;: [
+      &quot;release&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="android.template.packageName">
       <recent name="design.bosson.spookyhalloweensounds" />
@@ -522,7 +526,28 @@
       <option name="project" value="LOCAL" />
       <updated>1695144753190</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="1. added button color color changes to ScrollingActivity.&#10;2. created custom AudioControl.kt to handle pausing the audio when exiting the app and resuming when returning.&#10;3. Moved PrefManager to separate file and added code in each activity to call it.">
+      <created>1695217770540</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1695217770540</updated>
+    </task>
+    <task id="LOCAL-00028" summary="1. added button color color changes to ScrollingActivity.&#10;2. created custom AudioControl.kt to handle pausing the audio when exiting the app and resuming when returning.&#10;3. Moved PrefManager to separate file and added code in each activity to call it.">
+      <created>1695217827009</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1695217827009</updated>
+    </task>
+    <task id="LOCAL-00029" summary="A little cleanup">
+      <created>1695218812387</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1695218812387</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -538,8 +563,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="production version 1.9.26 build 37" />
-    <MESSAGE value="Updated gradle kotlin extensions and changed build to 1.9.30 41" />
     <MESSAGE value="Centered text on secret activity" />
     <MESSAGE value="Disabled 'com.google.firebase:firebase-analytics:17.3.0' and 'com.crashlytics.sdk.android:crashlytics:2.9.9' due to duplicate resource errors. Crash reporting may not be working if Firebase Crash isn't supported." />
     <MESSAGE value="Converted to androidX and API 28" />
@@ -563,6 +586,8 @@
     <MESSAGE value="overhaul of ScrollingActivity to match the code design of the long play activities." />
     <MESSAGE value="good play and animation configuration. Need to ad button color color changes to ScrollingActivity - this will require modifying the play format code to the same as long play activities." />
     <MESSAGE value="1. added button color color changes to ScrollingActivity.&#10;2. created custom AudioControl.kt to handle pausing the audio when exiting the app and resuming when returning.&#10;3. Moved PrefManager to serperate file and added code in each activity to call it." />
-    <option name="LAST_COMMIT_MESSAGE" value="1. added button color color changes to ScrollingActivity.&#10;2. created custom AudioControl.kt to handle pausing the audio when exiting the app and resuming when returning.&#10;3. Moved PrefManager to serperate file and added code in each activity to call it." />
+    <MESSAGE value="1. added button color color changes to ScrollingActivity.&#10;2. created custom AudioControl.kt to handle pausing the audio when exiting the app and resuming when returning.&#10;3. Moved PrefManager to separate file and added code in each activity to call it." />
+    <MESSAGE value="A little cleanup" />
+    <option name="LAST_COMMIT_MESSAGE" value="A little cleanup" />
   </component>
 </project>
