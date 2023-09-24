@@ -1,23 +1,30 @@
 package design.bosson.spookyhalloweensounds
 
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.graphics.Typeface
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_long.toolbar
-import kotlinx.android.synthetic.main.content_long.buttonDontLetIn
-import kotlinx.android.synthetic.main.content_long.buttonHauntedMix
-import kotlinx.android.synthetic.main.content_long.buttonLongMix
-import kotlinx.android.synthetic.main.content_long.buttonSpaceTerror
-import kotlinx.android.synthetic.main.content_long.buttonTerrorMix
+import kotlinx.android.synthetic.main.content_long.bDontLetIn
+import kotlinx.android.synthetic.main.content_long.bHauntedMix
+import kotlinx.android.synthetic.main.content_long.bLongMix
+import kotlinx.android.synthetic.main.content_long.bSpaceTerror
+import kotlinx.android.synthetic.main.content_long.bTerrorMix
+import kotlinx.android.synthetic.main.content_movie.bHalloween
 
 class LongActivity : AppCompatActivity() {
 
+    // Initialize the MediaPlayer
     private var mp: MediaPlayer? = null
+    // Define a variable to keep track of the currently playing button
+    private var currentPlayingButton: View? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,24 +32,164 @@ class LongActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayShowTitleEnabled(false) //prevent title display
 
-        //initialize buttons
-        val bTerrorMix = this.buttonTerrorMix
-        val bHauntedMix = this.buttonHauntedMix
-        val bLongMix = this.buttonLongMix
-        val bSpaceTerror = this.buttonSpaceTerror
-        val bDontLetIn = this.buttonDontLetIn
-
         // initialize button animation for long and movie buttons
         val buttonAnimation = AnimationUtils.loadAnimation(this, R.anim.button_animation)
-        //sets font for buttons on API 16
-        val mTypeFace = Typeface.createFromAsset(assets, "Creepster.ttf")
 
-        bTerrorMix.typeface = mTypeFace
-        bHauntedMix.typeface = mTypeFace
-        bLongMix.typeface = mTypeFace
-        bSpaceTerror.typeface = mTypeFace
-        bDontLetIn.typeface = mTypeFace
+        bTerrorMix.setOnClickListener {
+            bTerrorMix.startAnimation(buttonAnimation)
 
+            // Check if a media player is currently playing
+            if (currentPlayingButton != null) {
+                // Change the background color of the previously playing button back to colorTitle
+                currentPlayingButton!!.backgroundTintList = ColorStateList.valueOf(
+                    ContextCompat.getColor(
+                        this@LongActivity,
+                        R.color.colorTitle
+                    )
+                )
+            }
+
+            // Start playing the media player
+            stopPlaying()
+            mp = MediaPlayer.create(this@LongActivity, R.raw.ultra_terror)
+            mPlay()
+
+            // Update the currently playing button reference
+            currentPlayingButton = bTerrorMix
+
+            // Change the background color of the currently playing button to colorButtonPressed
+            bTerrorMix.backgroundTintList = ColorStateList.valueOf(
+                ContextCompat.getColor(
+                    this@LongActivity,
+                    R.color.colorButtonPressed
+                )
+            )
+        }
+
+        bHauntedMix.setOnClickListener {
+            bHauntedMix.startAnimation(buttonAnimation)
+
+            // Check if a media player is currently playing
+            if (currentPlayingButton != null) {
+                // Change the background color of the previously playing button back to colorTitle
+                currentPlayingButton!!.backgroundTintList = ColorStateList.valueOf(
+                    ContextCompat.getColor(
+                        this@LongActivity,
+                        R.color.colorTitle
+                    )
+                )
+            }
+
+            // Start playing the media player
+            stopPlaying()
+            mp = MediaPlayer.create(this@LongActivity, R.raw.haunted_house)
+            mPlay()
+
+            // Update the currently playing button reference
+            currentPlayingButton = bHauntedMix
+
+            // Change the background color of the currently playing button to colorButtonPressed
+            bHauntedMix.backgroundTintList = ColorStateList.valueOf(
+                ContextCompat.getColor(
+                    this@LongActivity,
+                    R.color.colorButtonPressed
+                )
+            )
+        }
+
+        bLongMix.setOnClickListener {
+            bLongMix.startAnimation(buttonAnimation)
+
+            // Check if a media player is currently playing
+            if (currentPlayingButton != null) {
+                // Change the background color of the previously playing button back to colorTitle
+                currentPlayingButton!!.backgroundTintList = ColorStateList.valueOf(
+                    ContextCompat.getColor(
+                        this@LongActivity,
+                        R.color.colorTitle
+                    )
+                )
+            }
+
+            // Start playing the media player
+            stopPlaying()
+            mp = MediaPlayer.create(this@LongActivity, R.raw.long_mix)
+            mPlay()
+
+            // Update the currently playing button reference
+            currentPlayingButton = bLongMix
+
+            // Change the background color of the currently playing button to colorButtonPressed
+            bLongMix.backgroundTintList = ColorStateList.valueOf(
+                ContextCompat.getColor(
+                    this@LongActivity,
+                    R.color.colorButtonPressed
+                )
+            )
+        }
+
+        bSpaceTerror.setOnClickListener {
+            bSpaceTerror.startAnimation(buttonAnimation)
+
+            // Check if a media player is currently playing
+            if (currentPlayingButton != null) {
+                // Change the background color of the previously playing button back to colorTitle
+                currentPlayingButton!!.backgroundTintList = ColorStateList.valueOf(
+                    ContextCompat.getColor(
+                        this@LongActivity,
+                        R.color.colorTitle
+                    )
+                )
+            }
+
+            // Start playing the media player
+            stopPlaying()
+            mp = MediaPlayer.create(this@LongActivity, R.raw.space_terror)
+            mPlay()
+
+            // Update the currently playing button reference
+            currentPlayingButton = bSpaceTerror
+
+            // Change the background color of the currently playing button to colorButtonPressed
+            bSpaceTerror.backgroundTintList = ColorStateList.valueOf(
+                ContextCompat.getColor(
+                    this@LongActivity,
+                    R.color.colorButtonPressed
+                )
+            )
+        }
+
+        bDontLetIn.setOnClickListener {
+            bDontLetIn.startAnimation(buttonAnimation)
+
+            // Check if a media player is currently playing
+            if (currentPlayingButton != null) {
+                // Change the background color of the previously playing button back to colorTitle
+                currentPlayingButton!!.backgroundTintList = ColorStateList.valueOf(
+                    ContextCompat.getColor(
+                        this@LongActivity,
+                        R.color.colorTitle
+                    )
+                )
+            }
+
+            // Start playing the media player
+            stopPlaying()
+            mp = MediaPlayer.create(this@LongActivity, R.raw.dont_let_in)
+            mPlay()
+
+            // Update the currently playing button reference
+            currentPlayingButton = bDontLetIn
+
+            // Change the background color of the currently playing button to colorButtonPressed
+            bDontLetIn.backgroundTintList = ColorStateList.valueOf(
+                ContextCompat.getColor(
+                    this@LongActivity,
+                    R.color.colorButtonPressed
+                )
+            )
+        }
+        /*
         //sound managers
         bTerrorMix.setOnClickListener {
             bTerrorMix.startAnimation(buttonAnimation)
@@ -79,43 +226,34 @@ class LongActivity : AppCompatActivity() {
             mPlay()
 
         }
+        */
     }
-
     private fun mPlay () {
-        mp!!.start()
-        mp!!.isLooping = true
-        mp!!.setScreenOnWhilePlaying(true)
+        mp?.start()
+        mp?.isLooping = true
+        mp?.setScreenOnWhilePlaying(true)
     }
-
     private fun stopPlaying() {
-        if (mp != null) {
-            mp!!.stop()
-            mp!!.release()
-            mp = null
+        // If media player is not null and is playing, then stop and release it
+        mp?.apply {
+            if (isPlaying) {
+                stop()
+            }
+            release()
         }
+        mp = null
     }
 
     override fun onStop() {
         super.onStop()
-        mp?.release()
-        mp = null
+        stopPlaying()
     }
-
-//    override fun onPause() {
-//        if (mp != null) {
-//            mp!!.release()
-//        }
-//
-//        super.onPause()
-//    }
-
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
 
         menuInflater.inflate(R.menu.menu_scrolling, menu)
 
         return true
     }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         val id = item.itemId
@@ -136,6 +274,5 @@ class LongActivity : AppCompatActivity() {
         }*/
 
         return true
-
     }
 }

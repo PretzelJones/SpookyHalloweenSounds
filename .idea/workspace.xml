@@ -18,43 +18,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0ab9337d-686f-443d-85b5-d4995dd55070" name="Default Changelist" comment="Modified DeveloperActivity to include new version number and privacy policy link - commented out SecretActivity link from menus">
-      <change afterPath="$PROJECT_DIR$/.idea/kotlinc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_play_core_1_10_3_aar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_play_core_ktx_1_8_1_aar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_kotlin_kotlin_stdlib_jdk7_1_3_72.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_kotlinx_kotlinx_coroutines_android_1_3_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_kotlinx_kotlinx_coroutines_core_1_3_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/anim/button_animation.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout-v26/content_scrolling.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/deploymentTargetDropDown.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deploymentTargetDropDown.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/SpookyHalloweenSounds.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/SpookyHalloweenSounds.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/app/SpookyHalloweenSounds.app.androidTest.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/app/SpookyHalloweenSounds.app.androidTest.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/app/SpookyHalloweenSounds.app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/app/SpookyHalloweenSounds.app.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/app/SpookyHalloweenSounds.app.main.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/app/SpookyHalloweenSounds.app.main.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/app/SpookyHalloweenSounds.app.unitTest.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/app/SpookyHalloweenSounds.app.unitTest.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/release/halloweensounds.aab" beforeDir="false" afterPath="$PROJECT_DIR$/app/release/halloweensounds.aab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/release/halloweensounds_error.aab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/release/halloweensounds_old.aab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/AppRater.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/DeveloperActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/DeveloperActivity.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/LongActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/LongActivity.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/MovieActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/MovieActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/PaymentActivity.kt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/ScrollingActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/ScrollingActivity.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/SecretActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/SecretActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_payment.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/content_developer.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/content_developer.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/content_long.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/content_long.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/content_movie.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/content_movie.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/content_payment.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/content_scrolling.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/content_scrolling.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/content_secret.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/content_secret.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/menu/menu_scrolling.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/menu/menu_scrolling.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -157,34 +134,37 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;BundleExportedModule&quot;: &quot;SpookyHalloweenSounds.app&quot;,
-    &quot;DEBUGGABLE_DEVICE&quot;: &quot;samsung-sm_g970u-adb-R58M32HPR8D-OTajSs._adb-tls-connect._tcp.&quot;,
-    &quot;DEBUGGABLE_PROCESS&quot;: &quot;design.bosson.spookyhalloweensounds&quot;,
-    &quot;DEBUGGER_ID&quot;: &quot;Auto&quot;,
-    &quot;ExportBundle.BundlePathForSpookyHalloweenSounds.app&quot;: &quot;/Users/mac/Projects/Android/SpookyHalloweenSounds/app&quot;,
-    &quot;PROJECT_TRUSTED_KEY&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;SHOW_ALL_PROCESSES&quot;: &quot;false&quot;,
-    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;com.google.services.firebase.aqiPopupShown&quot;: &quot;true&quot;,
-    &quot;kotlin.migration.detection.enabled&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/mac/Projects/Android/SpookyHalloweenSounds&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Suggestions&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.17&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "BundleExportedModule": "SpookyHalloweenSounds.app",
+    "DEBUGGABLE_DEVICE": "samsung-sm_g970u-adb-R58M32HPR8D-OTajSs._adb-tls-connect._tcp.",
+    "DEBUGGABLE_PROCESS": "design.bosson.spookyhalloweensounds",
+    "DEBUGGER_ID": "Auto",
+    "ExportBundle.BundlePathForSpookyHalloweenSounds.app": "/Users/mac/Projects/Android/SpookyHalloweenSounds/app",
+    "PROJECT_TRUSTED_KEY": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "SHOW_ALL_PROCESSES": "false",
+    "cidr.known.project.marker": "true",
+    "com.google.services.firebase.aqiPopupShown": "true",
+    "kotlin.migration.detection.enabled": "false",
+    "last_opened_file_path": "/Users/mac/Projects/Android/SpookyHalloweenSounds",
+    "project.structure.last.edited": "Suggestions",
+    "project.structure.proportion": "0.17",
+    "project.structure.side.proportion": "0.2",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "reference.settingsdialog.IDE.editor.colors.General"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;ExportApk.BuildVariants&quot;: [
-      &quot;release&quot;
+  "keyToStringList": {
+    "ExportApk.BuildVariants": [
+      "release"
     ]
   }
-}</component>
+}]]></component>
+  <component name="PsdUISettings">
+    <option name="MODULE_TAB" value="Properties" />
+  </component>
   <component name="RecentsManager">
     <key name="android.template.packageName">
       <recent name="design.bosson.spookyhalloweensounds" />

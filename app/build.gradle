@@ -11,8 +11,8 @@ android {
         applicationId "design.bosson.spookyhalloweensounds"
         minSdkVersion 22
         targetSdkVersion 33
-        versionCode 60
-        versionName "1.9.44"
+        versionCode 62
+        versionName "1.9.46"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         lintOptions {
 

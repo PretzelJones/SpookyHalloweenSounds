@@ -11,7 +11,7 @@
     tools:showIn="@layout/activity_movie">
 
     <Button
-        android:id="@+id/buttonHalloween"
+        android:id="@+id/bHalloween"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:drawableTop="@drawable/ic_halloween"
@@ -23,10 +23,10 @@
         tools:ignore="HardcodedText,MissingPrefix" />
 
     <Button
-        android:id="@+id/buttonExorcist"
+        android:id="@+id/bExorcist"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:layout_below="@+id/buttonHalloween"
+        android:layout_below="@+id/bHalloween"
         android:drawableTop="@drawable/ic_cross"
         android:elevation="0dp"
         android:fontFamily="@font/creepster"
@@ -35,10 +35,10 @@
         app:backgroundTint="@color/colorTitle"
         tools:ignore="HardcodedText,MissingPrefix" />
     <Button
-        android:id="@+id/buttonShining"
+        android:id="@+id/bShining"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:layout_below="@+id/buttonExorcist"
+        android:layout_below="@+id/bExorcist"
         android:drawableTop="@drawable/ic_axe"
         android:elevation="0dp"
         android:fontFamily="@font/creepster"
@@ -48,10 +48,10 @@
         tools:ignore="HardcodedText,MissingPrefix" />
 
     <Button
-        android:id="@+id/buttonElmStreet"
+        android:id="@+id/bElmStreet"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:layout_below="@+id/buttonShining"
+        android:layout_below="@+id/bShining"
         android:drawableTop="@drawable/ic_krueger"
         android:elevation="0dp"
         android:fontFamily="@font/creepster"
@@ -61,10 +61,10 @@
         tools:ignore="HardcodedText,MissingPrefix" />
 
     <Button
-        android:id="@+id/buttonFriday"
+        android:id="@+id/bFriday"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:layout_below="@+id/buttonElmStreet"
+        android:layout_below="@+id/bElmStreet"
         android:drawableTop="@drawable/ic_vorhees"
         android:elevation="0dp"
         android:fontFamily="@font/creepster"
@@ -74,10 +74,10 @@
         tools:ignore="HardcodedText,MissingPrefix" />
 
     <Button
-        android:id="@+id/buttonAmityville"
+        android:id="@+id/bAmityville"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:layout_below="@+id/buttonFriday"
+        android:layout_below="@+id/bFriday"
         android:drawableTop="@drawable/ic_amityville"
         android:elevation="0dp"
         android:fontFamily="@font/creepster"
@@ -94,7 +94,7 @@
         app:cardElevation="0dp"
         android:paddingTop="15dp"
         android:backgroundTint="@color/colorAccent"
-        android:layout_below="@+id/buttonAmityville">
+        android:layout_below="@+id/bAmityville">
 
         <ImageView
             android:id="@+id/imageView"

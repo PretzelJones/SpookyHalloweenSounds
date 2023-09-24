@@ -29,23 +29,11 @@ class DeveloperActivity : AppCompatActivity() {
         }
 
     }
-/*
-    //prevent reload on orientation change
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-    }
-*/
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         val id = item.itemId
 
-    /*
-        if (id == R.id.payment){
-            val intent = Intent(this, PaymentActivity::class.java)
-            this.startActivity(intent)
-
-        } else if
-                */
     if (id == R.id.action_settings) {
         val intent = Intent(this, DeveloperActivity::class.java)
         this.startActivity(intent)

@@ -1,6 +1,7 @@
 package design.bosson.spookyhalloweensounds
 
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -10,6 +11,7 @@ import android.view.View
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import com.google.android.play.core.review.ReviewManagerFactory
 import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.content_scrolling.bBlackCat
@@ -74,7 +76,6 @@ class ScrollingActivity : AppCompatActivity() {
         // Calculate the initial halloweenDate based on the current year's Halloween
         val currentYear = Calendar.getInstance().get(Calendar.YEAR)
         halloweenDate = calculateHalloweenDate(currentYear)
-
         // Start the countdown timer
         startCountdown()
         // present Google in-app review dialog
@@ -100,193 +101,192 @@ class ScrollingActivity : AppCompatActivity() {
 
         bWitchCackle.setOnClickListener {
             bWitchCackle.startAnimation(buttonAnimation)
-            playSound(R.raw.witch_laugh)
+            playSound(R.raw.witch_laugh, bWitchCackle)
         }
 
         bBlackCat.setOnClickListener {
             bBlackCat.startAnimation(buttonAnimation)
-            playSound(R.raw.black_cat)
+            playSound(R.raw.black_cat, bBlackCat)
         }
 
         bCreepyLaugh.setOnClickListener {
             bCreepyLaugh.startAnimation(buttonAnimation)
-            playSound(R.raw.evil_man)
+            playSound(R.raw.evil_man, bCreepyLaugh)
         }
 
         bCreakyDoor.setOnClickListener {
             bCreakyDoor.startAnimation(buttonAnimation)
-            playSound(R.raw.creaky_door)
+            playSound(R.raw.creaky_door, bCreakyDoor)
         }
 
         bHorrorAmbience.setOnClickListener {
             bHorrorAmbience.startAnimation(buttonAnimation)
-            playSound(R.raw.horror_ambience)
+            playSound(R.raw.horror_ambience, bHorrorAmbience)
         }
 
         bMonsterGrowl.setOnClickListener {
             bMonsterGrowl.startAnimation(buttonAnimation)
-            playSound(R.raw.monster_growl)
+            playSound(R.raw.monster_growl, bMonsterGrowl)
         }
 
         bMonsterWalking.setOnClickListener {
             bMonsterWalking.startAnimation(buttonAnimation)
-            playSound(R.raw.monster_walking)
+            playSound(R.raw.monster_walking, bMonsterWalking)
         }
 
         bScaryScream.setOnClickListener {
             bScaryScream.startAnimation(buttonAnimation)
-            playSound(R.raw.scary_scream)
+            playSound(R.raw.scary_scream, bScaryScream)
         }
 
         bSpookyChains.setOnClickListener {
             bSpookyChains.startAnimation(buttonAnimation)
-            playSound(R.raw.spooky_chains)
+            playSound(R.raw.spooky_chains, bSpookyChains)
         }
 
         bThunderStorm.setOnClickListener {
             bThunderStorm.startAnimation(buttonAnimation)
-            playSound(R.raw.thunder)
+            playSound(R.raw.thunder, bThunderStorm)
         }
 
         bVampireBat.setOnClickListener {
             bVampireBat.startAnimation(buttonAnimation)
-            playSound(R.raw.vampire_bat)
+            playSound(R.raw.vampire_bat, bVampireBat)
         }
 
         bZombieGroan.setOnClickListener {
             bZombieGroan.startAnimation(buttonAnimation)
-            playSound(R.raw.zombie)
+            playSound(R.raw.zombie, bZombieGroan)
         }
 
         bGhostBoo.setOnClickListener {
             bGhostBoo.startAnimation(buttonAnimation)
-            playSound(R.raw.ghost_boo)
+            playSound(R.raw.ghost_boo, bGhostBoo)
         }
 
         bWerewolfHowl.setOnClickListener {
             bWerewolfHowl.startAnimation(buttonAnimation)
-            playSound(R.raw.werewolf_howl)
+            playSound(R.raw.werewolf_howl, bWerewolfHowl)
         }
 
         bPoltergeistVoice.setOnClickListener {
             bPoltergeistVoice.startAnimation(buttonAnimation)
-            playSound(R.raw.poltergeist_voice)
+            playSound(R.raw.poltergeist_voice, bPoltergeistVoice)
         }
 
         bZombieCall.setOnClickListener {
             bZombieCall.startAnimation(buttonAnimation)
-            playSound(R.raw.zombie_come)
+            playSound(R.raw.zombie_come, bZombieCall)
         }
 
         bCatScream.setOnClickListener {
             bCatScream.startAnimation(buttonAnimation)
-            playSound(R.raw.cat_scream)
+            playSound(R.raw.cat_scream, bCatScream)
         }
 
         bWraithWail.setOnClickListener {
             bWraithWail.startAnimation(buttonAnimation)
-            playSound(R.raw.wraith_wail)
+            playSound(R.raw.wraith_wail, bWraithWail)
         }
 
         bSpookyOwl.setOnClickListener {
             bSpookyOwl.startAnimation(buttonAnimation)
-            playSound(R.raw.spooky_owl)
+            playSound(R.raw.spooky_owl, bSpookyOwl)
         }
 
         bChainedGhoul.setOnClickListener {
             bChainedGhoul.startAnimation(buttonAnimation)
-            playSound(R.raw.chained_ghoul)
+            playSound(R.raw.chained_ghoul, bChainedGhoul)
         }
 
         bTerrifiedScream.setOnClickListener {
             bTerrifiedScream.startAnimation(buttonAnimation)
-            playSound(R.raw.terrified_scream)
+            playSound(R.raw.terrified_scream, bTerrifiedScream)
         }
 
         bHauntedOrgan.setOnClickListener {
             bHauntedOrgan.startAnimation(buttonAnimation)
-            playSound(R.raw.haunted_organ)
+            playSound(R.raw.haunted_organ, bHauntedOrgan)
         }
 
         bScareCrow.setOnClickListener {
             bScareCrow.startAnimation(buttonAnimation)
-            playSound(R.raw.scarecrow)
+            playSound(R.raw.scarecrow, bScareCrow)
         }
 
         bBlowingWind.setOnClickListener {
             bBlowingWind.startAnimation(buttonAnimation)
-            playSound(R.raw.blowing_wind)
+            playSound(R.raw.blowing_wind, bBlowingWind)
         }
 
         bGhostlyWhisper.setOnClickListener {
             bGhostlyWhisper.startAnimation(buttonAnimation)
-            playSound(R.raw.ghostly_whisper)
+            playSound(R.raw.ghostly_whisper, bGhostlyWhisper)
         }
 
         bDraculaLaugh.setOnClickListener {
             bDraculaLaugh.startAnimation(buttonAnimation)
-            playSound(R.raw.dracula_laugh)
+            playSound(R.raw.dracula_laugh, bDraculaLaugh)
         }
 
         bWolfCry.setOnClickListener {
             bWolfCry.startAnimation(buttonAnimation)
-            playSound(R.raw.wolf_cry)
+            playSound(R.raw.wolf_cry, bWolfCry)
         }
 
         bKnockKnock.setOnClickListener {
             bKnockKnock.startAnimation(buttonAnimation)
-            playSound(R.raw.knock_knock)
+            playSound(R.raw.knock_knock, bKnockKnock)
         }
 
         bFrankenstein.setOnClickListener {
             bFrankenstein.startAnimation(buttonAnimation)
-            playSound(R.raw.igor_grumble)
+            playSound(R.raw.igor_grumble, bFrankenstein)
         }
 
         bHorrorMovie.setOnClickListener {
             bHorrorMovie.startAnimation(buttonAnimation)
-            playSound(R.raw.horror_film)
+            playSound(R.raw.horror_film, bHorrorMovie)
         }
 
         bWarningBells.setOnClickListener {
             bWarningBells.startAnimation(buttonAnimation)
-            playSound(R.raw.warning_bells)
+            playSound(R.raw.warning_bells, bWarningBells)
         }
 
         bPainfulMoan.setOnClickListener {
             bPainfulMoan.startAnimation(buttonAnimation)
-            playSound(R.raw.painful_moan)
+            playSound(R.raw.painful_moan, bPainfulMoan)
         }
 
         bWitchesCauldron.setOnClickListener {
             bWitchesCauldron.startAnimation(buttonAnimation)
-            playSound(R.raw.bubbles)
+            playSound(R.raw.bubbles, bWitchesCauldron)
         }
 
         bGhostlyChildren.setOnClickListener {
             bGhostlyChildren.startAnimation(buttonAnimation)
-            playSound(R.raw.scary_nursery)
+            playSound(R.raw.scary_nursery, bGhostlyChildren)
         }
 
         bHauntedSwamp.setOnClickListener {
             bHauntedSwamp.startAnimation(buttonAnimation)
-            playSound(R.raw.haunted_swamp)
+            playSound(R.raw.haunted_swamp, bHauntedSwamp)
         }
 
         bTorturedSouls.setOnClickListener {
             bTorturedSouls.startAnimation(buttonAnimation)
-            playSound(R.raw.tortured_souls)
+            playSound(R.raw.tortured_souls, bTorturedSouls)
         }
 
         bChillingHorn.setOnClickListener {
             bChillingHorn.startAnimation(buttonAnimation)
-            playSound(R.raw.chilling_horn)
+            playSound(R.raw.chilling_horn, bChillingHorn)
         }
         // Set an OnClickListener to handle the click event
         overlayImageView.setOnClickListener {
             openSecretActivity()
         }
-
     }
     // Google in-app review dialog - do not delete
     private fun showFeedbackDialog() {
@@ -348,7 +348,14 @@ class ScrollingActivity : AppCompatActivity() {
         }
         return calendar.timeInMillis
     }
-    private fun playSound(soundId: Int) {
+    private fun playSound(soundId: Int, button: View) {
+        // Change the button color to colorButtonPressed
+        button.backgroundTintList = ColorStateList.valueOf(
+            ContextCompat.getColor(
+                this@ScrollingActivity,
+                R.color.colorButtonPressed
+            )
+        )
         // Create a new MediaPlayer instance for the current sound
         val mediaPlayer = MediaPlayer.create(this, soundId)
 
@@ -356,8 +363,15 @@ class ScrollingActivity : AppCompatActivity() {
         mediaPlayer.setOnCompletionListener {
             it.release()
             mediaPlayerQueue.remove(it)
-        }
 
+            // Change the button color back to colorButton when sound finishes
+            button.backgroundTintList = ColorStateList.valueOf(
+                ContextCompat.getColor(
+                    this@ScrollingActivity,
+                    R.color.colorButton
+                )
+            )
+        }
         // Add the new MediaPlayer to the queue
         mediaPlayerQueue.add(mediaPlayer)
 
