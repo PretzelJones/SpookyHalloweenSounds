@@ -17,29 +17,23 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0ab9337d-686f-443d-85b5-d4995dd55070" name="Default Changelist" comment="Modified DeveloperActivity to include new version number and privacy policy link - commented out SecretActivity link from menus">
+    <list default="true" id="0ab9337d-686f-443d-85b5-d4995dd55070" name="Default Changelist" comment="changed mediaplayer management to use playSound function from ScrollingActivity. The sounds will pause when pressed and stop previous player when new one is created. Also readded the toast message when backpressing from ScrollingActivity">
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_pause.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_play.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/deploymentTargetDropDown.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deploymentTargetDropDown.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/assetWizardSettings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/assetWizardSettings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/release/halloweensounds.aab" beforeDir="false" afterPath="$PROJECT_DIR$/app/release/halloweensounds.aab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/DeveloperActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/DeveloperActivity.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/LongActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/LongActivity.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/MovieActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/MovieActivity.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/ScrollingActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/ScrollingActivity.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/SecretActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/SecretActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/content_long.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/content_long.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/content_movie.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/content_movie.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/content_secret.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/content_secret.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[adb-R58M32HPR8D-OTajSs._adb-tls-connect._tcp.]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[/Users/mac/.android/avd/Pixel_7_Pro_API_22.avd]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -87,9 +81,9 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="layoutResourceFile" />
-        <option value="resourceFile" />
         <option value="Kotlin Class" />
         <option value="valueResourceFile" />
+        <option value="resourceFile" />
       </list>
     </option>
   </component>
@@ -175,8 +169,8 @@
       <recent name="$PROJECT_DIR$/app/src/main/res/raw" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/app/src/main/res/anim" />
       <recent name="$PROJECT_DIR$/app/src/main/res/drawable" />
+      <recent name="$PROJECT_DIR$/app/src/main/res/anim" />
       <recent name="$PROJECT_DIR$/app/src/main/res/raw" />
       <recent name="$PROJECT_DIR$/app/src/main/res/layout" />
     </key>
@@ -541,7 +535,14 @@
       <option name="project" value="LOCAL" />
       <updated>1695218812387</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="added color change on buttons on all activities. Reworked the playsound function on the scrollingactivity and change each indivisual onclick listener in the other activities. should consider changing the other activities to use the playsound function for simplicity and effeciency.">
+      <created>1695517873870</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1695517873870</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -557,8 +558,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Disabled 'com.google.firebase:firebase-analytics:17.3.0' and 'com.crashlytics.sdk.android:crashlytics:2.9.9' due to duplicate resource errors. Crash reporting may not be working if Firebase Crash isn't supported." />
-    <MESSAGE value="Converted to androidX and API 28" />
     <MESSAGE value="Release version 1.9.31 Build 42" />
     <MESSAGE value="Corrected player code back to old way. Added countdown. Updated version" />
     <MESSAGE value="commented out google review api code. Set app rater to 0 days and 5 app starts. optimized imports." />
@@ -582,6 +581,8 @@
     <MESSAGE value="1. added button color color changes to ScrollingActivity.&#10;2. created custom AudioControl.kt to handle pausing the audio when exiting the app and resuming when returning.&#10;3. Moved PrefManager to separate file and added code in each activity to call it." />
     <MESSAGE value="A little cleanup" />
     <MESSAGE value="Modified DeveloperActivity to include new version number and privacy policy link - commented out SecretActivity link from menus" />
-    <option name="LAST_COMMIT_MESSAGE" value="Modified DeveloperActivity to include new version number and privacy policy link - commented out SecretActivity link from menus" />
+    <MESSAGE value="added color change on buttons on all activities. Reworked the playsound function on the scrollingactivity and change each indivisual onclick listener in the other activities. should consider changing the other activities to use the playsound function for simplicity and effeciency." />
+    <MESSAGE value="changed mediaplayer management to use playSound function from ScrollingActivity. The sounds will pause when pressed and stop previous player when new one is created. Also readded the toast message when backpressing from ScrollingActivity" />
+    <option name="LAST_COMMIT_MESSAGE" value="changed mediaplayer management to use playSound function from ScrollingActivity. The sounds will pause when pressed and stop previous player when new one is created. Also readded the toast message when backpressing from ScrollingActivity" />
   </component>
 </project>

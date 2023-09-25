@@ -15,13 +15,16 @@ import kotlinx.android.synthetic.main.content_secret.bChillingCries
 import kotlinx.android.synthetic.main.content_secret.bCriesFromHell
 import kotlinx.android.synthetic.main.content_secret.bTheGhostSong
 import kotlinx.android.synthetic.main.content_secret.bTheOldTape
+import java.util.LinkedList
 
 class SecretActivity : AppCompatActivity() {
 
     // Initialize the MediaPlayer
-    private var mp: MediaPlayer? = null
-    // Define a variable to keep track of the currently playing button
-    private var currentPlayingButton: View? = null
+    //private var mp: MediaPlayer? = null
+    private var currentPlayingButton: View? = null // Track the currently pressed button associated with media.
+    private val mediaPlayerQueue = LinkedList<MediaPlayer>() // Queue to manage MediaPlayer instances.
+    private var currentPlayingMediaPlayer: MediaPlayer? = null // Reference to the currently playing MediaPlayer.
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +35,24 @@ class SecretActivity : AppCompatActivity() {
         // initialize button animation for long and movie buttons
         val buttonAnimation = AnimationUtils.loadAnimation(this, R.anim.button_animation)
 
+        bTheGhostSong.setOnClickListener {
+            bTheGhostSong.startAnimation(buttonAnimation)
+            playSound(R.raw.the_ghost_song, bTheGhostSong)
+        }
+        bTheOldTape.setOnClickListener {
+            bTheOldTape.startAnimation(buttonAnimation)
+            playSound(R.raw.the_old_tape, bTheOldTape)
+        }
+        bChillingCries.setOnClickListener {
+            bChillingCries.startAnimation(buttonAnimation)
+            playSound(R.raw.chilling_cries, bChillingCries)
+        }
+        bCriesFromHell.setOnClickListener {
+            bCriesFromHell.startAnimation(buttonAnimation)
+            playSound(R.raw.cries_from_hell, bCriesFromHell)
+        }
+    }
+        /*
         bTheGhostSong.setOnClickListener {
             bTheGhostSong.startAnimation(buttonAnimation)
 
@@ -155,37 +176,81 @@ class SecretActivity : AppCompatActivity() {
                 )
             )
         }
-        /*
-        //media player methods
-        bTheOldTape.setOnClickListener {
-            bTheGhostSong.startAnimation(buttonAnimation)
-            stopPlaying()
-            mp = MediaPlayer.create(this@SecretActivity, R.raw.the_old_tape)
-            mPlay()
+    }*/ //end old code
+    private fun playSound(soundId: Int, button: View) {
+        // Check if the current media player is already playing and associated with a button
+        if (currentPlayingMediaPlayer != null && currentPlayingButton != null) {
+            // If the same button is tapped again, pause or resume playback
+            if (currentPlayingButton == button) {
+                if (currentPlayingMediaPlayer!!.isPlaying) {
+                    currentPlayingMediaPlayer!!.pause()
+                } else {
+                    currentPlayingMediaPlayer!!.start()
+                }
+                return
+            } else {
+                // If a different button is tapped, release the current media player
+                currentPlayingMediaPlayer!!.release()
+                currentPlayingMediaPlayer = null
+                // Change the previous button's color back to colorButton
+                currentPlayingButton!!.backgroundTintList = ColorStateList.valueOf(
+                    ContextCompat.getColor(
+                        this@SecretActivity,
+                        R.color.colorButton
+                    )
+                )
+            }
         }
-
-        bTheGhostSong.setOnClickListener {
-            bTheGhostSong.startAnimation(buttonAnimation)
-            stopPlaying()
-            mp = MediaPlayer.create(this@SecretActivity, R.raw.the_ghost_song)
-            mPlay()
+        // Change the button color to colorButtonPressed
+        button.backgroundTintList = ColorStateList.valueOf(
+            ContextCompat.getColor(
+                this@SecretActivity,
+                R.color.colorButtonPressed
+            )
+        )
+        // Create a new MediaPlayer instance for the current sound
+        val mediaPlayer = MediaPlayer.create(this, soundId)
+        // Set completion listener to release the MediaPlayer when sound finishes
+        mediaPlayer.setOnCompletionListener {
+            it.release()
+            mediaPlayerQueue.remove(it)
+            // Change the button color back to colorButton when sound finishes
+            button.backgroundTintList = ColorStateList.valueOf(
+                ContextCompat.getColor(
+                    this@SecretActivity,
+                    R.color.colorButton
+                )
+            )
         }
-
-        bChillingCries.setOnClickListener {
-            bChillingCries.startAnimation(buttonAnimation)
-            stopPlaying()
-            mp = MediaPlayer.create(this@SecretActivity, R.raw.chilling_cries)
-            mPlay()
-        }
-
-        bCriesFromHell.setOnClickListener {
-            bCriesFromHell.startAnimation(buttonAnimation)
-            stopPlaying()
-            mp = MediaPlayer.create(this@SecretActivity, R.raw.cries_from_hell)
-            mPlay()
-        }
-        */
+        // Set looping to true to repeat the sound
+        mediaPlayer.isLooping = true
+        // Add the new MediaPlayer to the queue
+        mediaPlayerQueue.add(mediaPlayer)
+        // Start playing the current sound
+        mediaPlayer.start()
+        // Set the current media player and button to the ones just created
+        currentPlayingMediaPlayer = mediaPlayer
+        currentPlayingButton = button
     }
+    override fun onDestroy() {
+        super.onDestroy()
+        mediaPlayerQueue.forEach { mediaPlayer ->
+            mediaPlayer.release()
+        }
+        mediaPlayerQueue.clear()
+    }
+    private fun releaseAllMediaPlayers() {
+        mediaPlayerQueue.forEach { mediaPlayer ->
+            mediaPlayer.release()
+        }
+        mediaPlayerQueue.clear()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        releaseAllMediaPlayers()
+    }
+    /*
     private fun mPlay () {
         mp?.start()
         mp?.isLooping = true
@@ -206,15 +271,12 @@ class SecretActivity : AppCompatActivity() {
     override fun onStop() {
         super.onStop()
         stopPlaying()
-    }
+    } */ //end of old code
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-
         menuInflater.inflate(R.menu.menu_scrolling, menu)
-
         return true
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
         val id = item.itemId
 
         if (id == R.id.action_settings) {

@@ -37,7 +37,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="imagePath" value="$USER_HOME$/Library/Mobile Documents/com~apple~CloudDocs/iCloud Projects/Material/Spooky Halloween Sounds/New Image Assets/amityville/android/playstore-icon.png" />
+                                                <entry key="imagePath" value="$USER_HOME$/Downloads/Android Image/xxxhdpi.png" />
                                                 <entry key="opacityPercent" value="80" />
                                                 <entry key="paddingPercent" value="-10" />
                                               </map>
@@ -72,8 +72,8 @@
                                   <option name="values">
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
-                                      <entry key="imageAsset" value="$USER_HOME$/Library/Mobile Documents/com~apple~CloudDocs/iCloud Projects/Material/Spooky Halloween Sounds/New Image Assets/amityville/android/playstore-icon.png" />
-                                      <entry key="outputName" value="ic_amityville" />
+                                      <entry key="imageAsset" value="$USER_HOME$/Downloads/Android Image/xxxhdpi.png" />
+                                      <entry key="outputName" value="ic_pause" />
                                       <entry key="theme" value="CUSTOM" />
                                       <entry key="themeColor" value="000000" />
                                     </map>

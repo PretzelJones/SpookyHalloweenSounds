@@ -5,10 +5,12 @@ import android.content.res.ColorStateList
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.os.Handler
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.animation.AnimationUtils
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
@@ -62,6 +64,7 @@ class ScrollingActivity : AppCompatActivity() {
     private val mediaPlayerQueue = LinkedList<MediaPlayer>()
     private lateinit var timer: CountDownTimer
     private var halloweenDate: Long = 0
+    private var doubleBackToExitPressedOnce = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -401,6 +404,23 @@ class ScrollingActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
         releaseAllMediaPlayers()
+    }
+    @Deprecated("Deprecated in Java")
+    override fun onBackPressed() {
+
+        if (!doubleBackToExitPressedOnce) {
+            this.doubleBackToExitPressedOnce = true
+
+            //display msg
+            Toast.makeText(this, "Press again to exit", Toast.LENGTH_SHORT).show()
+
+            Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
+
+        } else {
+
+            super.onBackPressed()
+
+        }
     }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_scrolling, menu)
