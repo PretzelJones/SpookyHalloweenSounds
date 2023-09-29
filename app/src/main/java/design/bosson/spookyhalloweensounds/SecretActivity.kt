@@ -19,12 +19,9 @@ import java.util.LinkedList
 
 class SecretActivity : AppCompatActivity() {
 
-    // Initialize the MediaPlayer
-    //private var mp: MediaPlayer? = null
     private var currentPlayingButton: View? = null // Track the currently pressed button associated with media.
     private val mediaPlayerQueue = LinkedList<MediaPlayer>() // Queue to manage MediaPlayer instances.
     private var currentPlayingMediaPlayer: MediaPlayer? = null // Reference to the currently playing MediaPlayer.
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,132 +49,79 @@ class SecretActivity : AppCompatActivity() {
             playSound(R.raw.cries_from_hell, bCriesFromHell)
         }
     }
-        /*
-        bTheGhostSong.setOnClickListener {
-            bTheGhostSong.startAnimation(buttonAnimation)
-
-            // Check if a media player is currently playing
-            if (currentPlayingButton != null) {
-                // Change the background color of the previously playing button back to colorTitle
-                currentPlayingButton!!.backgroundTintList = ColorStateList.valueOf(
-                    ContextCompat.getColor(
-                        this@SecretActivity,
-                        R.color.colorTitle
-                    )
-                )
-            }
-
-            // Start playing the media player
-            stopPlaying()
-            mp = MediaPlayer.create(this@SecretActivity, R.raw.the_ghost_song)
-            mPlay()
-
-            // Update the currently playing button reference
-            currentPlayingButton = bTheGhostSong
-
-            // Change the background color of the currently playing button to colorButtonPressed
-            bTheGhostSong.backgroundTintList = ColorStateList.valueOf(
-                ContextCompat.getColor(
-                    this@SecretActivity,
-                    R.color.colorButtonPressed
-                )
-            )
-        }
-
-        bTheOldTape.setOnClickListener {
-            bTheOldTape.startAnimation(buttonAnimation)
-
-            // Check if a media player is currently playing
-            if (currentPlayingButton != null) {
-                // Change the background color of the previously playing button back to colorTitle
-                currentPlayingButton!!.backgroundTintList = ColorStateList.valueOf(
-                    ContextCompat.getColor(
-                        this@SecretActivity,
-                        R.color.colorTitle
-                    )
-                )
-            }
-
-            // Start playing the media player
-            stopPlaying()
-            mp = MediaPlayer.create(this@SecretActivity, R.raw.the_old_tape)
-            mPlay()
-
-            // Update the currently playing button reference
-            currentPlayingButton = bTheOldTape
-
-            // Change the background color of the currently playing button to colorButtonPressed
-            bTheOldTape.backgroundTintList = ColorStateList.valueOf(
-                ContextCompat.getColor(
-                    this@SecretActivity,
-                    R.color.colorButtonPressed
-                )
-            )
-        }
-
-        bChillingCries.setOnClickListener {
-            bChillingCries.startAnimation(buttonAnimation)
-
-            // Check if a media player is currently playing
-            if (currentPlayingButton != null) {
-                // Change the background color of the previously playing button back to colorTitle
-                currentPlayingButton!!.backgroundTintList = ColorStateList.valueOf(
-                    ContextCompat.getColor(
-                        this@SecretActivity,
-                        R.color.colorTitle
-                    )
-                )
-            }
-
-            // Start playing the media player
-            stopPlaying()
-            mp = MediaPlayer.create(this@SecretActivity, R.raw.chilling_cries)
-            mPlay()
-
-            // Update the currently playing button reference
-            currentPlayingButton = bChillingCries
-
-            // Change the background color of the currently playing button to colorButtonPressed
-            bChillingCries.backgroundTintList = ColorStateList.valueOf(
-                ContextCompat.getColor(
-                    this@SecretActivity,
-                    R.color.colorButtonPressed
-                )
-            )
-        }
-
-        bCriesFromHell.setOnClickListener {
-            bCriesFromHell.startAnimation(buttonAnimation)
-
-            // Check if a media player is currently playing
-            if (currentPlayingButton != null) {
-                // Change the background color of the previously playing button back to colorTitle
-                currentPlayingButton!!.backgroundTintList = ColorStateList.valueOf(
-                    ContextCompat.getColor(
-                        this@SecretActivity,
-                        R.color.colorTitle
-                    )
-                )
-            }
-
-            // Start playing the media player
-            stopPlaying()
-            mp = MediaPlayer.create(this@SecretActivity, R.raw.cries_from_hell)
-            mPlay()
-
-            // Update the currently playing button reference
-            currentPlayingButton = bCriesFromHell
-
-            // Change the background color of the currently playing button to colorButtonPressed
-            bCriesFromHell.backgroundTintList = ColorStateList.valueOf(
-                ContextCompat.getColor(
-                    this@SecretActivity,
-                    R.color.colorButtonPressed
-                )
-            )
-        }
-    }*/ //end old code
     private fun playSound(soundId: Int, button: View) {
+        try {
+            // Check if the current media player is already playing and associated with a button
+            if (currentPlayingMediaPlayer != null && currentPlayingButton != null) {
+                // If the same button is tapped again, pause or resume playback
+                if (currentPlayingButton == button) {
+                    if (currentPlayingMediaPlayer!!.isPlaying) {
+                        currentPlayingMediaPlayer!!.pause()
+                    } else {
+                        currentPlayingMediaPlayer!!.start()
+                    }
+                    return
+                } else {
+                    // If a different button is tapped, release the current media player
+                    currentPlayingMediaPlayer!!.release()
+                    currentPlayingMediaPlayer = null
+                    // Change the previous button's color back to colorButton
+                    currentPlayingButton!!.backgroundTintList = ColorStateList.valueOf(
+                        ContextCompat.getColor(
+                            this@SecretActivity,
+                            R.color.colorButton
+                        )
+                    )
+                }
+            }
+
+            // Change the button color to colorButtonPressed
+            button.backgroundTintList = ColorStateList.valueOf(
+                ContextCompat.getColor(
+                    this@SecretActivity,
+                    R.color.colorButtonPressed
+                )
+            )
+
+            // Create a new MediaPlayer instance for the current sound
+            val mediaPlayer = MediaPlayer.create(this, soundId)
+
+            // Set completion listener to release the MediaPlayer when sound finishes
+            mediaPlayer.setOnCompletionListener {
+                it.release()
+                mediaPlayerQueue.remove(it)
+                // Change the button color back to colorButton when sound finishes
+                button.backgroundTintList = ColorStateList.valueOf(
+                    ContextCompat.getColor(
+                        this@SecretActivity,
+                        R.color.colorButton
+                    )
+                )
+            }
+
+            // Add the new MediaPlayer to the queue
+            mediaPlayerQueue.add(mediaPlayer)
+
+            // Check if the queue size exceeds the limit (e.g., 10)
+            if (mediaPlayerQueue.size > 10) {
+                // Release the oldest MediaPlayer
+                val oldestMediaPlayer = mediaPlayerQueue.poll()
+                oldestMediaPlayer?.release()
+            }
+
+            // Start playing the current sound
+            mediaPlayer.start()
+
+            // Set the current media player and button to the ones just created
+            currentPlayingMediaPlayer = mediaPlayer
+            currentPlayingButton = button
+        } catch (e: Exception) {
+            e.printStackTrace()
+            // Handle any exceptions here, e.g., log an error message or show a toast
+        }
+    }
+
+    /*private fun playSound(soundId: Int, button: View) {
         // Check if the current media player is already playing and associated with a button
         if (currentPlayingMediaPlayer != null && currentPlayingButton != null) {
             // If the same button is tapped again, pause or resume playback
@@ -231,7 +175,7 @@ class SecretActivity : AppCompatActivity() {
         // Set the current media player and button to the ones just created
         currentPlayingMediaPlayer = mediaPlayer
         currentPlayingButton = button
-    }
+    }*/
     override fun onDestroy() {
         super.onDestroy()
         mediaPlayerQueue.forEach { mediaPlayer ->
@@ -250,28 +194,6 @@ class SecretActivity : AppCompatActivity() {
         super.onPause()
         releaseAllMediaPlayers()
     }
-    /*
-    private fun mPlay () {
-        mp?.start()
-        mp?.isLooping = true
-        mp?.setScreenOnWhilePlaying(true)
-    }
-
-    private fun stopPlaying() {
-        // If media player is not null and is playing, then stop and release it
-        mp?.apply {
-            if (isPlaying) {
-                stop()
-            }
-            release()
-        }
-        mp = null
-    }
-
-    override fun onStop() {
-        super.onStop()
-        stopPlaying()
-    } */ //end of old code
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_scrolling, menu)
         return true
