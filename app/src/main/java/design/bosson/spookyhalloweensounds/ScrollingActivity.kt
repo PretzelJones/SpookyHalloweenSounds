@@ -520,80 +520,81 @@ class ScrollingActivity : AppCompatActivity() {
         }
         mediaPlayerQueue.clear()
     }
-    private fun releaseAllMediaPlayers() {
-        mediaPlayerQueue.forEach { mediaPlayer ->
-            mediaPlayer.release()
-        }
-        mediaPlayerQueue.clear()
+/* original code to stop playing when moving back and forth between activities
+private fun releaseAllMediaPlayers() {
+    mediaPlayerQueue.forEach { mediaPlayer ->
+        mediaPlayer.release()
     }
-    override fun onPause() {
-        super.onPause()
-        if (currentPlayingMediaPlayer != null) {
-            currentPlayingMediaPlayer!!.stop()
-            currentPlayingMediaPlayer!!.release()
-            currentPlayingMediaPlayer = null
-        }
+    mediaPlayerQueue.clear()
+} */
+override fun onPause() {
+    super.onPause()
+    if (currentPlayingMediaPlayer != null) {
+        currentPlayingMediaPlayer!!.stop()
+        currentPlayingMediaPlayer!!.release()
+        currentPlayingMediaPlayer = null
     }
-    override fun onResume() {
-        super.onResume()
-        currentPlayingButton?.backgroundTintList = ColorStateList.valueOf(
-            ContextCompat.getColor(this, R.color.colorButton)
-        )
-        if (currentPlayingMediaPlayer != null && !currentPlayingMediaPlayer!!.isPlaying) {
-            currentPlayingMediaPlayer!!.start()
-        }
+}
+override fun onResume() {
+    super.onResume()
+    currentPlayingButton?.backgroundTintList = ColorStateList.valueOf(
+        ContextCompat.getColor(this, R.color.colorButton)
+    )
+    if (currentPlayingMediaPlayer != null && !currentPlayingMediaPlayer!!.isPlaying) {
+        currentPlayingMediaPlayer!!.start()
     }
-    /* original code to stop playing when moving back and forth between activities
-    override fun onPause() {
-        super.onPause()
-        releaseAllMediaPlayers()
+}
+/* original code to stop playing when moving back and forth between activities
+override fun onPause() {
+    super.onPause()
+    releaseAllMediaPlayers()
+}
+override fun onResume() {
+    super.onResume()
+    // Reset the button colors here
+    currentPlayingButton?.backgroundTintList = ColorStateList.valueOf(
+        ContextCompat.getColor(this, R.color.colorButton)
+    )
+}*/
+@Suppress("DEPRECATION")
+@Deprecated("Deprecated in Java")
+override fun onBackPressed() {
+
+    if (!doubleBackToExitPressedOnce) {
+        this.doubleBackToExitPressedOnce = true
+
+        //display msg
+        Toast.makeText(this, "Press again to exit", Toast.LENGTH_SHORT).show()
+
+        Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
+
+    } else {
+
+        super.onBackPressed()
+
     }
-    override fun onResume() {
-        super.onResume()
-        // Reset the button colors here
-        currentPlayingButton?.backgroundTintList = ColorStateList.valueOf(
-            ContextCompat.getColor(this, R.color.colorButton)
-        )
-    }*/
-    @Suppress("DEPRECATION")
-    @Deprecated("Deprecated in Java")
-    override fun onBackPressed() {
-
-        if (!doubleBackToExitPressedOnce) {
-            this.doubleBackToExitPressedOnce = true
-
-            //display msg
-            Toast.makeText(this, "Press again to exit", Toast.LENGTH_SHORT).show()
-
-            Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
-
-        } else {
-
-            super.onBackPressed()
-
-        }
-    }
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_scrolling, menu)
-        return true
-    }
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.action_settings -> {
-                val intent = Intent(this, DeveloperActivity::class.java)
-                this.startActivity(intent)
-            }
-
-            R.id.share -> {
-                val sharingIntent = Intent(Intent.ACTION_SEND)
-                sharingIntent.type = "text/plain"
-                sharingIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.google_play_store))
-                startActivity(Intent.createChooser(sharingIntent, "Share via"))
-            }/*else if (id == R.id.secret) {
-            val intent = Intent(this, SecretActivity::class.java)
+}
+override fun onCreateOptionsMenu(menu: Menu): Boolean {
+    menuInflater.inflate(R.menu.menu_scrolling, menu)
+    return true
+}
+override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    when (item.itemId) {
+        R.id.action_settings -> {
+            val intent = Intent(this, DeveloperActivity::class.java)
             this.startActivity(intent)
-        }*/
         }
-        return true
+
+        R.id.share -> {
+            val sharingIntent = Intent(Intent.ACTION_SEND)
+            sharingIntent.type = "text/plain"
+            sharingIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.google_play_store))
+            startActivity(Intent.createChooser(sharingIntent, "Share via"))
+        }/*else if (id == R.id.secret) {
+        val intent = Intent(this, SecretActivity::class.java)
+        this.startActivity(intent)
+    }*/
     }
+    return true
+}
 }
