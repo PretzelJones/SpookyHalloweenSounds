@@ -130,63 +130,6 @@ class MovieActivity : AppCompatActivity() {
             // Handle any exceptions here, e.g., log an error message or show a toast
         }
     }
-
-    /*private fun playSound(soundId: Int, button: View) {
-        // Check if the current media player is already playing and associated with a button
-        if (currentPlayingMediaPlayer != null && currentPlayingButton != null) {
-            // If the same button is tapped again, pause or resume playback
-            if (currentPlayingButton == button) {
-                if (currentPlayingMediaPlayer!!.isPlaying) {
-                    currentPlayingMediaPlayer!!.pause()
-                } else {
-                    currentPlayingMediaPlayer!!.start()
-                }
-                return
-            } else {
-                // If a different button is tapped, release the current media player
-                currentPlayingMediaPlayer!!.release()
-                currentPlayingMediaPlayer = null
-                // Change the previous button's color back to colorButton
-                currentPlayingButton!!.backgroundTintList = ColorStateList.valueOf(
-                    ContextCompat.getColor(
-                        this@MovieActivity,
-                        R.color.colorButton
-                    )
-                )
-            }
-        }
-        // Change the button color to colorButtonPressed
-        button.backgroundTintList = ColorStateList.valueOf(
-            ContextCompat.getColor(
-                this@MovieActivity,
-                R.color.colorButtonPressed
-            )
-        )
-        // Create a new MediaPlayer instance for the current sound
-        val mediaPlayer = MediaPlayer.create(this, soundId)
-        // Set completion listener to release the MediaPlayer when sound finishes
-        mediaPlayer.setOnCompletionListener {
-            it.release()
-            mediaPlayerQueue.remove(it)
-            // Change the button color back to colorButton when sound finishes
-            button.backgroundTintList = ColorStateList.valueOf(
-                ContextCompat.getColor(
-                    this@MovieActivity,
-                    R.color.colorButton
-                )
-            )
-        }
-        // Set looping based on the 'loop' parameter
-        mediaPlayer.isLooping = true
-        //mediaPlayer.isLooping = loop
-        // Add the new MediaPlayer to the queue
-        mediaPlayerQueue.add(mediaPlayer)
-        // Start playing the current sound
-        mediaPlayer.start()
-        // Set the current media player and button to the ones just created
-        currentPlayingMediaPlayer = mediaPlayer
-        currentPlayingButton = button
-    }*/
     override fun onDestroy() {
         super.onDestroy()
         mediaPlayerQueue.forEach { mediaPlayer ->
@@ -200,7 +143,6 @@ class MovieActivity : AppCompatActivity() {
         }
         mediaPlayerQueue.clear()
     }
-
     override fun onPause() {
         super.onPause()
         releaseAllMediaPlayers()

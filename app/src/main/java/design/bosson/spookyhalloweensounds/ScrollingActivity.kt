@@ -354,7 +354,95 @@ class ScrollingActivity : AppCompatActivity() {
         }
         return calendar.timeInMillis
     }
+    private fun playSound(soundId: Int, button: View) {
+        try {
+            if (currentPlayingMediaPlayer != null && currentPlayingButton != null) {
+                if (currentPlayingButton == button) {
+                    if (currentPlayingMediaPlayer!!.isPlaying) {
+                        currentPlayingMediaPlayer!!.pause()
+                    } else {
+                        // Check if the media player is not null before starting it
+                        currentPlayingMediaPlayer?.start() ?: run {
+                            createMediaPlayer(soundId, button)
+                        }
+                    }
+                    return
+                } else {
+                    currentPlayingButton!!.backgroundTintList = ColorStateList.valueOf(
+                        ContextCompat.getColor(
+                            this@ScrollingActivity,
+                            R.color.colorButton
+                        )
+                    )
+                }
+            }
+            createMediaPlayer(soundId, button)
+            // Change the button color to colorButtonPressed
+            button.backgroundTintList = ColorStateList.valueOf(
+                ContextCompat.getColor(
+                    this@ScrollingActivity,
+                    R.color.colorButtonPressed
+                )
+            )
 
+            // Create a new MediaPlayer instance for the current sound
+            val mediaPlayer = MediaPlayer.create(this, soundId)
+
+            // Set completion listener to release the MediaPlayer when sound finishes
+            mediaPlayer.setOnCompletionListener {
+                it.release()
+                mediaPlayerQueue.remove(it)
+                // Change the button color back to colorButton when sound finishes
+                button.backgroundTintList = ColorStateList.valueOf(
+                    ContextCompat.getColor(
+                        this@ScrollingActivity,
+                        R.color.colorButton
+                    )
+                )
+            }
+
+            // Add the new MediaPlayer to the queue
+            mediaPlayerQueue.add(mediaPlayer)
+
+            // Check if the queue size exceeds the limit (e.g., 10)
+            if (mediaPlayerQueue.size > 10) {
+                // Release the oldest MediaPlayer
+                val oldestMediaPlayer = mediaPlayerQueue.poll()
+                oldestMediaPlayer?.release()
+            }
+
+            // Start playing the current sound
+            mediaPlayer.start()
+
+            // Set the current media player and button to the ones just created
+            currentPlayingMediaPlayer = mediaPlayer
+            currentPlayingButton = button
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+    private fun createMediaPlayer(soundId: Int, button: View) {
+        val mediaPlayer = MediaPlayer.create(this, soundId)
+        mediaPlayer.setOnCompletionListener {
+            it.release()
+            mediaPlayerQueue.remove(it)
+            button.backgroundTintList = ColorStateList.valueOf(
+                ContextCompat.getColor(
+                    this@ScrollingActivity,
+                    R.color.colorButton
+                )
+            )
+        }
+        mediaPlayerQueue.add(mediaPlayer)
+        if (mediaPlayerQueue.size > 10) {
+            val oldestMediaPlayer = mediaPlayerQueue.poll()
+            oldestMediaPlayer?.release()
+        }
+        mediaPlayer.start()
+        currentPlayingMediaPlayer = mediaPlayer
+        currentPlayingButton = button
+    }
+/* original code. Sound button stuck when moving back and forth between activities
     private fun playSound(soundId: Int, button: View) {
         try {
             // Check if the current media player is already playing and associated with a button
@@ -424,66 +512,6 @@ class ScrollingActivity : AppCompatActivity() {
         } catch (e: Exception) {
             e.printStackTrace()
         }
-    }
-
-    /*private fun playSound(soundId: Int, button: View) {
-        // Check if the current media player is already playing and associated with a button
-        if (currentPlayingMediaPlayer != null && currentPlayingButton != null) {
-            // If the same button is tapped again, pause or resume playback
-            if (currentPlayingButton == button) {
-                if (currentPlayingMediaPlayer!!.isPlaying) {
-                    currentPlayingMediaPlayer!!.pause()
-                } else {
-                    currentPlayingMediaPlayer!!.start()
-                }
-                return
-            } else {
-                // If a different button is tapped, release the current media player
-                currentPlayingMediaPlayer!!.release()
-                currentPlayingMediaPlayer = null
-                // Change the previous button's color back to colorButton
-                currentPlayingButton!!.backgroundTintList = ColorStateList.valueOf(
-                    ContextCompat.getColor(
-                        this@ScrollingActivity,
-                        R.color.colorButton
-                    )
-                )
-            }
-        }
-        // Change the button color to colorButtonPressed
-        button.backgroundTintList = ColorStateList.valueOf(
-            ContextCompat.getColor(
-                this@ScrollingActivity,
-                R.color.colorButtonPressed
-            )
-        )
-        // Create a new MediaPlayer instance for the current sound
-        val mediaPlayer = MediaPlayer.create(this, soundId)
-        // Set completion listener to release the MediaPlayer when sound finishes
-        mediaPlayer.setOnCompletionListener {
-            it.release()
-            mediaPlayerQueue.remove(it)
-            // Change the button color back to colorButton when sound finishes
-            button.backgroundTintList = ColorStateList.valueOf(
-                ContextCompat.getColor(
-                    this@ScrollingActivity,
-                    R.color.colorButton
-                )
-            )
-        }
-        // Add the new MediaPlayer to the queue
-        mediaPlayerQueue.add(mediaPlayer)
-        // Check if the queue size exceeds the limit (e.g., 10)
-        if (mediaPlayerQueue.size > 10) {
-            // Release the oldest MediaPlayer
-            val oldestMediaPlayer = mediaPlayerQueue.poll()
-            oldestMediaPlayer?.release()
-        }
-        // Start playing the current sound
-        mediaPlayer.start()
-        // Set the current media player and button to the ones just created
-        currentPlayingMediaPlayer = mediaPlayer
-        currentPlayingButton = button
     }*/
     override fun onDestroy() {
         super.onDestroy()
@@ -500,6 +528,24 @@ class ScrollingActivity : AppCompatActivity() {
     }
     override fun onPause() {
         super.onPause()
+        if (currentPlayingMediaPlayer != null) {
+            currentPlayingMediaPlayer!!.stop()
+            currentPlayingMediaPlayer!!.release()
+            currentPlayingMediaPlayer = null
+        }
+    }
+    override fun onResume() {
+        super.onResume()
+        currentPlayingButton?.backgroundTintList = ColorStateList.valueOf(
+            ContextCompat.getColor(this, R.color.colorButton)
+        )
+        if (currentPlayingMediaPlayer != null && !currentPlayingMediaPlayer!!.isPlaying) {
+            currentPlayingMediaPlayer!!.start()
+        }
+    }
+    /* original code to stop playing when moving back and forth between activities
+    override fun onPause() {
+        super.onPause()
         releaseAllMediaPlayers()
     }
     override fun onResume() {
@@ -508,7 +554,7 @@ class ScrollingActivity : AppCompatActivity() {
         currentPlayingButton?.backgroundTintList = ColorStateList.valueOf(
             ContextCompat.getColor(this, R.color.colorButton)
         )
-    }
+    }*/
     @Suppress("DEPRECATION")
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
