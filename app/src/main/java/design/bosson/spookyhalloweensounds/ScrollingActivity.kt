@@ -2,6 +2,7 @@ package design.bosson.spookyhalloweensounds
 
 import android.content.Intent
 import android.content.res.ColorStateList
+import android.content.res.Resources
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -16,6 +17,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import com.google.android.play.core.review.ReviewManagerFactory
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.android.synthetic.main.content_scrolling.bBlackCat
 import kotlinx.android.synthetic.main.content_scrolling.bBlowingWind
 import kotlinx.android.synthetic.main.content_scrolling.bCatScream
@@ -68,6 +70,8 @@ class ScrollingActivity : AppCompatActivity() {
     private var doubleBackToExitPressedOnce = false
     private var currentPlayingButton: View? = null
     private var currentPlayingMediaPlayer: MediaPlayer? = null
+    private val mediaPlayerMap = mutableMapOf<View, MediaPlayer>()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,8 +79,9 @@ class ScrollingActivity : AppCompatActivity() {
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
-        // Obtain the FirebaseAnalytics instance.
+        // Obtain the Firebase instances.
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
+        FirebaseMessaging.getInstance().isAutoInitEnabled = true
         // load button animation
         val buttonAnimation = AnimationUtils.loadAnimation(this, R.anim.button_animation)
         // Calculate the initial halloweenDate based on the current year's Halloween
@@ -349,100 +354,74 @@ class ScrollingActivity : AppCompatActivity() {
             set(Calendar.MONTH, Calendar.OCTOBER)
             set(Calendar.DAY_OF_MONTH, 31)
             set(Calendar.HOUR_OF_DAY, 23)
-            set(Calendar.MINUTE, 59)
-            set(Calendar.SECOND, 59)
+            //set(Calendar.MINUTE, 59)
+            //set(Calendar.SECOND, 59)
         }
         return calendar.timeInMillis
     }
     private fun playSound(soundId: Int, button: View) {
         try {
-            if (currentPlayingMediaPlayer != null && currentPlayingButton != null) {
-                if (currentPlayingButton == button) {
-                    if (currentPlayingMediaPlayer!!.isPlaying) {
-                        currentPlayingMediaPlayer!!.pause()
-                    } else {
-                        // Check if the media player is not null before starting it
-                        currentPlayingMediaPlayer?.start() ?: run {
-                            createMediaPlayer(soundId, button)
-                        }
-                    }
-                    return
+            // Check if a MediaPlayer is associated with this button
+            val existingMediaPlayer = mediaPlayerMap[button]
+
+            if (existingMediaPlayer != null) {
+                if (existingMediaPlayer.isPlaying) {
+                    // If the MediaPlayer associated with this button is playing, pause it
+                    existingMediaPlayer.pause()
                 } else {
-                    currentPlayingButton!!.backgroundTintList = ColorStateList.valueOf(
-                        ContextCompat.getColor(
-                            this@ScrollingActivity,
-                            R.color.colorButton
-                        )
-                    )
+                    // If the MediaPlayer associated with this button is paused, resume playback
+                    existingMediaPlayer.start()
                 }
-            }
-            createMediaPlayer(soundId, button)
-            // Change the button color to colorButtonPressed
-            button.backgroundTintList = ColorStateList.valueOf(
-                ContextCompat.getColor(
-                    this@ScrollingActivity,
-                    R.color.colorButtonPressed
-                )
-            )
+            } else {
+                // Create a new MediaPlayer instance for the current sound
+                val mediaPlayer = MediaPlayer.create(this, soundId)
 
-            // Create a new MediaPlayer instance for the current sound
-            val mediaPlayer = MediaPlayer.create(this, soundId)
+                // Set completion listener to release the MediaPlayer when sound finishes
+                mediaPlayer.setOnCompletionListener {
+                    it.release()
+                    mediaPlayerMap.remove(button)
 
-            // Set completion listener to release the MediaPlayer when sound finishes
-            mediaPlayer.setOnCompletionListener {
-                it.release()
-                mediaPlayerQueue.remove(it)
-                // Change the button color back to colorButton when sound finishes
+                    // Change the button color back to colorButton when sound finishes
+                    resetButtonColor(button)
+                }
+
+                // Add the new MediaPlayer to the map and start playing the current sound
+                mediaPlayerMap[button] = mediaPlayer
+
+                // Change the button color to colorButtonPressed
                 button.backgroundTintList = ColorStateList.valueOf(
                     ContextCompat.getColor(
                         this@ScrollingActivity,
-                        R.color.colorButton
+                        R.color.colorButtonPressed
                     )
                 )
+
+                mediaPlayer.start()
+
+                // Add a long-press listener to restart the audio
+                button.setOnLongClickListener {
+                    mediaPlayer.seekTo(0) // Restart the audio from the beginning
+                    true // Consume the long-press event
+                }
             }
-
-            // Add the new MediaPlayer to the queue
-            mediaPlayerQueue.add(mediaPlayer)
-
-            // Check if the queue size exceeds the limit (e.g., 10)
-            if (mediaPlayerQueue.size > 10) {
-                // Release the oldest MediaPlayer
-                val oldestMediaPlayer = mediaPlayerQueue.poll()
-                oldestMediaPlayer?.release()
-            }
-
-            // Start playing the current sound
-            mediaPlayer.start()
-
-            // Set the current media player and button to the ones just created
-            currentPlayingMediaPlayer = mediaPlayer
-            currentPlayingButton = button
+        } catch (e: Resources.NotFoundException) {
+            // Handle the case where the resource with the given soundId is not found
+            e.printStackTrace()
         } catch (e: Exception) {
+            // Handle other exceptions
             e.printStackTrace()
         }
     }
-    private fun createMediaPlayer(soundId: Int, button: View) {
-        val mediaPlayer = MediaPlayer.create(this, soundId)
-        mediaPlayer.setOnCompletionListener {
-            it.release()
-            mediaPlayerQueue.remove(it)
-            button.backgroundTintList = ColorStateList.valueOf(
-                ContextCompat.getColor(
-                    this@ScrollingActivity,
-                    R.color.colorButton
-                )
+
+    private fun resetButtonColor(button: View) {
+        button.backgroundTintList = ColorStateList.valueOf(
+            ContextCompat.getColor(
+                this@ScrollingActivity,
+                R.color.colorButton
             )
-        }
-        mediaPlayerQueue.add(mediaPlayer)
-        if (mediaPlayerQueue.size > 10) {
-            val oldestMediaPlayer = mediaPlayerQueue.poll()
-            oldestMediaPlayer?.release()
-        }
-        mediaPlayer.start()
-        currentPlayingMediaPlayer = mediaPlayer
-        currentPlayingButton = button
+        )
     }
-/* original code. Sound button stuck when moving back and forth between activities
+    /* original code. Sound button stuck when moving back and forth between activities
     private fun playSound(soundId: Int, button: View) {
         try {
             // Check if the current media player is already playing and associated with a button
