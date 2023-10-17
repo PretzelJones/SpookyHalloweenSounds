@@ -2,6 +2,7 @@ package design.bosson.spookyhalloweensounds
 
 import android.content.Intent
 import android.content.res.ColorStateList
+import android.content.res.Resources
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.Menu
@@ -21,9 +22,10 @@ import java.util.LinkedList
 
 class MovieActivity : AppCompatActivity() {
 
-    private var currentPlayingButton: View? = null // Track the currently pressed button associated with media
     private val mediaPlayerQueue = LinkedList<MediaPlayer>() // Queue to manage MediaPlayer instances
     private var currentPlayingMediaPlayer: MediaPlayer? = null // Reference to the currently playing MediaPlayer
+    private var currentPlayingButton: View? = null // Track the currently pressed button associated with media
+    private val mediaPlayerMap = mutableMapOf<View, MediaPlayer>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,74 +63,64 @@ class MovieActivity : AppCompatActivity() {
     }
     private fun playSound(soundId: Int, button: View) {
         try {
-            // Check if the current media player is already playing and associated with a button
-            if (currentPlayingMediaPlayer != null && currentPlayingButton != null) {
-                // If the same button is tapped again, pause or resume playback
-                if (currentPlayingButton == button) {
-                    if (currentPlayingMediaPlayer!!.isPlaying) {
-                        currentPlayingMediaPlayer!!.pause()
-                    } else {
-                        currentPlayingMediaPlayer!!.start()
-                    }
-                    return
+            // Check if a MediaPlayer is associated with this button
+            val existingMediaPlayer = mediaPlayerMap[button]
+
+            if (existingMediaPlayer != null) {
+                if (existingMediaPlayer.isPlaying) {
+                    // If the MediaPlayer associated with this button is playing, pause it
+                    existingMediaPlayer.pause()
                 } else {
-                    // If a different button is tapped, release the current media player
-                    currentPlayingMediaPlayer!!.release()
-                    currentPlayingMediaPlayer = null
-                    // Change the previous button's color back to colorButton
-                    currentPlayingButton!!.backgroundTintList = ColorStateList.valueOf(
-                        ContextCompat.getColor(
-                            this@MovieActivity,
-                            R.color.colorButton
-                        )
-                    )
+                    // If the MediaPlayer associated with this button is paused, resume playback
+                    existingMediaPlayer.start()
                 }
-            }
+            } else {
+                // Create a new MediaPlayer instance for the current sound
+                val mediaPlayer = MediaPlayer.create(this, soundId)
 
-            // Change the button color to colorButtonPressed
-            button.backgroundTintList = ColorStateList.valueOf(
-                ContextCompat.getColor(
-                    this@MovieActivity,
-                    R.color.colorButtonPressed
-                )
-            )
+                // Set completion listener to release the MediaPlayer when sound finishes
+                mediaPlayer.setOnCompletionListener {
+                    it.release()
+                    mediaPlayerMap.remove(button)
 
-            // Create a new MediaPlayer instance for the current sound
-            val mediaPlayer = MediaPlayer.create(this, soundId)
+                    // Change the button color back to colorButton when sound finishes
+                    resetButtonColor(button)
+                }
 
-            // Set completion listener to release the MediaPlayer when sound finishes
-            mediaPlayer.setOnCompletionListener {
-                it.release()
-                mediaPlayerQueue.remove(it)
-                // Change the button color back to colorButton when sound finishes
+                // Add the new MediaPlayer to the map and start playing the current sound
+                mediaPlayerMap[button] = mediaPlayer
+
+                // Change the button color to colorButtonPressed
                 button.backgroundTintList = ColorStateList.valueOf(
                     ContextCompat.getColor(
                         this@MovieActivity,
-                        R.color.colorButton
+                        R.color.colorButtonPressed
                     )
                 )
+
+                mediaPlayer.start()
+
+                // Add a long-press listener to restart the audio
+                button.setOnLongClickListener {
+                    mediaPlayer.seekTo(0) // Restart the audio from the beginning
+                    true // Consume the long-press event
+                }
             }
-
-            // Add the new MediaPlayer to the queue
-            mediaPlayerQueue.add(mediaPlayer)
-
-            // Check if the queue size exceeds the limit (e.g., 10)
-            if (mediaPlayerQueue.size > 10) {
-                // Release the oldest MediaPlayer
-                val oldestMediaPlayer = mediaPlayerQueue.poll()
-                oldestMediaPlayer?.release()
-            }
-
-            // Start playing the current sound
-            mediaPlayer.start()
-
-            // Set the current media player and button to the ones just created
-            currentPlayingMediaPlayer = mediaPlayer
-            currentPlayingButton = button
-        } catch (e: Exception) {
+        } catch (e: Resources.NotFoundException) {
+            // Handle the case where the resource with the given soundId is not found
             e.printStackTrace()
-            // Handle any exceptions here, e.g., log an error message or show a toast
+        } catch (e: Exception) {
+            // Handle other exceptions
+            e.printStackTrace()
         }
+    }
+    private fun resetButtonColor(button: View) {
+        button.backgroundTintList = ColorStateList.valueOf(
+            ContextCompat.getColor(
+                this@MovieActivity,
+                R.color.colorButton
+            )
+        )
     }
     override fun onDestroy() {
         super.onDestroy()
@@ -137,15 +129,40 @@ class MovieActivity : AppCompatActivity() {
         }
         mediaPlayerQueue.clear()
     }
-    private fun releaseAllMediaPlayers() {
-        mediaPlayerQueue.forEach { mediaPlayer ->
-            mediaPlayer.release()
-        }
-        mediaPlayerQueue.clear()
-    }
     override fun onPause() {
         super.onPause()
-        releaseAllMediaPlayers()
+        if (currentPlayingMediaPlayer != null) {
+            currentPlayingMediaPlayer!!.stop()
+            currentPlayingMediaPlayer!!.release()
+            currentPlayingMediaPlayer = null
+        }
+    }
+    override fun onResume() {
+        super.onResume()
+        currentPlayingButton?.backgroundTintList = ColorStateList.valueOf(
+            ContextCompat.getColor(this, R.color.colorButton)
+        )
+        if (currentPlayingMediaPlayer != null && !currentPlayingMediaPlayer!!.isPlaying) {
+            currentPlayingMediaPlayer!!.start()
+        }
+    }
+    override fun onStop() {
+        super.onStop()
+
+        // Release all media players in the mediaPlayerMap
+        mediaPlayerMap.values.forEach { mediaPlayer ->
+            mediaPlayer.release()
+        }
+        mediaPlayerMap.clear()
+
+        // Reset the button colors for all buttons associated with media players
+        mediaPlayerMap.keys.forEach { button ->
+            resetButtonColor(button)
+        }
+
+        // Release the currentPlayingMediaPlayer if it exists
+        currentPlayingMediaPlayer?.release()
+        currentPlayingMediaPlayer = null
     }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_scrolling, menu)
@@ -164,11 +181,7 @@ class MovieActivity : AppCompatActivity() {
             sharingIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.google_play_store))
             startActivity(Intent.createChooser(sharingIntent, "Share via"))
 
-        } /*else if (id == R.id.secret) {
-            val intent = Intent(this, SecretActivity::class.java)
-            this.startActivity(intent)
-        }*/
-
+        }
         return true
     }
 }

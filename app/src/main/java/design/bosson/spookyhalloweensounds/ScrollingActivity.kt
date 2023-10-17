@@ -72,7 +72,6 @@ class ScrollingActivity : AppCompatActivity() {
     private var currentPlayingMediaPlayer: MediaPlayer? = null
     private val mediaPlayerMap = mutableMapOf<View, MediaPlayer>()
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_scrolling)
@@ -98,6 +97,10 @@ class ScrollingActivity : AppCompatActivity() {
             openSecretActivity()
         }
 
+        //initialize the mediaplayer and set it to null
+        val mediaPlayer = MediaPlayer()
+        currentPlayingMediaPlayer = mediaPlayer
+
         bLoopingMix.setOnClickListener {
             bLoopingMix.startAnimation(buttonAnimation)
             val intent = Intent(this, LongActivity::class.java)
@@ -112,187 +115,187 @@ class ScrollingActivity : AppCompatActivity() {
 
         bWitchCackle.setOnClickListener {
             bWitchCackle.startAnimation(buttonAnimation)
-            playSound(R.raw.witch_laugh, bWitchCackle)
+            playSound(bWitchCackle, R.raw.witch_laugh)
         }
 
         bBlackCat.setOnClickListener {
             bBlackCat.startAnimation(buttonAnimation)
-            playSound(R.raw.black_cat, bBlackCat)
+            playSound(bBlackCat, R.raw.black_cat)
         }
 
         bCreepyLaugh.setOnClickListener {
             bCreepyLaugh.startAnimation(buttonAnimation)
-            playSound(R.raw.evil_man, bCreepyLaugh)
+            playSound(bCreepyLaugh, R.raw.evil_man)
         }
 
         bCreakyDoor.setOnClickListener {
             bCreakyDoor.startAnimation(buttonAnimation)
-            playSound(R.raw.creaky_door, bCreakyDoor)
+            playSound(bCreakyDoor, R.raw.creaky_door)
         }
 
         bHorrorAmbience.setOnClickListener {
             bHorrorAmbience.startAnimation(buttonAnimation)
-            playSound(R.raw.horror_ambience, bHorrorAmbience)
+            playSound(bHorrorAmbience, R.raw.horror_ambience)
         }
 
         bMonsterGrowl.setOnClickListener {
             bMonsterGrowl.startAnimation(buttonAnimation)
-            playSound(R.raw.monster_growl, bMonsterGrowl)
+            playSound(bMonsterGrowl, R.raw.monster_growl)
         }
 
         bMonsterWalking.setOnClickListener {
             bMonsterWalking.startAnimation(buttonAnimation)
-            playSound(R.raw.monster_walking, bMonsterWalking)
+            playSound(bMonsterWalking, R.raw.monster_walking)
         }
 
         bScaryScream.setOnClickListener {
             bScaryScream.startAnimation(buttonAnimation)
-            playSound(R.raw.scary_scream, bScaryScream)
+            playSound(bScaryScream, R.raw.scary_scream)
         }
 
         bSpookyChains.setOnClickListener {
             bSpookyChains.startAnimation(buttonAnimation)
-            playSound(R.raw.spooky_chains, bSpookyChains)
+            playSound(bSpookyChains, R.raw.spooky_chains)
         }
 
         bThunderStorm.setOnClickListener {
             bThunderStorm.startAnimation(buttonAnimation)
-            playSound(R.raw.thunder, bThunderStorm)
+            playSound(bThunderStorm, R.raw.thunder)
         }
 
         bVampireBat.setOnClickListener {
             bVampireBat.startAnimation(buttonAnimation)
-            playSound(R.raw.vampire_bat, bVampireBat)
+            playSound(bVampireBat, R.raw.vampire_bat)
         }
 
         bZombieGroan.setOnClickListener {
             bZombieGroan.startAnimation(buttonAnimation)
-            playSound(R.raw.zombie, bZombieGroan)
+            playSound(bZombieGroan, R.raw.zombie)
         }
 
         bGhostBoo.setOnClickListener {
             bGhostBoo.startAnimation(buttonAnimation)
-            playSound(R.raw.ghost_boo, bGhostBoo)
+            playSound(bGhostBoo, R.raw.ghost_boo)
         }
 
         bWerewolfHowl.setOnClickListener {
             bWerewolfHowl.startAnimation(buttonAnimation)
-            playSound(R.raw.werewolf_howl, bWerewolfHowl)
+            playSound(bWerewolfHowl, R.raw.werewolf_howl)
         }
 
         bPoltergeistVoice.setOnClickListener {
             bPoltergeistVoice.startAnimation(buttonAnimation)
-            playSound(R.raw.poltergeist_voice, bPoltergeistVoice)
+            playSound(bPoltergeistVoice, R.raw.poltergeist_voice)
         }
 
         bZombieCall.setOnClickListener {
             bZombieCall.startAnimation(buttonAnimation)
-            playSound(R.raw.zombie_come, bZombieCall)
+            playSound(bZombieCall, R.raw.zombie_come)
         }
 
         bCatScream.setOnClickListener {
             bCatScream.startAnimation(buttonAnimation)
-            playSound(R.raw.cat_scream, bCatScream)
+            playSound(bCatScream, R.raw.cat_scream)
         }
 
         bWraithWail.setOnClickListener {
             bWraithWail.startAnimation(buttonAnimation)
-            playSound(R.raw.wraith_wail, bWraithWail)
+            playSound(bWraithWail, R.raw.wraith_wail)
         }
 
         bSpookyOwl.setOnClickListener {
             bSpookyOwl.startAnimation(buttonAnimation)
-            playSound(R.raw.spooky_owl, bSpookyOwl)
+            playSound(bSpookyOwl, R.raw.spooky_owl)
         }
 
         bChainedGhoul.setOnClickListener {
             bChainedGhoul.startAnimation(buttonAnimation)
-            playSound(R.raw.chained_ghoul, bChainedGhoul)
+            playSound(bChainedGhoul, R.raw.chained_ghoul)
         }
 
         bTerrifiedScream.setOnClickListener {
             bTerrifiedScream.startAnimation(buttonAnimation)
-            playSound(R.raw.terrified_scream, bTerrifiedScream)
+            playSound(bTerrifiedScream, R.raw.terrified_scream)
         }
 
         bHauntedOrgan.setOnClickListener {
             bHauntedOrgan.startAnimation(buttonAnimation)
-            playSound(R.raw.haunted_organ, bHauntedOrgan)
+            playSound(bHauntedOrgan, R.raw.haunted_organ)
         }
 
         bScareCrow.setOnClickListener {
             bScareCrow.startAnimation(buttonAnimation)
-            playSound(R.raw.scarecrow, bScareCrow)
+            playSound(bScareCrow, R.raw.scarecrow)
         }
 
         bBlowingWind.setOnClickListener {
             bBlowingWind.startAnimation(buttonAnimation)
-            playSound(R.raw.blowing_wind, bBlowingWind)
+            playSound(bBlowingWind, R.raw.blowing_wind)
         }
 
         bGhostlyWhisper.setOnClickListener {
             bGhostlyWhisper.startAnimation(buttonAnimation)
-            playSound(R.raw.ghostly_whisper, bGhostlyWhisper)
+            playSound(bGhostlyWhisper, R.raw.ghostly_whisper)
         }
 
         bDraculaLaugh.setOnClickListener {
             bDraculaLaugh.startAnimation(buttonAnimation)
-            playSound(R.raw.dracula_laugh, bDraculaLaugh)
+            playSound(bDraculaLaugh, R.raw.dracula_laugh)
         }
 
         bWolfCry.setOnClickListener {
             bWolfCry.startAnimation(buttonAnimation)
-            playSound(R.raw.wolf_cry, bWolfCry)
+            playSound(bWolfCry, R.raw.wolf_cry)
         }
 
         bKnockKnock.setOnClickListener {
             bKnockKnock.startAnimation(buttonAnimation)
-            playSound(R.raw.knock_knock, bKnockKnock)
+            playSound(bKnockKnock, R.raw.knock_knock)
         }
 
         bFrankenstein.setOnClickListener {
             bFrankenstein.startAnimation(buttonAnimation)
-            playSound(R.raw.igor_grumble, bFrankenstein)
+            playSound(bFrankenstein, R.raw.igor_grumble)
         }
 
         bHorrorMovie.setOnClickListener {
             bHorrorMovie.startAnimation(buttonAnimation)
-            playSound(R.raw.horror_film, bHorrorMovie)
+            playSound(bHorrorMovie, R.raw.horror_film)
         }
 
         bWarningBells.setOnClickListener {
             bWarningBells.startAnimation(buttonAnimation)
-            playSound(R.raw.warning_bells, bWarningBells)
+            playSound(bWarningBells, R.raw.warning_bells)
         }
 
         bPainfulMoan.setOnClickListener {
             bPainfulMoan.startAnimation(buttonAnimation)
-            playSound(R.raw.painful_moan, bPainfulMoan)
+            playSound(bPainfulMoan, R.raw.painful_moan)
         }
 
         bWitchesCauldron.setOnClickListener {
             bWitchesCauldron.startAnimation(buttonAnimation)
-            playSound(R.raw.bubbles, bWitchesCauldron)
+            playSound(bWitchesCauldron, R.raw.bubbles)
         }
 
         bGhostlyChildren.setOnClickListener {
             bGhostlyChildren.startAnimation(buttonAnimation)
-            playSound(R.raw.scary_nursery, bGhostlyChildren)
+            playSound(bGhostlyChildren, R.raw.scary_nursery)
         }
 
         bHauntedSwamp.setOnClickListener {
             bHauntedSwamp.startAnimation(buttonAnimation)
-            playSound(R.raw.haunted_swamp, bHauntedSwamp)
+            playSound(bHauntedSwamp, R.raw.haunted_swamp)
         }
 
         bTorturedSouls.setOnClickListener {
             bTorturedSouls.startAnimation(buttonAnimation)
-            playSound(R.raw.tortured_souls, bTorturedSouls)
+            playSound(bTorturedSouls, R.raw.tortured_souls)
         }
 
         bChillingHorn.setOnClickListener {
             bChillingHorn.startAnimation(buttonAnimation)
-            playSound(R.raw.chilling_horn, bChillingHorn)
+            playSound(bChillingHorn, R.raw.chilling_horn)
         }
         // Set an OnClickListener to handle the click event
         overlayImageView.setOnClickListener {
@@ -303,16 +306,18 @@ class ScrollingActivity : AppCompatActivity() {
     private fun showFeedbackDialog() {
         val reviewManager = ReviewManagerFactory.create(applicationContext)
         reviewManager.requestReviewFlow().addOnCompleteListener {
-            if(it.isSuccessful) {
+            if (it.isSuccessful) {
                 reviewManager.launchReviewFlow(this, it.result)
             }
         }
     }
+
     private fun openSecretActivity() {
         // Open the SecretActivity here
         val intent = Intent(this, SecretActivity::class.java)
         startActivity(intent)
     }
+
     private fun resetTimer() {
         // Calculate the next year's Halloween
         val currentYear = Calendar.getInstance().get(Calendar.YEAR)
@@ -322,6 +327,7 @@ class ScrollingActivity : AppCompatActivity() {
         // Start the countdown timer
         startCountdown()
     }
+
     private fun startCountdown() {
         timer = object : CountDownTimer(halloweenDate - System.currentTimeMillis(), 1000) {
             override fun onTick(millisUntilFinished: Long) {
@@ -334,15 +340,18 @@ class ScrollingActivity : AppCompatActivity() {
         }
         timer.start()
     }
+
     private fun updateCountdown(timeRemaining: Long) {
 
         when (val remainingDays = (timeRemaining / (1000 * 60 * 60 * 24)).toInt()) {
             0 -> {
                 getString(R.string.happy_halloween).also { this.textCountdown.text = it }
             }
+
             1 -> {
                 textCountdown.text = getString(R.string.tomorrow_is_halloween)
             }
+
             else -> {
                 "$remainingDays days until Halloween".also { textCountdown.text = it }
             }
@@ -354,41 +363,29 @@ class ScrollingActivity : AppCompatActivity() {
             set(Calendar.MONTH, Calendar.OCTOBER)
             set(Calendar.DAY_OF_MONTH, 31)
             set(Calendar.HOUR_OF_DAY, 23)
-            //set(Calendar.MINUTE, 59)
-            //set(Calendar.SECOND, 59)
         }
         return calendar.timeInMillis
     }
-    private fun playSound(soundId: Int, button: View) {
+    private fun playSound(button: View, soundId: Int) {
         try {
-            // Check if a MediaPlayer is associated with this button
-            val existingMediaPlayer = mediaPlayerMap[button]
+            val mediaPlayer = mediaPlayerMap[button]
 
-            if (existingMediaPlayer != null) {
-                if (existingMediaPlayer.isPlaying) {
-                    // If the MediaPlayer associated with this button is playing, pause it
-                    existingMediaPlayer.pause()
+            if (mediaPlayer != null) {
+                if (mediaPlayer.isPlaying) {
+                    mediaPlayer.pause()
                 } else {
-                    // If the MediaPlayer associated with this button is paused, resume playback
-                    existingMediaPlayer.start()
+                    mediaPlayer.start()
                 }
             } else {
-                // Create a new MediaPlayer instance for the current sound
-                val mediaPlayer = MediaPlayer.create(this, soundId)
+                val newMediaPlayer = MediaPlayer.create(this, soundId)
+                mediaPlayerMap[button] = newMediaPlayer
 
-                // Set completion listener to release the MediaPlayer when sound finishes
-                mediaPlayer.setOnCompletionListener {
+                newMediaPlayer.setOnCompletionListener {
                     it.release()
                     mediaPlayerMap.remove(button)
-
-                    // Change the button color back to colorButton when sound finishes
                     resetButtonColor(button)
                 }
 
-                // Add the new MediaPlayer to the map and start playing the current sound
-                mediaPlayerMap[button] = mediaPlayer
-
-                // Change the button color to colorButtonPressed
                 button.backgroundTintList = ColorStateList.valueOf(
                     ContextCompat.getColor(
                         this@ScrollingActivity,
@@ -396,23 +393,19 @@ class ScrollingActivity : AppCompatActivity() {
                     )
                 )
 
-                mediaPlayer.start()
+                newMediaPlayer.start()
 
-                // Add a long-press listener to restart the audio
                 button.setOnLongClickListener {
-                    mediaPlayer.seekTo(0) // Restart the audio from the beginning
-                    true // Consume the long-press event
+                    newMediaPlayer.seekTo(0)
+                    true
                 }
             }
         } catch (e: Resources.NotFoundException) {
-            // Handle the case where the resource with the given soundId is not found
             e.printStackTrace()
         } catch (e: Exception) {
-            // Handle other exceptions
             e.printStackTrace()
         }
     }
-
     private fun resetButtonColor(button: View) {
         button.backgroundTintList = ColorStateList.valueOf(
             ContextCompat.getColor(
@@ -421,77 +414,6 @@ class ScrollingActivity : AppCompatActivity() {
             )
         )
     }
-    /* original code. Sound button stuck when moving back and forth between activities
-    private fun playSound(soundId: Int, button: View) {
-        try {
-            // Check if the current media player is already playing and associated with a button
-            if (currentPlayingMediaPlayer != null && currentPlayingButton != null) {
-                // If the same button is tapped again, pause or resume playback
-                if (currentPlayingButton == button) {
-                    if (currentPlayingMediaPlayer!!.isPlaying) {
-                        currentPlayingMediaPlayer!!.pause()
-                    } else {
-                        currentPlayingMediaPlayer!!.start()
-                    }
-                    return
-                } else {
-                    // If a different button is tapped, release the current media player
-                    currentPlayingMediaPlayer!!.release()
-                    currentPlayingMediaPlayer = null
-                    // Change the previous button's color back to colorButton
-                    currentPlayingButton!!.backgroundTintList = ColorStateList.valueOf(
-                        ContextCompat.getColor(
-                            this@ScrollingActivity,
-                            R.color.colorButton
-                        )
-                    )
-                }
-            }
-
-            // Change the button color to colorButtonPressed
-            button.backgroundTintList = ColorStateList.valueOf(
-                ContextCompat.getColor(
-                    this@ScrollingActivity,
-                    R.color.colorButtonPressed
-                )
-            )
-
-            // Create a new MediaPlayer instance for the current sound
-            val mediaPlayer = MediaPlayer.create(this, soundId)
-
-            // Set completion listener to release the MediaPlayer when sound finishes
-            mediaPlayer.setOnCompletionListener {
-                it.release()
-                mediaPlayerQueue.remove(it)
-                // Change the button color back to colorButton when sound finishes
-                button.backgroundTintList = ColorStateList.valueOf(
-                    ContextCompat.getColor(
-                        this@ScrollingActivity,
-                        R.color.colorButton
-                    )
-                )
-            }
-
-            // Add the new MediaPlayer to the queue
-            mediaPlayerQueue.add(mediaPlayer)
-
-            // Check if the queue size exceeds the limit (e.g., 10)
-            if (mediaPlayerQueue.size > 10) {
-                // Release the oldest MediaPlayer
-                val oldestMediaPlayer = mediaPlayerQueue.poll()
-                oldestMediaPlayer?.release()
-            }
-
-            // Start playing the current sound
-            mediaPlayer.start()
-
-            // Set the current media player and button to the ones just created
-            currentPlayingMediaPlayer = mediaPlayer
-            currentPlayingButton = button
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }*/
     override fun onDestroy() {
         super.onDestroy()
         mediaPlayerQueue.forEach { mediaPlayer ->
@@ -499,81 +421,59 @@ class ScrollingActivity : AppCompatActivity() {
         }
         mediaPlayerQueue.clear()
     }
-/* original code to stop playing when moving back and forth between activities
-private fun releaseAllMediaPlayers() {
-    mediaPlayerQueue.forEach { mediaPlayer ->
-        mediaPlayer.release()
-    }
-    mediaPlayerQueue.clear()
-} */
-override fun onPause() {
-    super.onPause()
-    if (currentPlayingMediaPlayer != null) {
-        currentPlayingMediaPlayer!!.stop()
-        currentPlayingMediaPlayer!!.release()
-        currentPlayingMediaPlayer = null
-    }
-}
-override fun onResume() {
-    super.onResume()
-    currentPlayingButton?.backgroundTintList = ColorStateList.valueOf(
-        ContextCompat.getColor(this, R.color.colorButton)
-    )
-    if (currentPlayingMediaPlayer != null && !currentPlayingMediaPlayer!!.isPlaying) {
-        currentPlayingMediaPlayer!!.start()
-    }
-}
-/* original code to stop playing when moving back and forth between activities
-override fun onPause() {
-    super.onPause()
-    releaseAllMediaPlayers()
-}
-override fun onResume() {
-    super.onResume()
-    // Reset the button colors here
-    currentPlayingButton?.backgroundTintList = ColorStateList.valueOf(
-        ContextCompat.getColor(this, R.color.colorButton)
-    )
-}*/
-@Suppress("DEPRECATION")
-@Deprecated("Deprecated in Java")
-override fun onBackPressed() {
-
-    if (!doubleBackToExitPressedOnce) {
-        this.doubleBackToExitPressedOnce = true
-
-        //display msg
-        Toast.makeText(this, "Press again to exit", Toast.LENGTH_SHORT).show()
-
-        Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
-
-    } else {
-
-        super.onBackPressed()
-
-    }
-}
-override fun onCreateOptionsMenu(menu: Menu): Boolean {
-    menuInflater.inflate(R.menu.menu_scrolling, menu)
-    return true
-}
-override fun onOptionsItemSelected(item: MenuItem): Boolean {
-    when (item.itemId) {
-        R.id.action_settings -> {
-            val intent = Intent(this, DeveloperActivity::class.java)
-            this.startActivity(intent)
+    override fun onPause() {
+        super.onPause()
+        if (currentPlayingMediaPlayer != null) {
+            currentPlayingMediaPlayer!!.stop()
+            currentPlayingMediaPlayer!!.release()
+            currentPlayingMediaPlayer = null
         }
-
-        R.id.share -> {
-            val sharingIntent = Intent(Intent.ACTION_SEND)
-            sharingIntent.type = "text/plain"
-            sharingIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.google_play_store))
-            startActivity(Intent.createChooser(sharingIntent, "Share via"))
-        }/*else if (id == R.id.secret) {
-        val intent = Intent(this, SecretActivity::class.java)
-        this.startActivity(intent)
-    }*/
     }
-    return true
-}
+    override fun onResume() {
+        super.onResume()
+        currentPlayingButton?.backgroundTintList = ColorStateList.valueOf(
+            ContextCompat.getColor(this, R.color.colorButton)
+        )
+        if (currentPlayingMediaPlayer != null && !currentPlayingMediaPlayer!!.isPlaying) {
+            currentPlayingMediaPlayer!!.start()
+        }
+    }
+    @Suppress("DEPRECATION")
+    @Deprecated("Deprecated in Java")
+    override fun onBackPressed() {
+
+        if (!doubleBackToExitPressedOnce) {
+            this.doubleBackToExitPressedOnce = true
+
+            //display msg
+            Toast.makeText(this, "Press again to exit", Toast.LENGTH_SHORT).show()
+
+            Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
+
+        } else {
+
+            super.onBackPressed()
+
+        }
+    }
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_scrolling, menu)
+        return true
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_settings -> {
+                val intent = Intent(this, DeveloperActivity::class.java)
+                this.startActivity(intent)
+            }
+
+            R.id.share -> {
+                val sharingIntent = Intent(Intent.ACTION_SEND)
+                sharingIntent.type = "text/plain"
+                sharingIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.google_play_store))
+                startActivity(Intent.createChooser(sharingIntent, "Share via"))
+            }
+        }
+        return true
+    }
 }
