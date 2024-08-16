@@ -61,11 +61,11 @@ class ScrollingActivity : AppCompatActivity() {
 
         startCountdown()
         showFeedbackDialog()
-
+/*
         binding.overlayImageView.setOnClickListener {
             openSecretActivity()
         }
-
+*/
         binding.menuHamburger.setOnClickListener { view ->
             showPopupMenu(view)
         }

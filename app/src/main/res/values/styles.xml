@@ -8,16 +8,19 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="AppTheme.NoActionBar">
+    <!-- No Action Bar Theme that inherits from AppTheme -->
+    <style name="AppTheme.NoActionBar" parent="AppTheme">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:windowLightStatusBar">false</item>
     </style>
 
+    <!-- Overlay for AppBarLayout -->
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
+    <!-- Popup Menu Overlay -->
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light">
-
     </style>
 
-
 </resources>
+

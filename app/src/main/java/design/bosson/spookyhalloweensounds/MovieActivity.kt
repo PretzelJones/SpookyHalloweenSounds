@@ -9,6 +9,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.ContextCompat
 import design.bosson.spookyhalloweensounds.databinding.ActivityMovieBinding
 import java.util.LinkedList
@@ -28,7 +29,19 @@ class MovieActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
 
+        window.statusBarColor = getColor(R.color.colorAccent)
+        // Ensure icons are white
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+
         val buttonAnimation = AnimationUtils.loadAnimation(this, R.anim.button_animation)
+
+        binding.menuHamburger.setOnClickListener { view ->
+            showPopupMenu(view)
+        }
+
+        binding.overlayImageView.setOnClickListener {
+            openSecretActivity()
+        }
 
         // Set click listeners for each button
         binding.bHalloween.setOnClickListener {
@@ -149,8 +162,24 @@ class MovieActivity : AppCompatActivity() {
         mediaPlayerQueue.clear()
     }
 
+    private fun openSecretActivity() {
+        val intent = Intent(this, SecretActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun showPopupMenu(view: View) {
+        val popupMenu = PopupMenu(this, view)
+        popupMenu.menuInflater.inflate(R.menu.menu_scrolling, popupMenu.menu)
+
+        popupMenu.setOnMenuItemClickListener { item ->
+            onOptionsItemSelected(item)
+        }
+
+        popupMenu.show()
+    }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_scrolling, menu)
+        //menuInflater.inflate(R.menu.menu_scrolling, menu)
         return true
     }
 

@@ -7,8 +7,10 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.WindowManager
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.ContextCompat
 import design.bosson.spookyhalloweensounds.databinding.ActivityLongBinding
 import design.bosson.spookyhalloweensounds.databinding.ContentLongBinding
@@ -25,10 +27,23 @@ class LongActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        window.statusBarColor = getColor(R.color.colorAccent)
+        // Ensure icons are white
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+
         binding = ActivityLongBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
+
+        binding.menuHamburger.setOnClickListener { view ->
+            showPopupMenu(view)
+        }
+
+        // Use the binding to access views in the layout
+        binding.overlayImageView.setOnClickListener {
+            openSecretActivity()
+        }
 
         // Initialize button animation for long and movie buttons
         val buttonAnimation = AnimationUtils.loadAnimation(this, R.anim.button_animation)
@@ -148,9 +163,25 @@ class LongActivity : AppCompatActivity() {
         releaseAllMediaPlayers()
     }
 
+    private fun openSecretActivity() {
+        val intent = Intent(this, SecretActivity::class.java)
+        startActivity(intent)
+    }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_scrolling, menu)
+        //menuInflater.inflate(R.menu.menu_scrolling, menu)
         return true
+    }
+
+    private fun showPopupMenu(view: View) {
+        val popupMenu = PopupMenu(this, view)
+        popupMenu.menuInflater.inflate(R.menu.menu_scrolling, popupMenu.menu)
+
+        popupMenu.setOnMenuItemClickListener { item ->
+            onOptionsItemSelected(item)
+        }
+
+        popupMenu.show()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
