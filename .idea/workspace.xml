@@ -67,25 +67,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b8c2fb5b-798d-40ca-94ae-81e0d2c6fbb8" name="Changes" comment="updated libraries and upgraded to API 34. Transitioned from androidx to viwbinding. Modified ScrollingActivity layout to incorporate the countdown in the toolbar.">
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/deploymentTargetSelector.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deploymentTargetSelector.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/app/SpookyHalloweenSounds.app.main.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/app/SpookyHalloweenSounds.app.main.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/release/halloweensounds.aab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/LongActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/LongActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/MovieActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/MovieActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/ScrollingActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/ScrollingActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/SecretActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/design/bosson/spookyhalloweensounds/SecretActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_long.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_long.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_movie.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_movie.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_scrolling.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_scrolling.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_secret.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_secret.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" afterDir="false" />
-    </list>
+    <list default="true" id="b8c2fb5b-798d-40ca-94ae-81e0d2c6fbb8" name="Changes" comment="updated toolbars to show title and no longer image. Added hamburger menu. countdown on toolbar in ScrollingActivity. Added SecretActivity cat link to each bottom image." />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -621,7 +603,15 @@
       <option name="project" value="LOCAL" />
       <updated>1723668320447</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="updated toolbars to show title and no longer image. Added hamburger menu. countdown on toolbar in ScrollingActivity. Added SecretActivity cat link to each bottom image.">
+      <option name="closed" value="true" />
+      <created>1723828862143</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1723828862144</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -649,8 +639,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="updated to version 1.9.33 version 44 ready for release" />
-    <MESSAGE value="Added updated image assets - updated to version 1.9.35 version 46 ready for release" />
     <MESSAGE value="Added Amityville sound and version code - updated to version 1.9.36 version 47 ready for release" />
     <MESSAGE value="Added firebase crashylitics" />
     <MESSAGE value="Updated Halloween date" />
@@ -674,6 +662,8 @@
     <MESSAGE value="added try catch to prevent crashing when returning to a mediaplayer that was previously running in another activity. Sound still will not play until another button is pressed, but app does not crash." />
     <MESSAGE value="modified playSound and onPause/onResume to fix the issue with buttons on ScrollingActivity getting stuck after navigating away then returning. Old code left in commented out." />
     <MESSAGE value="updated libraries and upgraded to API 34. Transitioned from androidx to viwbinding. Modified ScrollingActivity layout to incorporate the countdown in the toolbar." />
-    <option name="LAST_COMMIT_MESSAGE" value="updated libraries and upgraded to API 34. Transitioned from androidx to viwbinding. Modified ScrollingActivity layout to incorporate the countdown in the toolbar." />
+    <MESSAGE value="updated toolbars to show title and no longer image. Addded hamburger menu. countdown on toolbar in ScrollingActivity. Added SecretActivity cat link to each bottom image." />
+    <MESSAGE value="updated toolbars to show title and no longer image. Added hamburger menu. countdown on toolbar in ScrollingActivity. Added SecretActivity cat link to each bottom image." />
+    <option name="LAST_COMMIT_MESSAGE" value="updated toolbars to show title and no longer image. Added hamburger menu. countdown on toolbar in ScrollingActivity. Added SecretActivity cat link to each bottom image." />
   </component>
 </project>
