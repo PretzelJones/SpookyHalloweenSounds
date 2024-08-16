@@ -2,4 +2,6 @@
 .idea/modules.xml
 *.iml
 .idea/
+.gradle/
+/build/
 
