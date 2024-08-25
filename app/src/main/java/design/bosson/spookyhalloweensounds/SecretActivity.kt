@@ -1,8 +1,6 @@
 package design.bosson.spookyhalloweensounds
 
 import android.content.Intent
-import android.content.res.ColorStateList
-import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -10,17 +8,12 @@ import android.view.View
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
-import androidx.core.content.ContextCompat
 import design.bosson.spookyhalloweensounds.databinding.ActivitySecretBinding
-import java.util.LinkedList
 
 class SecretActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySecretBinding
-
-    private var currentPlayingButton: View? = null // Track the currently pressed button associated with media.
-    private val mediaPlayerQueue = LinkedList<MediaPlayer>() // Queue to manage MediaPlayer instances.
-    private var currentPlayingMediaPlayer: MediaPlayer? = null // Reference to the currently playing MediaPlayer.
+    private lateinit var soundManager: SoundManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +21,8 @@ class SecretActivity : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
         supportActionBar!!.setDisplayShowTitleEnabled(false) //prevent title display
+
+        soundManager = SoundManager()
 
         window.statusBarColor = getColor(R.color.colorAccent)
         // Ensure icons are white
@@ -43,112 +38,41 @@ class SecretActivity : AppCompatActivity() {
         // Setting up button click listeners
         binding.bTheGhostSong.setOnClickListener {
             it.startAnimation(buttonAnimation)
-            playSound(R.raw.the_ghost_song, it)
+            soundManager.playLongSound(this@SecretActivity, R.raw.the_ghost_song, it)
         }
         binding.bTheOldTape.setOnClickListener {
             it.startAnimation(buttonAnimation)
-            playSound(R.raw.the_old_tape, it)
+            soundManager.playLongSound(this@SecretActivity, R.raw.the_old_tape, it)
         }
         binding.bChillingCries.setOnClickListener {
             it.startAnimation(buttonAnimation)
-            playSound(R.raw.chilling_cries, it)
+            soundManager.playLongSound(this@SecretActivity, R.raw.chilling_cries, it)
         }
         binding.bCriesFromHell.setOnClickListener {
             it.startAnimation(buttonAnimation)
-            playSound(R.raw.cries_from_hell, it)
-        }
-    }
-
-    private fun playSound(soundId: Int, button: View) {
-        try {
-            // Check if the current media player is already playing and associated with a button
-            if (currentPlayingMediaPlayer != null && currentPlayingButton != null) {
-                // If the same button is tapped again, pause or resume playback
-                if (currentPlayingButton == button) {
-                    if (currentPlayingMediaPlayer!!.isPlaying) {
-                        currentPlayingMediaPlayer!!.pause()
-                    } else {
-                        currentPlayingMediaPlayer!!.start()
-                    }
-                    return
-                } else {
-                    // If a different button is tapped, release the current media player
-                    currentPlayingMediaPlayer!!.release()
-                    currentPlayingMediaPlayer = null
-                    // Change the previous button's color back to colorButton
-                    currentPlayingButton!!.backgroundTintList = ColorStateList.valueOf(
-                        ContextCompat.getColor(
-                            this@SecretActivity,
-                            R.color.colorButton
-                        )
-                    )
-                }
-            }
-
-            // Change the button color to colorButtonPressed
-            button.backgroundTintList = ColorStateList.valueOf(
-                ContextCompat.getColor(
-                    this@SecretActivity,
-                    R.color.colorButtonPressed
-                )
-            )
-
-            // Create a new MediaPlayer instance for the current sound
-            val mediaPlayer = MediaPlayer.create(this, soundId)
-
-            // Set completion listener to release the MediaPlayer when sound finishes
-            mediaPlayer.setOnCompletionListener {
-                it.release()
-                mediaPlayerQueue.remove(it)
-                // Change the button color back to colorButton when sound finishes
-                button.backgroundTintList = ColorStateList.valueOf(
-                    ContextCompat.getColor(
-                        this@SecretActivity,
-                        R.color.colorButton
-                    )
-                )
-            }
-
-            // Add the new MediaPlayer to the queue
-            mediaPlayerQueue.add(mediaPlayer)
-
-            // Check if the queue size exceeds the limit (e.g., 10)
-            if (mediaPlayerQueue.size > 10) {
-                // Release the oldest MediaPlayer
-                val oldestMediaPlayer = mediaPlayerQueue.poll()
-                oldestMediaPlayer?.release()
-            }
-
-            // Start playing the current sound
-            mediaPlayer.start()
-
-            // Set the current media player and button to the ones just created
-            currentPlayingMediaPlayer = mediaPlayer
-            currentPlayingButton = button
-        } catch (e: Exception) {
-            e.printStackTrace()
-            // Handle any exceptions here, e.g., log an error message or show a toast
+            soundManager.playLongSound(this@SecretActivity, R.raw.cries_from_hell, it)
         }
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        mediaPlayerQueue.forEach { mediaPlayer ->
-            mediaPlayer.release()
-        }
-        mediaPlayerQueue.clear()
-    }
-
-    private fun releaseAllMediaPlayers() {
-        mediaPlayerQueue.forEach { mediaPlayer ->
-            mediaPlayer.release()
-        }
-        mediaPlayerQueue.clear()
+        soundManager.releaseAllSounds()  // Delegate media release to SoundManager
     }
 
     override fun onPause() {
         super.onPause()
-        releaseAllMediaPlayers()
+        soundManager.releaseAllSounds()  // Pause and release media
+        resetAllButtons()
+    }
+
+    private fun resetAllButtons() {
+        // Reset each button to its original color and drawable
+        val buttons = listOf(binding.bTheGhostSong, binding.bTheOldTape, binding.bChillingCries, binding.bCriesFromHell)
+
+        buttons.forEach { button ->
+            soundManager.resetButtonDrawable(this, button)  // Reset drawable to the original
+            soundManager.resetButtonColor(this, button)  // Reset color to the original
+        }
     }
 
     private fun showPopupMenu(view: View) {

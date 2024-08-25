@@ -1,39 +1,26 @@
 package design.bosson.spookyhalloweensounds
 
 import android.content.Intent
-import android.content.res.ColorStateList
-import android.content.res.Resources
-import android.media.MediaPlayer
 import android.os.Bundle
-import android.os.CountDownTimer
-import android.os.Handler
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.animation.AnimationUtils
-import android.widget.Toast
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
-import androidx.core.content.ContextCompat
-import design.bosson.spookyhalloweensounds.databinding.ActivityScrollingBinding
 import com.google.android.play.core.review.ReviewManagerFactory
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.messaging.FirebaseMessaging
+import design.bosson.spookyhalloweensounds.databinding.ActivityScrollingBinding
 import java.util.Calendar
-import java.util.LinkedList
 
 class ScrollingActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityScrollingBinding
-    
     private lateinit var mFirebaseAnalytics: FirebaseAnalytics
-    private val mediaPlayerQueue = LinkedList<MediaPlayer>()
-    private lateinit var timer: CountDownTimer
-    private var halloweenDate: Long = 0
-    private var doubleBackToExitPressedOnce = false
-    private var currentPlayingButton: View? = null
-    private var currentPlayingMediaPlayer: MediaPlayer? = null
-    private val mediaPlayerMap = mutableMapOf<View, MediaPlayer>()
+    private lateinit var soundManager: SoundManager
+    private lateinit var countdownManager: CountdownManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +28,8 @@ class ScrollingActivity : AppCompatActivity() {
         // Inflate the main layout and set the content view
         binding = ActivityScrollingBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        soundManager = SoundManager()
 
         // Set up the toolbar from the main activity layout
         setSupportActionBar(binding.toolbar)
@@ -56,10 +45,19 @@ class ScrollingActivity : AppCompatActivity() {
 
         val buttonAnimation = AnimationUtils.loadAnimation(this, R.anim.button_animation)
 
-        val currentYear = Calendar.getInstance().get(Calendar.YEAR)
-        halloweenDate = calculateHalloweenDate(currentYear)
+        // Setup CountdownManager
+        countdownManager = CountdownManager(this) { text ->
+            binding.textCountdown.text = text // Update the countdown text
+        }
 
-        startCountdown()
+        // Start the countdown
+        val currentYear = Calendar.getInstance().get(Calendar.YEAR)
+        val halloweenDate = calculateHalloweenDate(currentYear)
+        countdownManager.startCountdown(halloweenDate)
+        //val currentYear = Calendar.getInstance().get(Calendar.YEAR)
+        //halloweenDate = calculateHalloweenDate(currentYear)
+
+        //startCountdown()
         showFeedbackDialog()
 /*
         binding.overlayImageView.setOnClickListener {
@@ -84,190 +82,200 @@ class ScrollingActivity : AppCompatActivity() {
 
         binding.bWitchCackle.setOnClickListener {
             it.startAnimation(buttonAnimation)
-            playSound(R.raw.witch_laugh, it)
+            soundManager.playShortSound(this@ScrollingActivity, R.raw.witch_laugh, it)
         }
 
         binding.bBlackCat.setOnClickListener {
             it.startAnimation(buttonAnimation)
-            playSound(R.raw.black_cat, it)
+            soundManager.playShortSound(this@ScrollingActivity, R.raw.black_cat, it)
         }
 
         binding.bCreepyLaugh.setOnClickListener {
             it.startAnimation(buttonAnimation)
-            playSound(R.raw.evil_man, it)
+            soundManager.playShortSound(this@ScrollingActivity, R.raw.evil_man, it)
         }
 
         binding.bCreakyDoor.setOnClickListener {
             it.startAnimation(buttonAnimation)
-            playSound(R.raw.creaky_door, it)
+            soundManager.playShortSound(this@ScrollingActivity, R.raw.creaky_door, it)
         }
 
         binding.bHorrorAmbience.setOnClickListener {
             it.startAnimation(buttonAnimation)
-            playSound(R.raw.horror_ambience, it)
+            soundManager.playShortSound(this@ScrollingActivity, R.raw.horror_ambience, it)
         }
 
         binding.bMonsterGrowl.setOnClickListener {
             it.startAnimation(buttonAnimation)
-            playSound(R.raw.monster_growl, it)
+            soundManager.playShortSound(this@ScrollingActivity, R.raw.monster_growl, it)
         }
 
         binding.bMonsterWalking.setOnClickListener {
             it.startAnimation(buttonAnimation)
-            playSound(R.raw.monster_walking, it)
+            soundManager.playShortSound(this@ScrollingActivity, R.raw.monster_walking, it)
         }
 
         binding.bScaryScream.setOnClickListener {
             it.startAnimation(buttonAnimation)
-            playSound(R.raw.scary_scream, it)
+            soundManager.playShortSound(this@ScrollingActivity, R.raw.scary_scream, it)
         }
 
         binding.bSpookyChains.setOnClickListener {
             it.startAnimation(buttonAnimation)
-            playSound(R.raw.spooky_chains, it)
+            soundManager.playShortSound(this@ScrollingActivity, R.raw.spooky_chains, it)
         }
 
         binding.bThunderStorm.setOnClickListener {
             it.startAnimation(buttonAnimation)
-            playSound(R.raw.thunder, it)
+            soundManager.playShortSound(this@ScrollingActivity, R.raw.thunder, it)
         }
 
         binding.bVampireBat.setOnClickListener {
             it.startAnimation(buttonAnimation)
-            playSound(R.raw.vampire_bat, it)
+            soundManager.playShortSound(this@ScrollingActivity, R.raw.vampire_bat, it)
         }
 
         binding.bZombieGroan.setOnClickListener {
             it.startAnimation(buttonAnimation)
-            playSound(R.raw.zombie, it)
+            soundManager.playShortSound(this@ScrollingActivity, R.raw.zombie, it)
         }
 
         binding.bGhostBoo.setOnClickListener {
             it.startAnimation(buttonAnimation)
-            playSound(R.raw.ghost_boo, it)
+            soundManager.playShortSound(this@ScrollingActivity, R.raw.ghost_boo, it)
         }
 
         binding.bWerewolfHowl.setOnClickListener {
             it.startAnimation(buttonAnimation)
-            playSound(R.raw.werewolf_howl, it)
+            soundManager.playShortSound(this@ScrollingActivity, R.raw.werewolf_howl, it)
         }
 
         binding.bPoltergeistVoice.setOnClickListener {
             it.startAnimation(buttonAnimation)
-            playSound(R.raw.poltergeist_voice, it)
+            soundManager.playShortSound(this@ScrollingActivity, R.raw.poltergeist_voice, it)
         }
 
         binding.bZombieCall.setOnClickListener {
             it.startAnimation(buttonAnimation)
-            playSound(R.raw.zombie_come, it)
+            soundManager.playShortSound(this@ScrollingActivity, R.raw.zombie_come, it)
         }
 
         binding.bCatScream.setOnClickListener {
             it.startAnimation(buttonAnimation)
-            playSound(R.raw.cat_scream, it)
+            soundManager.playShortSound(this@ScrollingActivity, R.raw.cat_scream, it)
         }
 
         binding.bWraithWail.setOnClickListener {
             it.startAnimation(buttonAnimation)
-            playSound(R.raw.wraith_wail, it)
+            soundManager.playShortSound(this@ScrollingActivity, R.raw.wraith_wail, it)
         }
 
         binding.bSpookyOwl.setOnClickListener {
             it.startAnimation(buttonAnimation)
-            playSound(R.raw.spooky_owl, it)
+            soundManager.playShortSound(this@ScrollingActivity, R.raw.spooky_owl, it)
         }
 
         binding.bChainedGhoul.setOnClickListener {
             it.startAnimation(buttonAnimation)
-            playSound(R.raw.chained_ghoul, it)
+            soundManager.playShortSound(this@ScrollingActivity, R.raw.chained_ghoul, it)
         }
 
         binding.bTerrifiedScream.setOnClickListener {
             it.startAnimation(buttonAnimation)
-            playSound(R.raw.terrified_scream, it)
+            soundManager.playShortSound(this@ScrollingActivity, R.raw.terrified_scream, it)
         }
 
         binding.bHauntedOrgan.setOnClickListener {
             it.startAnimation(buttonAnimation)
-            playSound(R.raw.haunted_organ, it)
+            soundManager.playShortSound(this@ScrollingActivity, R.raw.haunted_organ, it)
         }
 
         binding.bScareCrow.setOnClickListener {
             it.startAnimation(buttonAnimation)
-            playSound(R.raw.scarecrow, it)
+            soundManager.playShortSound(this@ScrollingActivity, R.raw.scarecrow, it)
         }
 
         binding.bBlowingWind.setOnClickListener {
             it.startAnimation(buttonAnimation)
-            playSound(R.raw.blowing_wind, it)
+            soundManager.playShortSound(this@ScrollingActivity, R.raw.blowing_wind, it)
         }
 
         binding.bGhostlyWhisper.setOnClickListener {
             it.startAnimation(buttonAnimation)
-            playSound(R.raw.ghostly_whisper, it)
+            soundManager.playShortSound(this@ScrollingActivity, R.raw.ghostly_whisper, it)
         }
 
         binding.bDraculaLaugh.setOnClickListener {
             it.startAnimation(buttonAnimation)
-            playSound(R.raw.dracula_laugh, it)
+            soundManager.playShortSound(this@ScrollingActivity, R.raw.dracula_laugh, it)
         }
 
         binding.bWolfCry.setOnClickListener {
             it.startAnimation(buttonAnimation)
-            playSound(R.raw.wolf_cry, it)
+            soundManager.playShortSound(this@ScrollingActivity, R.raw.wolf_cry, it)
         }
 
         binding.bKnockKnock.setOnClickListener {
             it.startAnimation(buttonAnimation)
-            playSound(R.raw.knock_knock, it)
+            soundManager.playShortSound(this@ScrollingActivity, R.raw.knock_knock, it)
         }
 
         binding.bFrankenstein.setOnClickListener {
             it.startAnimation(buttonAnimation)
-            playSound(R.raw.igor_grumble, it)
+            soundManager.playShortSound(this@ScrollingActivity, R.raw.igor_grumble, it)
         }
 
         binding.bHorrorMovie.setOnClickListener {
             it.startAnimation(buttonAnimation)
-            playSound(R.raw.horror_film, it)
+            soundManager.playShortSound(this@ScrollingActivity, R.raw.horror_film, it)
         }
 
         binding.bWarningBells.setOnClickListener {
             it.startAnimation(buttonAnimation)
-            playSound(R.raw.warning_bells, it)
+            soundManager.playShortSound(this@ScrollingActivity, R.raw.warning_bells, it)
         }
 
         binding.bPainfulMoan.setOnClickListener {
             it.startAnimation(buttonAnimation)
-            playSound(R.raw.painful_moan, it)
+            soundManager.playShortSound(this@ScrollingActivity, R.raw.painful_moan, it)
         }
 
         binding.bWitchesCauldron.setOnClickListener {
             it.startAnimation(buttonAnimation)
-            playSound(R.raw.bubbles, it)
+            soundManager.playShortSound(this@ScrollingActivity, R.raw.bubbles, it)
         }
 
         binding.bGhostlyChildren.setOnClickListener {
             it.startAnimation(buttonAnimation)
-            playSound(R.raw.scary_nursery, it)
+            soundManager.playShortSound(this@ScrollingActivity, R.raw.scary_nursery, it)
         }
 
         binding.bHauntedSwamp.setOnClickListener {
             it.startAnimation(buttonAnimation)
-            playSound(R.raw.haunted_swamp, it)
+            soundManager.playShortSound(this@ScrollingActivity, R.raw.haunted_swamp, it)
         }
 
         binding.bTorturedSouls.setOnClickListener {
             it.startAnimation(buttonAnimation)
-            playSound(R.raw.tortured_souls, it)
+            soundManager.playShortSound(this@ScrollingActivity, R.raw.tortured_souls, it)
         }
 
         binding.bChillingHorn.setOnClickListener {
             it.startAnimation(buttonAnimation)
-            playSound(R.raw.chilling_horn, it)
+            soundManager.playShortSound(this@ScrollingActivity, R.raw.chilling_horn, it)
         }
     }
 
+    private fun calculateHalloweenDate(year: Int): Long {
+        val calendar = Calendar.getInstance().apply {
+            set(Calendar.YEAR, year)
+            set(Calendar.MONTH, Calendar.OCTOBER)
+            set(Calendar.DAY_OF_MONTH, 31)
+            set(Calendar.HOUR_OF_DAY, 23)
+        }
+        return calendar.timeInMillis
+    }
+/*
     private fun updateCountdown(timeRemaining: Long) {
         when (val remainingDays = (timeRemaining / (1000 * 60 * 60 * 24)).toInt()) {
             0 -> {
@@ -281,52 +289,7 @@ class ScrollingActivity : AppCompatActivity() {
             }
         }
     }
-
-    private fun playSound(soundId: Int, button: View) {
-        try {
-            val existingMediaPlayer = mediaPlayerMap[button]
-
-            if (existingMediaPlayer != null) {
-                if (existingMediaPlayer.isPlaying) {
-                    existingMediaPlayer.pause()
-                } else {
-                    existingMediaPlayer.start()
-                }
-            } else {
-                val mediaPlayer = MediaPlayer.create(this, soundId)
-
-                mediaPlayer.setOnCompletionListener {
-                    it.release()
-                    mediaPlayerMap.remove(button)
-                    resetButtonColor(button)
-                }
-
-                mediaPlayerMap[button] = mediaPlayer
-
-                button.backgroundTintList = ColorStateList.valueOf(
-                    ContextCompat.getColor(this, R.color.colorButtonPressed)
-                )
-
-                mediaPlayer.start()
-
-                button.setOnLongClickListener {
-                    mediaPlayer.seekTo(0)
-                    true
-                }
-            }
-        } catch (e: Resources.NotFoundException) {
-            e.printStackTrace()
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
-
-    private fun resetButtonColor(button: View) {
-        button.backgroundTintList = ColorStateList.valueOf(
-            ContextCompat.getColor(this, R.color.colorButton)
-        )
-    }
-
+*/
     private fun showFeedbackDialog() {
         val reviewManager = ReviewManagerFactory.create(applicationContext)
         reviewManager.requestReviewFlow().addOnCompleteListener {
@@ -341,70 +304,37 @@ class ScrollingActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun calculateHalloweenDate(year: Int): Long {
-        val calendar = Calendar.getInstance().apply {
-            set(Calendar.YEAR, year)
-            set(Calendar.MONTH, Calendar.OCTOBER)
-            set(Calendar.DAY_OF_MONTH, 31)
-            set(Calendar.HOUR_OF_DAY, 23)
-        }
-        return calendar.timeInMillis
-    }
-
-    private fun startCountdown() {
-        timer = object : CountDownTimer(halloweenDate - System.currentTimeMillis(), 1000) {
-            override fun onTick(millisUntilFinished: Long) {
-                updateCountdown(millisUntilFinished)
-            }
-
-            override fun onFinish() {
-                resetTimer()
-            }
-        }
-        timer.start()
-    }
-
-    private fun resetTimer() {
-        val currentYear = Calendar.getInstance().get(Calendar.YEAR)
-        val nextYear = currentYear + 1
-        halloweenDate = calculateHalloweenDate(nextYear)
-        startCountdown()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        mediaPlayerQueue.forEach { mediaPlayer ->
-            mediaPlayer.release()
-        }
-        mediaPlayerQueue.clear()
-    }
-
     override fun onPause() {
         super.onPause()
-        if (currentPlayingMediaPlayer != null) {
-            currentPlayingMediaPlayer!!.stop()
-            currentPlayingMediaPlayer!!.release()
-            currentPlayingMediaPlayer = null
-        }
+
+        // Release all sounds using SoundManager
+        soundManager.releaseAllSounds()
+
+        // Reset all button colors and states (similar to MovieActivity)
+        resetAllButtons()
     }
 
-    override fun onResume() {
-        super.onResume()
-        currentPlayingButton?.backgroundTintList = ColorStateList.valueOf(
-            ContextCompat.getColor(this, R.color.colorButton)
+    private fun resetAllButtons() {
+        // Reset each button to its original color and drawable
+        val buttons = listOf(
+            binding.bWitchCackle, binding.bBlackCat, binding.bCreepyLaugh,
+            binding.bCreakyDoor, binding.bHorrorAmbience, binding.bMonsterGrowl,
+            binding.bMonsterWalking, binding.bScaryScream, binding.bSpookyChains,
+            binding.bThunderStorm, binding.bVampireBat, binding.bZombieGroan,
+            binding.bGhostBoo, binding.bWerewolfHowl, binding.bPoltergeistVoice,
+            binding.bZombieCall, binding.bCatScream, binding.bWraithWail,
+            binding.bSpookyOwl, binding.bChainedGhoul, binding.bTerrifiedScream,
+            binding.bHauntedOrgan, binding.bScareCrow, binding.bBlowingWind,
+            binding.bGhostlyWhisper, binding.bDraculaLaugh, binding.bWolfCry,
+            binding.bKnockKnock, binding.bFrankenstein, binding.bHorrorMovie,
+            binding.bWarningBells, binding.bPainfulMoan, binding.bWitchesCauldron,
+            binding.bGhostlyChildren, binding.bHauntedSwamp, binding.bTorturedSouls,
+            binding.bChillingHorn
         )
-        if (currentPlayingMediaPlayer != null && !currentPlayingMediaPlayer!!.isPlaying) {
-            currentPlayingMediaPlayer!!.start()
-        }
-    }
 
-    override fun onBackPressed() {
-        if (!doubleBackToExitPressedOnce) {
-            this.doubleBackToExitPressedOnce = true
-            Toast.makeText(this, "Press again to exit", Toast.LENGTH_SHORT).show()
-            Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
-        } else {
-            super.onBackPressed()
+        buttons.forEach { button ->
+            soundManager.resetButtonDrawable(this, button as Button)  // Reset drawable
+            soundManager.resetButtonColor(this, button)  // Reset button color
         }
     }
 
