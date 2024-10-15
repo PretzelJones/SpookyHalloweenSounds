@@ -2,6 +2,8 @@ package design.bosson.spookyhalloweensounds
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -13,7 +15,6 @@ import com.google.android.play.core.review.ReviewManagerFactory
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.messaging.FirebaseMessaging
 import design.bosson.spookyhalloweensounds.databinding.ActivityScrollingBinding
-import java.util.Calendar
 
 class ScrollingActivity : AppCompatActivity() {
 
@@ -21,6 +22,20 @@ class ScrollingActivity : AppCompatActivity() {
     private lateinit var mFirebaseAnalytics: FirebaseAnalytics
     private lateinit var soundManager: SoundManager
     private lateinit var countdownManager: CountdownManager
+    private val handler = Handler()
+
+    // Runnable to periodically check the system time and update the countdown
+    private val timeCheckRunnable = object : Runnable {
+        override fun run() {
+            // Recalculate and update the countdown
+            countdownManager.cancelCountdown()
+            countdownManager.startCountdown()
+            Log.d("TimeCheck", "Recalculating countdown based on current time")
+
+            // Run this again after 1 minute (60000 ms)
+            handler.postDelayed(this, 60000)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,20 +65,8 @@ class ScrollingActivity : AppCompatActivity() {
             binding.textCountdown.text = text // Update the countdown text
         }
 
-        // Start the countdown
-        val currentYear = Calendar.getInstance().get(Calendar.YEAR)
-        val halloweenDate = calculateHalloweenDate(currentYear)
-        countdownManager.startCountdown(halloweenDate)
-        //val currentYear = Calendar.getInstance().get(Calendar.YEAR)
-        //halloweenDate = calculateHalloweenDate(currentYear)
-
-        //startCountdown()
+        countdownManager.startCountdown()
         showFeedbackDialog()
-/*
-        binding.overlayImageView.setOnClickListener {
-            openSecretActivity()
-        }
-*/
         binding.menuHamburger.setOnClickListener { view ->
             showPopupMenu(view)
         }
@@ -266,30 +269,18 @@ class ScrollingActivity : AppCompatActivity() {
         }
     }
 
-    private fun calculateHalloweenDate(year: Int): Long {
-        val calendar = Calendar.getInstance().apply {
-            set(Calendar.YEAR, year)
-            set(Calendar.MONTH, Calendar.OCTOBER)
-            set(Calendar.DAY_OF_MONTH, 31)
-            set(Calendar.HOUR_OF_DAY, 23)
-        }
-        return calendar.timeInMillis
+    override fun onStart() {
+        super.onStart()
+        // Start the periodic check after a delay of 1 minute
+        handler.postDelayed(timeCheckRunnable, 60000)
     }
-/*
-    private fun updateCountdown(timeRemaining: Long) {
-        when (val remainingDays = (timeRemaining / (1000 * 60 * 60 * 24)).toInt()) {
-            0 -> {
-                getString(R.string.happy_halloween).also { binding.textCountdown.text = it }
-            }
-            1 -> {
-                binding.textCountdown.text = getString(R.string.tomorrow_is_halloween)
-            }
-            else -> {
-                "$remainingDays days until Halloween".also { binding.textCountdown.text = it }
-            }
-        }
+
+    override fun onStop() {
+        super.onStop()
+        // Remove the periodic check when the activity is no longer visible
+        handler.removeCallbacks(timeCheckRunnable)
     }
-*/
+
     private fun showFeedbackDialog() {
         val reviewManager = ReviewManagerFactory.create(applicationContext)
         reviewManager.requestReviewFlow().addOnCompleteListener {
@@ -306,10 +297,10 @@ class ScrollingActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
-
+        // Cancel countdown when activity is paused
+        countdownManager.cancelCountdown()
         // Release all sounds using SoundManager
-        soundManager.releaseAllSounds()
-
+        soundManager.releaseAllSounds(this)
         // Reset all button colors and states (similar to MovieActivity)
         resetAllButtons()
     }
@@ -353,7 +344,6 @@ class ScrollingActivity : AppCompatActivity() {
         popupMenu.setOnMenuItemClickListener { item ->
             onOptionsItemSelected(item)
         }
-
         // Show the popup menu
         popupMenu.show()
     }

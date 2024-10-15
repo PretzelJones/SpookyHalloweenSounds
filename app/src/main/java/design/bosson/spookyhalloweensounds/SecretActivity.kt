@@ -1,28 +1,28 @@
 package design.bosson.spookyhalloweensounds
 
+import BaseActivity
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.animation.AnimationUtils
-import androidx.appcompat.app.AppCompatActivity
+import android.widget.Button
 import androidx.appcompat.widget.PopupMenu
 import design.bosson.spookyhalloweensounds.databinding.ActivitySecretBinding
 
-class SecretActivity : AppCompatActivity() {
+class SecretActivity : BaseActivity() {  // Extend BaseActivity
 
     private lateinit var binding: ActivitySecretBinding
-    private lateinit var soundManager: SoundManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Inflate the layout using View Binding
         binding = ActivitySecretBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
-        supportActionBar!!.setDisplayShowTitleEnabled(false) //prevent title display
-
-        soundManager = SoundManager()
+        supportActionBar?.setDisplayShowTitleEnabled(false) // Prevent title display
 
         window.statusBarColor = getColor(R.color.colorAccent)
         // Ensure icons are white
@@ -31,6 +31,7 @@ class SecretActivity : AppCompatActivity() {
         // Initialize button animation for buttons
         val buttonAnimation = AnimationUtils.loadAnimation(this, R.anim.button_animation)
 
+        // Setup menu hamburger click listener
         binding.menuHamburger.setOnClickListener { view ->
             showPopupMenu(view)
         }
@@ -54,27 +55,28 @@ class SecretActivity : AppCompatActivity() {
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        soundManager.releaseAllSounds()  // Delegate media release to SoundManager
+    /**
+     * Provide the list of all buttons in SecretActivity.
+     */
+    override fun getAllButtons(): List<Button> {
+        return listOf(
+            binding.bTheGhostSong,
+            binding.bTheOldTape,
+            binding.bChillingCries,
+            binding.bCriesFromHell
+        )
     }
 
-    override fun onPause() {
-        super.onPause()
-        soundManager.releaseAllSounds()  // Pause and release media
-        resetAllButtons()
+    /**
+     * Resets all buttons in MovieActivity.
+     */
+    override fun resetAllButtons() {
+        soundManager.resetAllButtons(this, getAllButtons())
     }
 
-    private fun resetAllButtons() {
-        // Reset each button to its original color and drawable
-        val buttons = listOf(binding.bTheGhostSong, binding.bTheOldTape, binding.bChillingCries, binding.bCriesFromHell)
-
-        buttons.forEach { button ->
-            soundManager.resetButtonDrawable(this, button)  // Reset drawable to the original
-            soundManager.resetButtonColor(this, button)  // Reset color to the original
-        }
-    }
-
+    /**
+     * Displays the popup menu when the hamburger icon is clicked.
+     */
     private fun showPopupMenu(view: View) {
         val popupMenu = PopupMenu(this, view)
         popupMenu.menuInflater.inflate(R.menu.menu_scrolling, popupMenu.menu)
@@ -86,25 +88,35 @@ class SecretActivity : AppCompatActivity() {
         popupMenu.show()
     }
 
+    /**
+     * Inflates the options menu. Currently, no menu items are inflated.
+     */
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        //menuInflater.inflate(R.menu.menu_scrolling, menu)
+        // menuInflater.inflate(R.menu.menu_scrolling, menu)
         return true
     }
 
+    /**
+     * Handles selection of menu items.
+     */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
 
-        if (id == R.id.action_settings) {
-            val intent = Intent(this, DeveloperActivity::class.java)
-            this.startActivity(intent)
-
-        } else if (id == R.id.share) {
-            val sharingIntent = Intent(Intent.ACTION_SEND)
-            sharingIntent.type = "text/plain"
-            sharingIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.google_play_store))
-            startActivity(Intent.createChooser(sharingIntent, "Share via"))
-
+        when (id) {
+            R.id.action_settings -> {
+                val intent = Intent(this, DeveloperActivity::class.java)
+                startActivity(intent)
+                return true
+            }
+            R.id.share -> {
+                val sharingIntent = Intent(Intent.ACTION_SEND).apply {
+                    type = "text/plain"
+                    putExtra(Intent.EXTRA_TEXT, getString(R.string.google_play_store))
+                }
+                startActivity(Intent.createChooser(sharingIntent, "Share via"))
+                return true
+            }
+            else -> return super.onOptionsItemSelected(item)
         }
-        return true
     }
 }

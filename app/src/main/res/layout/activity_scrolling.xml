@@ -109,7 +109,7 @@
                 android:elevation="0dp"
                 android:fontFamily="@font/creepster"
                 android:keepScreenOn="true"
-                android:text="Horror Movie Themes"
+                android:text="Movie and TV Themes"
                 app:backgroundTint="@color/colorTitle"
                 tools:ignore="MissingPrefix" />
 
@@ -569,7 +569,7 @@
 
                 <ImageView
                     android:id="@+id/imageView"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:scaleType="centerCrop"
                     app:srcCompat="@drawable/graveyard" />

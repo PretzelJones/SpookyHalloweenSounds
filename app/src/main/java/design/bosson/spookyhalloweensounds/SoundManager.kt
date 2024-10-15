@@ -6,78 +6,56 @@ import android.graphics.drawable.Drawable
 import android.media.MediaPlayer
 import android.view.View
 import android.widget.Button
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 
 class SoundManager {
-    private val mediaPlayerMap = mutableMapOf<View, MediaPlayer>()
+
+    // Map to associate buttons with their corresponding MediaPlayers for long sounds
+    private val longMediaPlayerMap = mutableMapOf<View, MediaPlayer>()
+
+    // Map to associate buttons with their corresponding MediaPlayers for short sounds
+    private val shortMediaPlayerMap = mutableMapOf<View, MediaPlayer>()
+
+    // Map to store the original drawable of each button
     private val originalDrawableMap = mutableMapOf<Button, Drawable>()
-    private var currentPlayingMediaPlayer: MediaPlayer? = null
-    private var currentPlayingButton: Button? = null
 
-    // Method for playing short sounds (like in ScrollingActivity)
-    fun playShortSound(context: Context, soundId: Int, button: View) {
-        try {
-            val buttonWithDrawable = button as Button
+    // Variables to track the currently playing MediaPlayer and its associated button for long sounds
+    private var currentPlayingLongMediaPlayer: MediaPlayer? = null
+    private var currentPlayingLongButton: Button? = null
 
-            val existingMediaPlayer = mediaPlayerMap[buttonWithDrawable]
+    // Set to keep track of buttons whose long audio is paused
+    private val pausedLongButtons = mutableSetOf<Button>()
 
-            if (existingMediaPlayer != null) {
-                // If the sound is already playing, do nothing
-                if (!existingMediaPlayer.isPlaying) {
-                    existingMediaPlayer.start()
-                    setButtonColorPlaying(context, buttonWithDrawable) // Set color when playing
-                }
-            } else {
-                // Create and start a new MediaPlayer for short sound
-                val mediaPlayer = MediaPlayer.create(context, soundId)
-
-                mediaPlayer.setOnCompletionListener {
-                    it.release()
-                    mediaPlayerMap.remove(buttonWithDrawable)
-                    resetButtonColor(context, buttonWithDrawable) // Reset button color when done
-                }
-
-                mediaPlayerMap[buttonWithDrawable] = mediaPlayer
-                setButtonColorPlaying(context, buttonWithDrawable) // Set color to indicate playing
-                mediaPlayer.start()
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
-
-    // Method for playing long sounds (like in MovieActivity)
+    /**
+     * Plays a long sound associated with a button.
+     * Handles play, pause, and resume functionalities.
+     */
     fun playLongSound(context: Context, soundId: Int, button: View) {
         try {
-            // Cast the View to Button
             val buttonWithDrawable = button as Button
 
-            // If a sound is already playing, handle pause/resume logic
-            if (currentPlayingMediaPlayer != null && currentPlayingButton != null) {
-                if (currentPlayingButton == buttonWithDrawable) {
-                    if (currentPlayingMediaPlayer!!.isPlaying) {
-                        // Pause the audio
-                        currentPlayingMediaPlayer!!.pause()
-
-                        // Revert the icon to the original drawable but keep the color changed
-                        resetButtonDrawable(context, currentPlayingButton!!) // Revert to original drawable
-                        setButtonColorPaused(context, currentPlayingButton!!) // Keep the color changed to indicate paused
+            // If a long sound is already playing
+            if (currentPlayingLongMediaPlayer != null && currentPlayingLongButton != null) {
+                if (currentPlayingLongButton == buttonWithDrawable) {
+                    if (currentPlayingLongMediaPlayer!!.isPlaying) {
+                        // Pause the current long sound
+                        currentPlayingLongMediaPlayer!!.pause()
+                        pausedLongButtons.add(currentPlayingLongButton!!)
+                        setPlayDrawable(context, currentPlayingLongButton!!)
                     } else {
-                        // Resume the audio
-                        currentPlayingMediaPlayer!!.start()
-
-                        // Set the icon to ic_pause and keep the color changed
-                        setPauseDrawable(context, currentPlayingButton!!) // Set pause drawable
-                        setButtonColorPlaying(context, currentPlayingButton!!) // Keep the color changed to indicate playing
+                        // Resume the current long sound
+                        currentPlayingLongMediaPlayer!!.start()
+                        setPauseDrawable(context, currentPlayingLongButton!!)
+                        pausedLongButtons.remove(currentPlayingLongButton!!)
                     }
                     return
                 } else {
-                    // Release the current media player and reset the previous button's drawable and color
-                    currentPlayingMediaPlayer!!.release()
-                    resetButtonDrawable(context, currentPlayingButton!!)
-                    resetButtonColor(context, currentPlayingButton!!) // Reset the color of the previous button
-                    currentPlayingMediaPlayer = null
+                    // If a different long sound was playing, stop it
+                    currentPlayingLongMediaPlayer!!.release()
+                    resetButtonDrawable(context, currentPlayingLongButton!!)
+                    resetButtonColor(context, currentPlayingLongButton!!)
+                    pausedLongButtons.remove(currentPlayingLongButton!!)
+                    currentPlayingLongMediaPlayer = null
                 }
             }
 
@@ -87,64 +65,113 @@ class SoundManager {
                 originalDrawableMap[buttonWithDrawable] = originalDrawable
             }
 
-            // Create a new MediaPlayer instance for long sound
+            // Create a new MediaPlayer instance for the long sound
             val mediaPlayer = MediaPlayer.create(context, soundId)
+            mediaPlayer.isLooping = true
 
             mediaPlayer.setOnCompletionListener {
+                // Release MediaPlayer and reset button UI after playback
                 it.release()
-                resetButtonDrawable(context, buttonWithDrawable) // Revert to original drawable when sound finishes
-                resetButtonColor(context, buttonWithDrawable) // Reset the button color when sound finishes
+                resetButtonDrawable(context, buttonWithDrawable)
+                resetButtonColor(context, buttonWithDrawable)
             }
 
-            // Change the button color and icon to indicate sound is playing
+            // Update button UI to indicate playing state
             setButtonColorPlaying(context, buttonWithDrawable)
-            setPauseDrawable(context, buttonWithDrawable) // Set pause drawable
+            setPauseDrawable(context, buttonWithDrawable)
 
             mediaPlayer.start()
 
-            // Long press to restart the sound
+            // Handle long press to restart the sound
             buttonWithDrawable.setOnLongClickListener {
                 try {
-                    mediaPlayer.seekTo(0)
-                    mediaPlayer.start()
+                    mediaPlayer.seekTo(0)  // Restart the sound from the beginning
+                    mediaPlayer.start()    // Start playing again
+                    setPauseDrawable(context, buttonWithDrawable)  // Ensure the pause icon is shown
+                    setButtonColorPlaying(context, buttonWithDrawable)  // Keep colorButtonPressed
                 } catch (e: IllegalStateException) {
                     e.printStackTrace()
-                    Toast.makeText(context, "Unable to restart sound", Toast.LENGTH_SHORT).show()
                 }
                 true
             }
 
-            // Set the current media player and button
-            currentPlayingMediaPlayer = mediaPlayer
-            currentPlayingButton = buttonWithDrawable
+            // Update current playing references
+            currentPlayingLongMediaPlayer = mediaPlayer
+            currentPlayingLongButton = buttonWithDrawable
+
+            // Map the MediaPlayer to the button
+            longMediaPlayerMap[buttonWithDrawable] = mediaPlayer
 
         } catch (e: Exception) {
             e.printStackTrace()
         }
     }
 
-    // Helper function to set button color when sound is paused (icon reverts to original)
-    private fun setButtonColorPaused(context: Context, button: Button) {
-        button.backgroundTintList = ColorStateList.valueOf(
-            ContextCompat.getColor(context, R.color.colorButtonPressed) // Paused state color
-        )
+    /**
+     * Plays a short sound associated with a button.
+     * Handles single playback without looping.
+     */
+    fun playShortSound(context: Context, soundId: Int, button: View) {
+        try {
+            val buttonWithDrawable = button as Button
+
+            // If a short sound is already playing on this button, restart it
+            if (shortMediaPlayerMap.containsKey(buttonWithDrawable)) {
+                val existingMediaPlayer = shortMediaPlayerMap[buttonWithDrawable]
+                existingMediaPlayer?.release() // Stop the previous sound
+                shortMediaPlayerMap.remove(buttonWithDrawable)
+            }
+
+            // Store the original drawable if not already stored
+            if (!originalDrawableMap.containsKey(buttonWithDrawable)) {
+                val originalDrawable = buttonWithDrawable.compoundDrawables[1] // Top drawable
+                originalDrawableMap[buttonWithDrawable] = originalDrawable
+            }
+
+            // Create a new MediaPlayer instance for the short sound
+            val mediaPlayer = MediaPlayer.create(context, soundId)
+
+            mediaPlayer.setOnCompletionListener {
+                // Release MediaPlayer and reset button UI after playback finishes
+                it.release()
+                shortMediaPlayerMap.remove(buttonWithDrawable)
+                resetButtonColor(context, buttonWithDrawable) // Reset the button color
+            }
+
+            // Update button UI to indicate it's in a "playing" state
+            setButtonColorPlaying(context, buttonWithDrawable)
+
+            // Start playing the audio
+            mediaPlayer.start()
+
+            // Map the MediaPlayer to the button
+            shortMediaPlayerMap[buttonWithDrawable] = mediaPlayer
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
-    // Helper function to set button color when sound is playing
-    private fun setButtonColorPlaying(context: Context, button: Button) {
-        button.backgroundTintList = ColorStateList.valueOf(
-            ContextCompat.getColor(context, R.color.colorButtonPressed) // Playing state color
-        )
+    /**
+     * Resets all buttons based on their paused state for long sounds.
+     * - Paused buttons: Set icon to play and keep colorButtonPressed.
+     * - Other buttons: Reset to original drawable and color.
+     */
+    fun resetAllButtons(context: Context, buttons: List<Button>) {
+        buttons.forEach { button ->
+            if (pausedLongButtons.contains(button)) {
+                setPlayDrawable(context, button)
+                // Keep the color as colorButtonPressed
+            } else {
+                resetButtonDrawable(context, button)
+                resetButtonColor(context, button)
+            }
+        }
     }
 
-    // Helper function to set the pause drawable on the button
-    private fun setPauseDrawable(context: Context, button: Button) {
-        val pauseDrawable = ContextCompat.getDrawable(context, R.drawable.ic_pause)
-        pauseDrawable?.setTint(ContextCompat.getColor(context, android.R.color.black))
-        button.setCompoundDrawablesWithIntrinsicBounds(null, pauseDrawable, null, null)
-    }
-
-    // Helper function to reset the button's drawable to its original state
+    /**
+     * Resets the button's drawable to its original state.
+     */
     fun resetButtonDrawable(context: Context, button: Button) {
         val originalDrawable = originalDrawableMap[button]
         if (originalDrawable != null) {
@@ -152,29 +179,141 @@ class SoundManager {
         }
     }
 
-    // Helper to reset button color
+    /**
+     * Resets the button's color to its default state.
+     */
     fun resetButtonColor(context: Context, button: Button) {
         button.backgroundTintList = ColorStateList.valueOf(
             ContextCompat.getColor(context, R.color.colorButton)
         )
     }
 
-    fun releaseAllSounds() {
-        // Release all media players
-        mediaPlayerMap.values.forEach { mediaPlayer ->
-            mediaPlayer.stop()
-            mediaPlayer.release()
-        }
-        mediaPlayerMap.clear()
+    /**
+     * Sets the button's drawable to a pause icon.
+     */
+    fun setPauseDrawable(context: Context, button: Button) {
+        val pauseDrawable = ContextCompat.getDrawable(context, R.drawable.ic_pause)
+        pauseDrawable?.setTint(ContextCompat.getColor(context, android.R.color.black))
+        button.setCompoundDrawablesWithIntrinsicBounds(null, pauseDrawable, null, null)
+    }
 
-        // Reset the current playing long sound if any
-        if (currentPlayingMediaPlayer != null) {
-            currentPlayingMediaPlayer!!.stop()
-            currentPlayingMediaPlayer!!.release()
-            currentPlayingMediaPlayer = null
-            currentPlayingButton = null
+    /**
+     * Sets the button's drawable to a play icon.
+     */
+    fun setPlayDrawable(context: Context, button: Button) {
+        val playDrawable = ContextCompat.getDrawable(context, R.drawable.ic_play)
+        playDrawable?.setTint(ContextCompat.getColor(context, android.R.color.black))
+        button.setCompoundDrawablesWithIntrinsicBounds(null, playDrawable, null, null)
+    }
+
+    /**
+     * Sets the button color to indicate it's in an active state.
+     */
+    fun setButtonColorPlaying(context: Context, button: Button) {
+        button.backgroundTintList = ColorStateList.valueOf(
+            ContextCompat.getColor(context, R.color.colorButtonPressed) // Active state color
+        )
+    }
+
+    /**
+     * Checks if a specific long button's audio is paused.
+     */
+    fun isButtonPaused(button: Button): Boolean {
+        return pausedLongButtons.contains(button)
+    }
+
+    /**
+     * Checks if any long audio is currently playing.
+     */
+    /*
+    fun isAnyAudioPlaying(): Boolean {
+        return longMediaPlayerMap.values.any { it.isPlaying } || (currentPlayingLongMediaPlayer?.isPlaying
+            ?: false)
+    }
+
+    /**
+     * Checks if any long audio is currently paused.
+     */
+    fun isAnyAudioPaused(): Boolean {
+        return pausedLongButtons.isNotEmpty()
+    }
+    */
+    /**
+     * Pauses all currently playing long sounds without releasing them.
+     * Also updates the button UI to reflect the paused state.
+     */
+    fun pauseAllSounds(context: Context) {
+        longMediaPlayerMap.forEach { (button, mediaPlayer) ->
+            try {
+                // Check if mediaPlayer is valid before calling isPlaying
+                if (mediaPlayer.isPlaying) {
+                    mediaPlayer.pause()
+                    pausedLongButtons.add(button as Button)
+                    setPlayDrawable(context, button)
+                }
+            } catch (e: IllegalStateException) {
+                e.printStackTrace()
+                // Handle or log the exception appropriately
+            }
+        }
+
+        currentPlayingLongMediaPlayer?.let {
+            try {
+                if (it.isPlaying) {
+                    it.pause()
+                    pausedLongButtons.add(currentPlayingLongButton!!)
+                    setPlayDrawable(context, currentPlayingLongButton!!)
+                }
+            } catch (e: IllegalStateException) {
+                e.printStackTrace()
+                // Handle or log the exception appropriately
+            }
         }
     }
 
+    /**
+    * Releases all MediaPlayer instances and stops all sounds.
+    * Also updates the button UI to reflect the stopped state.
+    */
+    fun releaseAllSounds(context: Context) {
+        // Release all long MediaPlayers
+        longMediaPlayerMap.values.forEach { mediaPlayer ->
+            try {
+                if (mediaPlayer.isPlaying) {
+                    mediaPlayer.stop()
+                }
+                mediaPlayer.release()
+            } catch (e: IllegalStateException) {
+                e.printStackTrace()
+                // Optionally log or handle the exception as needed
+            }
+        }
+        longMediaPlayerMap.clear()
+        pausedLongButtons.clear()
+        currentPlayingLongMediaPlayer = null
+        currentPlayingLongButton = null
 
+        // Release all short MediaPlayers
+        shortMediaPlayerMap.values.forEach { mediaPlayer ->
+            try {
+                if (mediaPlayer.isPlaying) {
+                    mediaPlayer.stop()
+                }
+                mediaPlayer.release()
+            } catch (e: IllegalStateException) {
+                e.printStackTrace()
+                // Optionally log or handle the exception as needed
+            }
+        }
+        shortMediaPlayerMap.clear()
+
+        // Reset button visuals
+        originalDrawableMap.keys.forEach { button ->
+            resetButtonDrawable(context, button)
+            resetButtonColor(context, button)
+        }
+
+        // Clear paused buttons
+        pausedLongButtons.clear()
+    }
 }

@@ -37,9 +37,8 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="imagePath" value="$USER_HOME$/Downloads/pumpkin_menu.png" />
+                                                <entry key="imagePath" value="$USER_HOME$/Downloads/question_mark.png" />
                                                 <entry key="opacityPercent" value="80" />
-                                                <entry key="paddingPercent" value="-10" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -72,8 +71,8 @@
                                   <option name="values">
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
-                                      <entry key="imageAsset" value="$USER_HOME$/Downloads/pumpkin_menu.png" />
-                                      <entry key="outputName" value="pumpkin_menu" />
+                                      <entry key="imageAsset" value="$USER_HOME$/Downloads/question_mark.png" />
+                                      <entry key="outputName" value="question_mark" />
                                       <entry key="theme" value="CUSTOM" />
                                       <entry key="themeColor" value="000000" />
                                     </map>
@@ -323,7 +322,7 @@
                       <PersistentState>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="ic_hamburger_menu" />
+                            <entry key="outputName" value="ic_magnifying_glass" />
                           </map>
                         </option>
                       </PersistentState>

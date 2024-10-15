@@ -4,49 +4,69 @@ import android.content.Context
 import android.os.CountDownTimer
 import java.util.Calendar
 
-class CountdownManager(private val context: Context, private val updateCallback: (String) -> Unit) {
+class CountdownManager(private val context: Context, private val updateCountdown: (String) -> Unit) {
 
-    private lateinit var timer: CountDownTimer
-    private var halloweenDate: Long = 0
+    private var countDownTimer: CountDownTimer? = null
 
-    fun startCountdown(halloweenDate: Long) {
-        this.halloweenDate = halloweenDate
-        timer = object : CountDownTimer(halloweenDate - System.currentTimeMillis(), 1000) {
+    fun startCountdown() {
+        val halloweenDate = calculateHalloweenDate()
+        val currentTime = Calendar.getInstance().timeInMillis
+        val timeRemaining = halloweenDate - currentTime
+
+        countDownTimer = object : CountDownTimer(timeRemaining, 3600000) {
             override fun onTick(millisUntilFinished: Long) {
-                updateCountdown(millisUntilFinished)
+                updateCountdownText(millisUntilFinished)
             }
 
             override fun onFinish() {
-                resetTimer()
+                updateCountdown(context.getString(R.string.happy_halloween))
             }
-        }
-        timer.start()
+        }.start()
     }
 
-    private fun updateCountdown(timeRemaining: Long) {
+    private fun calculateHalloweenDate(): Long {
+        val currentYear = Calendar.getInstance().get(Calendar.YEAR)
+        val today = Calendar.getInstance()
+
+        // Set Halloween date for the current year
+        val halloweenThisYear = Calendar.getInstance().apply {
+            set(Calendar.YEAR, currentYear)
+            set(Calendar.MONTH, Calendar.OCTOBER)
+            set(Calendar.DAY_OF_MONTH, 31)
+            set(Calendar.HOUR_OF_DAY, 23)
+            set(Calendar.MINUTE, 59)
+            set(Calendar.SECOND, 59)
+        }
+
+        // If today is after Halloween this year, calculate next year's Halloween
+        return if (today.after(halloweenThisYear)) {
+            // Set Halloween date for next year
+            Calendar.getInstance().apply {
+                set(Calendar.YEAR, currentYear + 1)
+                set(Calendar.MONTH, Calendar.OCTOBER)
+                set(Calendar.DAY_OF_MONTH, 31)
+                set(Calendar.HOUR_OF_DAY, 23)
+                set(Calendar.MINUTE, 59)
+                set(Calendar.SECOND, 59)
+            }.timeInMillis
+        } else {
+            // Use this year's Halloween
+            halloweenThisYear.timeInMillis
+        }
+    }
+
+    private fun updateCountdownText(timeRemaining: Long) {
         val remainingDays = (timeRemaining / (1000 * 60 * 60 * 24)).toInt()
-        val text = when (remainingDays) {
+
+        val countdownText = when (remainingDays) {
             0 -> context.getString(R.string.happy_halloween)
             1 -> context.getString(R.string.tomorrow_is_halloween)
             else -> "$remainingDays days until Halloween"
         }
-        updateCallback(text) // Call the UI update
+        updateCountdown(countdownText)
     }
 
-    private fun resetTimer() {
-        val currentYear = Calendar.getInstance().get(Calendar.YEAR)
-        val nextYear = currentYear + 1
-        halloweenDate = calculateHalloweenDate(nextYear)
-        startCountdown(halloweenDate)
-    }
-
-    private fun calculateHalloweenDate(year: Int): Long {
-        val calendar = Calendar.getInstance().apply {
-            set(Calendar.YEAR, year)
-            set(Calendar.MONTH, Calendar.OCTOBER)
-            set(Calendar.DAY_OF_MONTH, 31)
-            set(Calendar.HOUR_OF_DAY, 23)
-        }
-        return calendar.timeInMillis
+    fun cancelCountdown() {
+        countDownTimer?.cancel()
     }
 }

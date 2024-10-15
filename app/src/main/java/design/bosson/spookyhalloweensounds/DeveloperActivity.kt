@@ -2,7 +2,6 @@ package design.bosson.spookyhalloweensounds
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -29,22 +28,4 @@ class DeveloperActivity : AppCompatActivity() {
         }
 
     }
-/*
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
-        val id = item.itemId
-
-    if (id == R.id.action_settings) {
-        val intent = Intent(this, DeveloperActivity::class.java)
-        this.startActivity(intent)
-
-    } else if (id == R.id.share) {
-        val sharingIntent = Intent(Intent.ACTION_SEND)
-        sharingIntent.type = "text/plain"
-        sharingIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.google_play_store))
-        startActivity(Intent.createChooser(sharingIntent, "Share via"))
-
-    }
-        return true
-    }*/
 }

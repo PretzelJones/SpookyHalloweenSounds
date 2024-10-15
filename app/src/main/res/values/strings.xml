@@ -7,7 +7,7 @@
     <string name="phone">443.527.9022</string>
     <string name="email">bosson.design@gmail.com</string>
     <string name="bosson">Bosson Design</string>
-    <string name="version_code">App Version 1.9.47 Aug 17, 2024</string>
+    <string name="version_code">App Version 1.9.54 Oct 15, 2024</string>
     <string name="title_activity_secret">You Were Warned</string>
     <string name="secret">Curiosity Killed the Black Cat</string>
     <string name="title_activity_ghost_song">The Ghost Song</string>
@@ -28,4 +28,11 @@
     <string name="tomorrow_is_halloween">Tomorrow is Halloween!</string>
     <string name="happy_halloween">Happy Halloween!</string>
     <string name="contact_us">Contact Us</string>
+    <string name="unsolved_mysteries">Unsolved Mysteries</string>
+    <string name="amityville_horror">Amityville Horror</string>
+    <string name="friday_the_13th">Friday the 13th</string>
+    <string name="the_shining">The Shining</string>
+    <string name="the_exorcist">The Exorcist</string>
+    <string name="halloween">Halloween</string>
+    <string name="xfiles">X-Files\n</string>
 </resources>

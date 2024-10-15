@@ -48,7 +48,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/creepster"
                     android:gravity="center"
-                    android:text="Horror Movie Themes"
+                    android:text="Movie and TV Themes"
                     android:textColor="@color/colorTitle"
                     android:textSize="24sp"
                     app:layout_constraintEnd_toStartOf="@id/menu_hamburger"
@@ -76,13 +76,16 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <!-- Scrollable Content -->
-    <RelativeLayout
+    <!-- Scrollable content within NestedScrollView -->
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorAccent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context="design.bosson.spookyhalloweensounds.MovieActivity">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <Button
             android:id="@+id/bHalloween"
@@ -92,7 +95,7 @@
             android:elevation="0dp"
             android:fontFamily="@font/creepster"
             android:keepScreenOn="true"
-            android:text="Halloween"
+            android:text="@string/halloween"
             app:backgroundTint="@color/colorTitle" />
 
         <Button
@@ -104,7 +107,7 @@
             android:elevation="0dp"
             android:fontFamily="@font/creepster"
             android:keepScreenOn="true"
-            android:text="The Exorcist"
+            android:text="@string/the_exorcist"
             app:backgroundTint="@color/colorTitle" />
 
         <Button
@@ -116,7 +119,7 @@
             android:elevation="0dp"
             android:fontFamily="@font/creepster"
             android:keepScreenOn="true"
-            android:text="The Shining"
+            android:text="@string/the_shining"
             app:backgroundTint="@color/colorTitle" />
 
         <Button
@@ -140,7 +143,7 @@
             android:elevation="0dp"
             android:fontFamily="@font/creepster"
             android:keepScreenOn="true"
-            android:text="Friday the 13th"
+            android:text="@string/friday_the_13th"
             app:backgroundTint="@color/colorTitle" />
 
         <Button
@@ -152,7 +155,31 @@
             android:elevation="0dp"
             android:fontFamily="@font/creepster"
             android:keepScreenOn="true"
-            android:text="Amityville Horror"
+            android:text="@string/amityville_horror"
+            app:backgroundTint="@color/colorTitle" />
+
+        <Button
+            android:id="@+id/bUnsolvedMysteries"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_below="@+id/bAmityville"
+            android:drawableTop="@drawable/question_mark"
+            android:elevation="0dp"
+            android:fontFamily="@font/creepster"
+            android:keepScreenOn="true"
+            android:text="@string/unsolved_mysteries"
+            app:backgroundTint="@color/colorTitle" />
+
+        <Button
+            android:id="@+id/bXfiles"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_below="@+id/bUnsolvedMysteries"
+            android:drawableTop="@drawable/magnifying_glass"
+            android:elevation="0dp"
+            android:fontFamily="@font/creepster"
+            android:keepScreenOn="true"
+            android:text="@string/xfiles"
             app:backgroundTint="@color/colorTitle" />
 
         <androidx.cardview.widget.CardView
@@ -163,14 +190,14 @@
             app:cardElevation="0dp"
             android:paddingTop="15dp"
             android:backgroundTint="@color/colorAccent"
-            android:layout_below="@+id/bAmityville">
+            android:layout_below="@+id/bXfiles">
 
             <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                app:srcCompat="@drawable/graveyard"
-                android:scaleType="fitStart" />
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/graveyard"
+            android:scaleType="fitStart" />
 
             <ImageView
                 android:id="@+id/overlayImageView"
@@ -183,45 +210,6 @@
         </androidx.cardview.widget.CardView>
 
     </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-<!--<?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context="design.bosson.spookyhalloweensounds.MovieActivity">
-
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/app_bar"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/app_bar_height"
-        android:fitsSystemWindows="true"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-        <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:id="@+id/toolbar_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/grave_stones_source_shadows_title"
-            android:fitsSystemWindows="true"
-            android:keepScreenOn="true"
-            app:contentScrim="?attr/colorPrimary"
-            app:expandedTitleTextAppearance="@style/TextAppearance.AppCompat.Title">
-
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin"
-                app:popupTheme="@style/AppTheme.PopupOverlay" />
-
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <include layout="@layout/content_movie" />
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>-->
