@@ -85,7 +85,7 @@
         tools:context="design.bosson.spookyhalloweensounds.LongActivity">
 
         <!-- Button List -->
-        <Button
+        <design.bosson.spookyhalloweensounds.ui.SeekButtonView
             android:id="@+id/bTerrorMix"
             android:layout_width="match_parent"
             android:layout_height="70dp"
@@ -96,7 +96,7 @@
             android:text="Ultra Terror"
             app:backgroundTint="@color/colorTitle" />
 
-        <Button
+        <design.bosson.spookyhalloweensounds.ui.SeekButtonView
             android:id="@+id/bHauntedMix"
             android:layout_width="match_parent"
             android:layout_height="70dp"
@@ -108,7 +108,7 @@
             android:text="Haunted House"
             app:backgroundTint="@color/colorTitle" />
 
-        <Button
+        <design.bosson.spookyhalloweensounds.ui.SeekButtonView
             android:id="@+id/bLongMix"
             android:layout_width="match_parent"
             android:layout_height="70dp"
@@ -120,7 +120,7 @@
             android:text="Spooky Sounds"
             app:backgroundTint="@color/colorTitle" />
 
-        <Button
+        <design.bosson.spookyhalloweensounds.ui.SeekButtonView
             android:id="@+id/bSpaceTerror"
             android:layout_width="match_parent"
             android:layout_height="70dp"
@@ -132,7 +132,7 @@
             android:text="Space Terror"
             app:backgroundTint="@color/colorTitle" />
 
-        <Button
+        <design.bosson.spookyhalloweensounds.ui.SeekButtonView
             android:id="@+id/bDontLetIn"
             android:layout_width="match_parent"
             android:layout_height="70dp"

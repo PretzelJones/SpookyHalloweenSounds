@@ -1,9 +1,11 @@
+package design.bosson.spookyhalloweensounds
+
+//import android.widget.Button
 import android.content.Context
 import android.os.Bundle
 import android.os.PowerManager
-import android.widget.Button
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import design.bosson.spookyhalloweensounds.SoundManager
 
 abstract class BaseActivity : AppCompatActivity() {
 
@@ -12,7 +14,8 @@ abstract class BaseActivity : AppCompatActivity() {
     /**
      * Abstract method to retrieve all buttons in the derived activities.
      */
-    protected abstract fun getAllButtons(): List<Button>
+    //protected abstract fun getAllButtons(): List<Button>
+    protected abstract fun getAllButtons(): List<TextView>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

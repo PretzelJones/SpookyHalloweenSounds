@@ -1,3 +1,459 @@
+// app/src/main/java/design/bosson/spookyhalloweensounds/SoundManager.kt
+package design.bosson.spookyhalloweensounds
+
+import android.content.Context
+import android.content.res.ColorStateList
+import android.graphics.drawable.Drawable
+import android.media.MediaPlayer
+import android.view.View
+import android.widget.TextView
+import androidx.core.content.ContextCompat
+
+class SoundManager {
+
+    private val longMediaPlayerMap = mutableMapOf<TextView, MediaPlayer>()
+    private val shortMediaPlayerMap = mutableMapOf<TextView, MediaPlayer>()
+    private val originalDrawableMap = mutableMapOf<TextView, Drawable?>()
+
+    private var currentPlayingLongMediaPlayer: MediaPlayer? = null
+    private var currentPlayingLongButton: TextView? = null
+
+    private val pausedLongButtons = mutableSetOf<TextView>()
+
+    fun playLongSound(context: Context, soundId: Int, button: View) {
+        try {
+            val tv = button as TextView
+
+            // If something is already associated
+            currentPlayingLongMediaPlayer?.let { mp ->
+                currentPlayingLongButton?.let { curBtn ->
+                    if (curBtn === tv) {
+                        // Toggle same button
+                        if (mp.isPlaying) {
+                            mp.pause()
+                            pausedLongButtons.add(curBtn)
+                            setPlayDrawable(context, curBtn)
+                            setButtonColorPlaying(context, curBtn) // keep light orange
+                            curBtn.invalidate()
+                        } else {
+                            mp.start()
+                            setPauseDrawable(context, curBtn)
+                            pausedLongButtons.remove(curBtn)
+                            curBtn.invalidate()
+                        }
+                        return
+                    } else {
+                        // Preserve prior button state: pause, keep mapping and visuals
+                        try { if (mp.isPlaying) mp.pause() } catch (_: IllegalStateException) {}
+                        pausedLongButtons.add(curBtn)
+                        setPlayDrawable(context, curBtn)           // show play icon
+                        setButtonColorPlaying(context, curBtn)     // keep light orange
+                        curBtn.invalidate()
+
+                        // Do NOT release or remove from map; keep position
+                        currentPlayingLongMediaPlayer = null
+                        currentPlayingLongButton = null
+                    }
+                }
+            }
+
+            if (!originalDrawableMap.containsKey(tv)) {
+                originalDrawableMap[tv] = tv.compoundDrawables[1]
+            }
+
+            // Reuse existing player if already created for this button; else create
+            val mediaPlayer = longMediaPlayerMap[tv] ?: MediaPlayer.create(context, soundId).also {
+                it.isLooping = true
+                it.setOnCompletionListener { mpDone ->
+                    mpDone.release()
+                    longMediaPlayerMap.remove(tv)
+                    pausedLongButtons.remove(tv)
+                    resetButtonDrawable(context, tv)
+                    resetButtonColor(context, tv)
+                }
+                longMediaPlayerMap[tv] = it
+            }
+
+            setButtonColorPlaying(context, tv)
+            setPauseDrawable(context, tv)
+            try { mediaPlayer.start() } catch (_: IllegalStateException) {}
+
+            // Long-press: restart from beginning
+            tv.setOnLongClickListener {
+                try {
+                    mediaPlayer.seekTo(0)
+                    mediaPlayer.start()
+                    setPauseDrawable(context, tv)
+                    setButtonColorPlaying(context, tv)
+                    pausedLongButtons.remove(tv)
+                    tv.invalidate()
+                } catch (_: IllegalStateException) {}
+                true
+            }
+
+            currentPlayingLongMediaPlayer = mediaPlayer
+            currentPlayingLongButton = tv
+
+        } catch (_: Exception) {}
+    }
+
+    fun playShortSound(context: Context, soundId: Int, button: View) {
+        try {
+            val tv = button as TextView
+
+            shortMediaPlayerMap.remove(tv)?.release()
+
+            if (!originalDrawableMap.containsKey(tv)) {
+                originalDrawableMap[tv] = tv.compoundDrawables[1]
+            }
+
+            val mediaPlayer = MediaPlayer.create(context, soundId).apply {
+                setOnCompletionListener {
+                    it.release()
+                    shortMediaPlayerMap.remove(tv)
+                    resetButtonColor(context, tv)
+                }
+            }
+
+            setButtonColorPlaying(context, tv)
+            mediaPlayer.start()
+            shortMediaPlayerMap[tv] = mediaPlayer
+
+        } catch (_: Exception) {}
+    }
+
+    fun resetAllButtons(context: Context, buttons: List<TextView>) {
+        buttons.forEach { tv ->
+            if (pausedLongButtons.contains(tv)) {
+                // paused: show play icon, keep light-orange tint (progress stays)
+                setPlayDrawable(context, tv)
+                setButtonColorPlaying(context, tv)
+                tv.invalidate()
+            } else {
+                // not paused and not playing: reset visuals
+                resetButtonDrawable(context, tv)
+                resetButtonColor(context, tv)
+            }
+        }
+    }
+
+    fun resetButtonDrawable(context: Context, tv: TextView) {
+        originalDrawableMap[tv]?.let {
+            tv.setCompoundDrawablesWithIntrinsicBounds(null, it, null, null)
+        }
+    }
+
+    fun resetButtonColor(context: Context, tv: TextView) {
+        tv.backgroundTintList =
+            ColorStateList.valueOf(ContextCompat.getColor(context, R.color.colorButton))
+    }
+
+    fun setPauseDrawable(context: Context, tv: TextView) {
+        val d = ContextCompat.getDrawable(context, R.drawable.ic_pause)
+        d?.setTint(ContextCompat.getColor(context, android.R.color.black))
+        tv.setCompoundDrawablesWithIntrinsicBounds(null, d, null, null)
+    }
+
+    fun setPlayDrawable(context: Context, tv: TextView) {
+        val d = ContextCompat.getDrawable(context, R.drawable.ic_play)
+        d?.setTint(ContextCompat.getColor(context, android.R.color.black))
+        tv.setCompoundDrawablesWithIntrinsicBounds(null, d, null, null)
+    }
+
+    fun setButtonColorPlaying(context: Context, tv: TextView) {
+        tv.backgroundTintList =
+            ColorStateList.valueOf(ContextCompat.getColor(context, R.color.colorButtonPressed))
+    }
+
+    fun isButtonPaused(tv: TextView): Boolean = pausedLongButtons.contains(tv)
+
+    fun pauseAllSounds(context: Context) {
+        longMediaPlayerMap.forEach { (tv, mp) ->
+            try {
+                if (mp.isPlaying) {
+                    mp.pause()
+                    pausedLongButtons.add(tv)
+                    setPlayDrawable(context, tv)
+                    setButtonColorPlaying(context, tv)
+                    tv.invalidate()
+                }
+            } catch (_: IllegalStateException) {}
+        }
+        currentPlayingLongMediaPlayer = null
+        currentPlayingLongButton = null
+    }
+
+    fun releaseAllSounds(context: Context) {
+        longMediaPlayerMap.values.forEach {
+            try { if (it.isPlaying) it.stop(); it.release() } catch (_: IllegalStateException) {}
+        }
+        longMediaPlayerMap.clear()
+
+        shortMediaPlayerMap.values.forEach {
+            try { if (it.isPlaying) it.stop(); it.release() } catch (_: IllegalStateException) {}
+        }
+        shortMediaPlayerMap.clear()
+
+        originalDrawableMap.keys.forEach {
+            resetButtonDrawable(context, it)
+            resetButtonColor(context, it)
+        }
+        pausedLongButtons.clear()
+        currentPlayingLongMediaPlayer = null
+        currentPlayingLongButton = null
+    }
+
+    // --- Seek helpers for SeekButtonView ---
+    fun getLongDuration(tv: TextView): Long =
+        longMediaPlayerMap[tv]?.duration?.toLong() ?: 0L
+
+    fun getLongPosition(tv: TextView): Long =
+        longMediaPlayerMap[tv]?.currentPosition?.toLong() ?: 0L
+
+    fun seekLongTo(tv: TextView, ms: Long) {
+        longMediaPlayerMap[tv]?.seekTo(ms.toInt())
+        tv.invalidate()
+    }
+
+    fun isLongPlaying(tv: TextView): Boolean =
+        longMediaPlayerMap[tv]?.isPlaying == true
+
+    fun pauseLong(tv: TextView) {
+        longMediaPlayerMap[tv]?.let {
+            if (it.isPlaying) it.pause()
+            pausedLongButtons.add(tv)
+            tv.invalidate()
+        }
+    }
+
+    fun resumeLong(tv: TextView) {
+        longMediaPlayerMap[tv]?.start()
+        pausedLongButtons.remove(tv)
+        tv.invalidate()
+    }
+}
+
+
+/*
+package design.bosson.spookyhalloweensounds
+
+import android.content.Context
+import android.content.res.ColorStateList
+import android.graphics.drawable.Drawable
+import android.media.MediaPlayer
+import android.view.View
+import android.widget.Button
+import android.widget.TextView
+import androidx.core.content.ContextCompat
+
+class SoundManager {
+
+    private val longMediaPlayerMap = mutableMapOf<View, MediaPlayer>()
+    private val shortMediaPlayerMap = mutableMapOf<View, MediaPlayer>()
+
+    private val originalDrawableMap = mutableMapOf<TextView, Drawable?>()
+
+    private var currentPlayingLongMediaPlayer: MediaPlayer? = null
+    private var currentPlayingLongButton: TextView? = null
+
+    private val pausedLongButtons = mutableSetOf<TextView>()
+
+    fun playLongSound(context: Context, soundId: Int, button: View) {
+        try {
+            val tv = button as TextView
+
+            if (currentPlayingLongMediaPlayer != null && currentPlayingLongButton != null) {
+                if (currentPlayingLongButton === tv) {
+                    if (currentPlayingLongMediaPlayer!!.isPlaying) {
+                        currentPlayingLongMediaPlayer!!.pause()
+                        pausedLongButtons.add(currentPlayingLongButton!!)
+                        setPlayDrawable(context, currentPlayingLongButton!!)
+                    } else {
+                        currentPlayingLongMediaPlayer!!.start()
+                        setPauseDrawable(context, currentPlayingLongButton!!)
+                        pausedLongButtons.remove(currentPlayingLongButton!!)
+                    }
+                    return
+                } else {
+                    currentPlayingLongMediaPlayer!!.release()
+                    resetButtonDrawable(context, currentPlayingLongButton!!)
+                    resetButtonColor(context, currentPlayingLongButton!!)
+                    pausedLongButtons.remove(currentPlayingLongButton!!)
+                    currentPlayingLongMediaPlayer = null
+                }
+            }
+
+            if (!originalDrawableMap.containsKey(tv)) {
+                val originalTop = tv.compoundDrawables[1]
+                originalDrawableMap[tv] = originalTop
+            }
+
+            val mediaPlayer = MediaPlayer.create(context, soundId).apply {
+                isLooping = true
+                setOnCompletionListener {
+                    it.release()
+                    resetButtonDrawable(context, tv)
+                    resetButtonColor(context, tv)
+                }
+            }
+
+            setButtonColorPlaying(context, tv)
+            setPauseDrawable(context, tv)
+            mediaPlayer.start()
+
+            tv.setOnLongClickListener {
+                try {
+                    mediaPlayer.seekTo(0)
+                    mediaPlayer.start()
+                    setPauseDrawable(context, tv)
+                    setButtonColorPlaying(context, tv)
+                } catch (_: IllegalStateException) { }
+                true
+            }
+
+            currentPlayingLongMediaPlayer = mediaPlayer
+            currentPlayingLongButton = tv
+            longMediaPlayerMap[tv] = mediaPlayer
+
+        } catch (_: Exception) { }
+    }
+
+    fun playShortSound(context: Context, soundId: Int, button: View) {
+        try {
+            val tv = button as TextView
+
+            shortMediaPlayerMap.remove(tv)?.release()
+
+            if (!originalDrawableMap.containsKey(tv)) {
+                originalDrawableMap[tv] = tv.compoundDrawables[1]
+            }
+
+            val mediaPlayer = MediaPlayer.create(context, soundId).apply {
+                setOnCompletionListener {
+                    it.release()
+                    shortMediaPlayerMap.remove(tv)
+                    resetButtonColor(context, tv)
+                }
+            }
+
+            setButtonColorPlaying(context, tv)
+            mediaPlayer.start()
+            shortMediaPlayerMap[tv] = mediaPlayer
+
+        } catch (_: Exception) { }
+    }
+
+    fun resetAllButtons(context: Context, buttons: List<@JvmSuppressWildcards TextView>) {
+        buttons.forEach { tv ->
+            if (pausedLongButtons.contains(tv)) {
+                setPlayDrawable(context, tv)
+            } else {
+                resetButtonDrawable(context, tv)
+                resetButtonColor(context, tv)
+            }
+        }
+    }
+
+    fun resetButtonDrawable(context: Context, tv: TextView) {
+        originalDrawableMap[tv]?.let {
+            tv.setCompoundDrawablesWithIntrinsicBounds(null, it, null, null)
+        }
+    }
+
+    fun resetButtonColor(context: Context, tv: TextView) {
+        tv.backgroundTintList =
+            ColorStateList.valueOf(ContextCompat.getColor(context, R.color.colorButton))
+    }
+
+    fun setPauseDrawable(context: Context, tv: TextView) {
+        val d = ContextCompat.getDrawable(context, R.drawable.ic_pause)
+        d?.setTint(ContextCompat.getColor(context, android.R.color.black))
+        tv.setCompoundDrawablesWithIntrinsicBounds(null, d, null, null)
+    }
+
+    fun setPlayDrawable(context: Context, tv: TextView) {
+        val d = ContextCompat.getDrawable(context, R.drawable.ic_play)
+        d?.setTint(ContextCompat.getColor(context, android.R.color.black))
+        tv.setCompoundDrawablesWithIntrinsicBounds(null, d, null, null)
+    }
+
+    fun setButtonColorPlaying(context: Context, tv: TextView) {
+        tv.backgroundTintList =
+            ColorStateList.valueOf(ContextCompat.getColor(context, R.color.colorButton))
+    }
+
+
+    fun isButtonPaused(tv: TextView): Boolean = pausedLongButtons.contains(tv)
+
+    fun pauseAllSounds(context: Context) {
+        longMediaPlayerMap.forEach { (v, mp) ->
+            try {
+                if (mp.isPlaying) {
+                    mp.pause()
+                    (v as? TextView)?.let {
+                        pausedLongButtons.add(it)
+                        setPlayDrawable(context, it)
+                    }
+                }
+            } catch (_: IllegalStateException) { }
+        }
+        currentPlayingLongMediaPlayer?.let {
+            try {
+                if (it.isPlaying) {
+                    it.pause()
+                    currentPlayingLongButton?.let { tv ->
+                        pausedLongButtons.add(tv)
+                        setPlayDrawable(context, tv)
+                    }
+                }
+            } catch (_: IllegalStateException) { }
+        }
+    }
+
+    // --- Seek support helpers ---
+    fun getLongDuration(button: View): Long =
+        longMediaPlayerMap[button]?.duration?.toLong() ?: 0L
+
+    fun getLongPosition(button: View): Long =
+        longMediaPlayerMap[button]?.currentPosition?.toLong() ?: 0L
+
+    fun seekLongTo(button: View, ms: Long) {
+        longMediaPlayerMap[button]?.seekTo(ms.toInt())
+    }
+
+    fun isLongPlaying(button: View): Boolean =
+        longMediaPlayerMap[button]?.isPlaying == true
+
+    fun pauseLong(button: View) {
+        longMediaPlayerMap[button]?.let { if (it.isPlaying) it.pause() }
+    }
+
+    fun resumeLong(button: View) {
+        longMediaPlayerMap[button]?.start()
+    }
+
+    fun releaseAllSounds(context: Context) {
+        longMediaPlayerMap.values.forEach {
+            try { if (it.isPlaying) it.stop(); it.release() } catch (_: IllegalStateException) { }
+        }
+        longMediaPlayerMap.clear()
+        shortMediaPlayerMap.values.forEach {
+            try { if (it.isPlaying) it.stop(); it.release() } catch (_: IllegalStateException) { }
+        }
+        shortMediaPlayerMap.clear()
+
+        originalDrawableMap.keys.forEach {
+            resetButtonDrawable(context, it)
+            resetButtonColor(context, it)
+        }
+        pausedLongButtons.clear()
+        currentPlayingLongMediaPlayer = null
+        currentPlayingLongButton = null
+    }
+}
+
+
+/*
 package design.bosson.spookyhalloweensounds
 
 import android.content.Context
@@ -317,3 +773,4 @@ class SoundManager {
         pausedLongButtons.clear()
     }
 }
+ */
