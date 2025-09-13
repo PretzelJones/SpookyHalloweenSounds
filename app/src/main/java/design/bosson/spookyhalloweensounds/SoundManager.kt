@@ -24,7 +24,6 @@ class SoundManager {
         try {
             val tv = button as TextView
 
-            // If something is already associated
             currentPlayingLongMediaPlayer?.let { mp ->
                 currentPlayingLongButton?.let { curBtn ->
                     if (curBtn === tv) {
@@ -217,7 +216,7 @@ class SoundManager {
 
     fun isLongPlaying(tv: TextView): Boolean =
         longMediaPlayerMap[tv]?.isPlaying == true
-
+/*
     fun pauseLong(tv: TextView) {
         longMediaPlayerMap[tv]?.let {
             if (it.isPlaying) it.pause()
@@ -231,6 +230,8 @@ class SoundManager {
         pausedLongButtons.remove(tv)
         tv.invalidate()
     }
+
+ */
 }
 
 

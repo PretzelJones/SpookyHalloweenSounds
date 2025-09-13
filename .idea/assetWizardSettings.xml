@@ -37,7 +37,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="imagePath" value="$USER_HOME$/Downloads/question_mark.png" />
+                                                <entry key="imagePath" value="$PROJECT_DIR$/../../iOS/SpookyHalloweenSounds_iOS/SpookyHalloweenSounds/Assets.xcassets/spooky_skeletons.imageset/icon-120.png" />
                                                 <entry key="opacityPercent" value="80" />
                                               </map>
                                             </option>
@@ -71,8 +71,8 @@
                                   <option name="values">
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
-                                      <entry key="imageAsset" value="$USER_HOME$/Downloads/question_mark.png" />
-                                      <entry key="outputName" value="question_mark" />
+                                      <entry key="imageAsset" value="$PROJECT_DIR$/../../iOS/SpookyHalloweenSounds_iOS/SpookyHalloweenSounds/Assets.xcassets/spooky_skeletons.imageset/icon-120.png" />
+                                      <entry key="outputName" value="ic_skeletons" />
                                       <entry key="theme" value="CUSTOM" />
                                       <entry key="themeColor" value="000000" />
                                     </map>

@@ -114,10 +114,23 @@
                 tools:ignore="MissingPrefix" />
 
             <Button
-                android:id="@+id/bWitchCackle"
+                android:id="@+id/bPartySongs"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:layout_below="@+id/bMovieThemes"
+                android:drawableTop="@drawable/ic_note"
+                android:elevation="0dp"
+                android:fontFamily="@font/creepster"
+                android:keepScreenOn="true"
+                android:text="Party Songs"
+                app:backgroundTint="@color/colorTitle"
+                tools:ignore="MissingPrefix" />
+
+            <Button
+                android:id="@+id/bWitchCackle"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_below="@+id/bPartySongs"
                 android:drawableTop="@drawable/ic_witch"
                 android:elevation="0dp"
                 android:fontFamily="@font/creepster"
@@ -286,7 +299,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:layout_below="@+id/bWerewolfHowl"
-                android:drawableTop="@drawable/poltergeist_tv"
+                android:drawableTop="@drawable/ic_poltergeist_tv"
                 android:elevation="0dp"
                 android:fontFamily="@font/creepster"
                 android:text="Poltergeist Voice"

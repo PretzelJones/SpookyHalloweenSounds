@@ -86,7 +86,7 @@ class SeekButtonView @JvmOverloads constructor(
             canvas.drawRect(left, top, fillRight, bottom, progressPaint)
         }
 
-        super.onDraw(canvas) // text/icons above
+        super.onDraw(canvas)
     }
     
     override fun onTouchEvent(event: MotionEvent): Boolean {

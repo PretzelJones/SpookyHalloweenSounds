@@ -36,8 +36,8 @@ abstract class BaseActivity : AppCompatActivity() {
 
         if (isScreenOn) {
             // App is being backgrounded
-            soundManager.pauseAllSounds(this)
-            soundManager.resetAllButtons(this, getAllButtons())
+            //soundManager.pauseAllSounds(this)
+            //soundManager.resetAllButtons(this, getAllButtons())
         }
         // If screen is off, do not pause sounds or reset buttons
     }
