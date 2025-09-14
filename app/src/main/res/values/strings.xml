@@ -12,7 +12,12 @@
     <string name="secret">Curiosity Killed the Black Cat</string>
     <string name="title_activity_ghost_song">The Ghost Song</string>
     <string name="title_activity_old_tape">OldTapeActivity</string>
-    <string name="privacy">This app may collect anonymous usage data. For more information view our Privacy Policy at https://docs.google.com/document/d/1GSII3CwCZ5sRwkRRzcBKNSAdhpMipyY0ltgSEivydt4/</string>
+    <string name="privacy">
+    This app may collect anonymous usage data. For more information view our
+    <a href="https://docs.google.com/document/d/1GSII3CwCZ5sRwkRRzcBKNSAdhpMipyY0ltgSEivydt4/">
+        Privacy Policy
+    </a>
+</string>
     <string name="google_play_store">Check out this awesome Halloween Sounds App in the Google Play Store! https://goo.gl/FiuVHq</string>
     <string name="amazon_store_store">Check out this awesome Halloween Sounds App in the Amazon App Store! https://goo.gl/VriraD</string>
     <string name="secret_description">You curious little devil! You’ve found the hidden sounds. We’ve saved the best for here. The sounds below are audio recordings found deep in the web. These are genuine recordings of mysterious origin and meaning. They are not for the faint of heart and may leave you feeling uneasy, frightened, and paranoid. You have been warned. </string>

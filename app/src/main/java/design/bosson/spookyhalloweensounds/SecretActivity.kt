@@ -20,7 +20,9 @@ class SecretActivity : BaseActivity() {
         binding = ActivitySecretBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Seek binds
+        //initiate seek info alert dialog
+        FeatureDialogHelper.showFeatureDialogIfNeeded(this)
+
         binding.bTheGhostSong.bind(
             getDurationMs = { soundManager.getLongDuration(binding.bTheGhostSong) },
             getPositionMs = { soundManager.getLongPosition(binding.bTheGhostSong) },

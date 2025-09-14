@@ -20,7 +20,9 @@ class LongActivity : BaseActivity() {
         binding = ActivityLongBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Seek binds
+        //initiate seek info alert dialog
+        FeatureDialogHelper.showFeatureDialogIfNeeded(this)
+
         binding.bTerrorMix.bind(
             getDurationMs = { soundManager.getLongDuration(binding.bTerrorMix) },
             getPositionMs = { soundManager.getLongPosition(binding.bTerrorMix) },

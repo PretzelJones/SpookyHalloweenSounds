@@ -19,7 +19,9 @@ class PartySongsActivity : BaseActivity() {
         binding = ActivityPartyBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Seek binds
+        //initiate seek info alert dialog
+        FeatureDialogHelper.showFeatureDialogIfNeeded(this)
+
         binding.bGhostbusters.bind(
             getDurationMs = { soundManager.getLongDuration(binding.bGhostbusters) },
             getPositionMs = { soundManager.getLongPosition(binding.bGhostbusters) },

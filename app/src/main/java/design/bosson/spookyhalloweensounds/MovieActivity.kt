@@ -17,11 +17,12 @@ class MovieActivity : BaseActivity() {  // Now extends BaseActivity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        // Inflate the layout using View Binding
         binding = ActivityMovieBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        // after setContentView(...)
+
+        //initiate seek info alert dialog
+        FeatureDialogHelper.showFeatureDialogIfNeeded(this)
+
         binding.bHalloween.bind(
             getDurationMs = { soundManager.getLongDuration(binding.bHalloween) },
             getPositionMs = { soundManager.getLongPosition(binding.bHalloween) },
